@@ -20,7 +20,8 @@ class _SignInPageState extends State<SignInPage> {
   final _focusNode = FocusNode();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordConfirmController = TextEditingController();
+  final TextEditingController _passwordConfirmController =
+      TextEditingController();
 
   @override
   void initState() {
@@ -41,30 +42,33 @@ class _SignInPageState extends State<SignInPage> {
         // });
 
         return const AlertDialog(
-          content:
-          SizedBox(
+          content: SizedBox(
             height: 100,
             child: Align(
               alignment: Alignment.center,
               child: Column(
                 children: <Widget>[
-                  Text('已發送認證信至',),
-                  Text('東華大學帳號的信箱！',),
-                  Text('請前往確認',),
+                  Text(
+                    '已發送認證信至',
+                  ),
+                  Text(
+                    '東華大學帳號的信箱！',
+                  ),
+                  Text(
+                    '請前往確認',
+                  ),
                 ],
               ),
             ),
           ),
-          contentPadding: EdgeInsets.only(top:35,right: 20,left: 20),
+          contentPadding: EdgeInsets.only(top: 35, right: 20, left: 20),
         );
       },
     );
     print('註冊成功');
     await Future.delayed(const Duration(seconds: 3));
     Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginPage())
-    );
+        context, MaterialPageRoute(builder: (context) => const LoginPage()));
   }
 
   Future<void> _signin(apiUrl) async {
@@ -79,18 +83,19 @@ class _SignInPageState extends State<SignInPage> {
       'password': password,
     };
 
-    if (username=="" || password=="" || passwordConfirm==""){
+    if (username == "" || password == "" || passwordConfirm == "") {
       print('請輸入學號及密碼！');
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            content:
-            const SizedBox(
+            content: const SizedBox(
               height: 50,
               child: Align(
                 alignment: Alignment.center,
-                child: Text('請輸入學號及密碼！',),
+                child: Text(
+                  '請輸入學號及密碼！',
+                ),
               ),
             ),
             actions: [
@@ -101,23 +106,24 @@ class _SignInPageState extends State<SignInPage> {
                 child: const Text('確定'),
               ),
             ],
-            contentPadding: const EdgeInsets.only(top:40,right: 20,left: 20),
+            contentPadding: const EdgeInsets.only(top: 40, right: 20, left: 20),
           );
         },
       );
-    }else{
-      if(password != passwordConfirm){
+    } else {
+      if (password != passwordConfirm) {
         print('確認密碼有誤，請重新輸入！');
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              content:
-              const SizedBox(
+              content: const SizedBox(
                 height: 50,
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text('確認密碼有誤，請重新輸入！',),
+                  child: Text(
+                    '確認密碼有誤，請重新輸入！',
+                  ),
                 ),
               ),
               actions: [
@@ -128,11 +134,12 @@ class _SignInPageState extends State<SignInPage> {
                   child: const Text('確定'),
                 ),
               ],
-              contentPadding: const EdgeInsets.only(top:40,right: 20,left: 20),
+              contentPadding:
+                  const EdgeInsets.only(top: 40, right: 20, left: 20),
             );
           },
         );
-      }else{
+      } else {
         String jsonData = jsonEncode(data);
         Map<String, String> headers = {
           'Content-Type': 'application/json',
@@ -141,24 +148,27 @@ class _SignInPageState extends State<SignInPage> {
         // 發送登錄請求
         String Loginurl = ('$apiUrl:8000/Register');
         try {
-          http.Response response = await http.post(Uri.parse(Loginurl), headers: headers, body: jsonData);
+          http.Response response = await http.post(Uri.parse(Loginurl),
+              headers: headers, body: jsonData);
+          print(jsonData);
           String responseData = response.body;
-          var res =jsonDecode(responseData);
+          var res = jsonDecode(responseData);
           var status = res['cause'];
 
           if (status == 0) {
             _showAlertDialog(context);
-          } else if(status == 101) {
+          } else if (status == 101) {
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  content:
-                  const SizedBox(
+                  content: const SizedBox(
                     height: 50,
                     child: Align(
                       alignment: Alignment.center,
-                      child: Text('此學號已被註冊！',),
+                      child: Text(
+                        '此學號已被註冊！',
+                      ),
                     ),
                   ),
                   actions: [
@@ -169,7 +179,8 @@ class _SignInPageState extends State<SignInPage> {
                       child: const Text('確定'),
                     ),
                   ],
-                  contentPadding: const EdgeInsets.only(top:40,right: 20,left: 20),
+                  contentPadding:
+                      const EdgeInsets.only(top: 40, right: 20, left: 20),
                 );
               },
             );
@@ -189,13 +200,14 @@ class _SignInPageState extends State<SignInPage> {
     _focusNode.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
     return GestureDetector(
-        onTap: (){
+        onTap: () {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
@@ -212,30 +224,32 @@ class _SignInPageState extends State<SignInPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                SizedBox(height: screenHeight*0.215),
+                SizedBox(height: screenHeight * 0.215),
                 Center(
                   child: Container(
-                    height: screenHeight*0.6,
-                    width: screenWidth*0.78,
+                    height: screenHeight * 0.6,
+                    width: screenWidth * 0.78,
                     decoration: BoxDecoration(
                       color: const Color(0xe6fcf7f0),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child:
-                    Center(
+                    child: Center(
                       child: Column(
                         children: <Widget>[
-                          SizedBox(height: screenHeight*0.05),
+                          SizedBox(height: screenHeight * 0.05),
                           Container(
                             padding: const EdgeInsets.all(10),
                             child: const Center(
                               child: Text(
                                 '註冊',
-                                style: TextStyle(color: Colors.black, fontSize: 20,letterSpacing: 25),
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    letterSpacing: 25),
                               ),
                             ),
                           ),
-                          SizedBox(height: screenHeight*0.05),
+                          SizedBox(height: screenHeight * 0.05),
                           const SizedBox(
                             width: 170,
                             child: Align(
@@ -251,29 +265,33 @@ class _SignInPageState extends State<SignInPage> {
                               ),
                             ),
                           ),
-                          SizedBox(height: screenHeight*0.005),
+                          SizedBox(height: screenHeight * 0.005),
                           Container(
                             height: 35,
                             width: 200,
                             decoration: BoxDecoration(
                                 color: const Color(0xffcab595),
                                 borderRadius: BorderRadius.circular(18),
-                                border: Border.all(
-                                    color: Colors.black
-                                )
-                            ),
+                                border: Border.all(color: Colors.black)),
                             child: TextField(
-                              style: const TextStyle(color: Colors.white,fontSize: 13,letterSpacing: 2),
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  letterSpacing: 2),
                               controller: _usernameController,
                               decoration: const InputDecoration(
                                 hintText: '學號',
-                                hintStyle: TextStyle(color: Colors.white,fontSize: 13,letterSpacing: 8),
+                                hintStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                    letterSpacing: 8),
                                 border: InputBorder.none,
-                                contentPadding: EdgeInsets.symmetric(vertical: 11.0,horizontal: 15),
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 11.0, horizontal: 15),
                               ),
                             ),
                           ),
-                          SizedBox(height: screenHeight*0.025),
+                          SizedBox(height: screenHeight * 0.025),
                           const SizedBox(
                             width: 170,
                             child: Align(
@@ -289,51 +307,59 @@ class _SignInPageState extends State<SignInPage> {
                               ),
                             ),
                           ),
-                          SizedBox(height: screenHeight*0.005),
+                          SizedBox(height: screenHeight * 0.005),
                           Container(
                             height: 35,
                             width: 200,
                             decoration: BoxDecoration(
                                 color: const Color(0xffcab595),
                                 borderRadius: BorderRadius.circular(18),
-                                border: Border.all(
-                                    color: Colors.black
-                                )
-                            ),
+                                border: Border.all(color: Colors.black)),
                             child: TextField(
                               controller: _passwordController,
-                              style: const TextStyle(color: Colors.white,fontSize: 13,letterSpacing: 2),
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  letterSpacing: 2),
                               decoration: const InputDecoration(
                                 hintText: '密碼',
-                                hintStyle: TextStyle(color: Colors.white,fontSize: 13,letterSpacing: 8),
+                                hintStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                    letterSpacing: 8),
                                 border: InputBorder.none,
-                                contentPadding: EdgeInsets.symmetric(vertical: 11.0,horizontal: 15),
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 11.0, horizontal: 15),
                               ),
                             ),
                           ),
-                          SizedBox(height: screenHeight*0.025),
+                          SizedBox(height: screenHeight * 0.025),
                           Container(
                             height: 35,
                             width: 200,
                             decoration: BoxDecoration(
                                 color: const Color(0xffcab595),
                                 borderRadius: BorderRadius.circular(18),
-                                border: Border.all(
-                                    color: Colors.black
-                                )
-                            ),
+                                border: Border.all(color: Colors.black)),
                             child: TextField(
                               controller: _passwordConfirmController,
-                              style: const TextStyle(color: Colors.white,fontSize: 13,letterSpacing: 2),
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  letterSpacing: 2),
                               decoration: const InputDecoration(
                                 hintText: '確認密碼',
-                                hintStyle: TextStyle(color: Colors.white,fontSize: 13,letterSpacing: 8),
+                                hintStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                    letterSpacing: 8),
                                 border: InputBorder.none,
-                                contentPadding: EdgeInsets.symmetric(vertical: 11.0,horizontal: 15),
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 11.0, horizontal: 15),
                               ),
                             ),
                           ),
-                          SizedBox(height: screenHeight*0.05),
+                          SizedBox(height: screenHeight * 0.05),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
@@ -345,12 +371,16 @@ class _SignInPageState extends State<SignInPage> {
                                   fontSize: 13.0,
                                 ),
                               ),
-                              const SizedBox(width: 10,),
+                              const SizedBox(
+                                width: 10,
+                              ),
                               GestureDetector(
                                 onTap: () {
                                   Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LoginPage()),
                                   );
                                 },
                                 child: const Text(
@@ -364,14 +394,17 @@ class _SignInPageState extends State<SignInPage> {
                                 ),
                               ),
                             ],
-                          ),SizedBox(height: screenHeight*0.02),
+                          ),
+                          SizedBox(height: screenHeight * 0.02),
                           TextButton(
                             style: ButtonStyle(
                               side: MaterialStateProperty.all<BorderSide>(
                                 const BorderSide(width: 2, color: Colors.black),
                               ),
-                              backgroundColor: MaterialStateProperty.all<Color>(const Color(0xffe87d42)),
-                              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  const Color(0xffe87d42)),
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.white),
                             ),
                             onPressed: () {
                               _signin(apiUrl);
@@ -379,8 +412,7 @@ class _SignInPageState extends State<SignInPage> {
                             child: const SizedBox(
                               width: 60,
                               height: 25,
-                              child:
-                              Center(
+                              child: Center(
                                 child: Text(
                                   '註冊',
                                   textAlign: TextAlign.center,
@@ -398,11 +430,10 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: screenHeight*0.185),
+                SizedBox(height: screenHeight * 0.185),
               ],
             ),
           ),
-        )
-    );
+        ));
   }
 }

@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:app/login.dart';
 
-String apiUrl = "http://140.128.101.247";
-String User_Token ="";
+String apiUrl = "http://140.128.104.115";
+String User_Token = "";
 
 void main() {
   runApp(const MyApp());

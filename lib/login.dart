@@ -37,7 +37,6 @@ class _LoginPageState extends State<LoginPage> {
     String username = _usernameController.text;
     String password = _passwordController.text;
 
-
     // 構建登錄請求的資料
     Map<String, String> data = {
       'student_id': username,
@@ -50,17 +49,18 @@ class _LoginPageState extends State<LoginPage> {
       'Content-Type': 'application/json',
     };
 
-
     // 發送登錄請求
-    String Loginurl = ('$apiUrl:8000/Login');
+    String Loginurl = ('$apiUrl:8000/auth/login');
     try {
-      http.Response response = await http.post(Uri.parse(Loginurl), headers: headers, body: jsonData);
-
-
+      print(jsonData);
+      http.Response response = await http.post(Uri.parse(Loginurl),
+          headers: headers, body: jsonData);
 
       String responseData = response.body;
       var data = jsonDecode(responseData);
-      var status = data['status'];
+      print(data);
+      var status = data['message'];
+      print("message: $status");
       String? rawCookie = response.headers['set-cookie'];
       String cookie = "";
       if (rawCookie != null) {
@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
       int equalsIndex = cookie.indexOf('=');
       User_Token = cookie.substring(equalsIndex + 1);
 
-      if (status == 0) {
+      if (status == "OK") {
         // 登錄成功，處理成功的邏輯
         print('登錄成功：$responseData');
         print('User_Token:$User_Token');
@@ -79,17 +79,18 @@ class _LoginPageState extends State<LoginPage> {
           context,
           MaterialPageRoute(builder: (context) => const HomePage()),
         );
-      } else if(status == 205) {
+      } else if (status == 205) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              content:
-              const SizedBox(
+              content: const SizedBox(
                 height: 50,
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text('請輸入正確的帳號密碼，或註冊帳號',),
+                  child: Text(
+                    '請輸入正確的帳號密碼，或註冊帳號',
+                  ),
                 ),
               ),
               actions: [
@@ -100,7 +101,8 @@ class _LoginPageState extends State<LoginPage> {
                   child: const Text('確定'),
                 ),
               ],
-              contentPadding: const EdgeInsets.only(top:40,right: 20,left: 20),
+              contentPadding:
+                  const EdgeInsets.only(top: 40, right: 20, left: 20),
             );
           },
         );
@@ -115,12 +117,13 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            content:
-            const SizedBox(
+            content: const SizedBox(
               height: 50,
               child: Align(
                 alignment: Alignment.center,
-                child: Text('請先從右上角的設定中設置ip地址，或檢查網路連線',),
+                child: Text(
+                  '請先從右上角的設定中設置ip地址，或檢查網路連線',
+                ),
               ),
             ),
             actions: [
@@ -131,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: const Text('确定'),
               ),
             ],
-            contentPadding: const EdgeInsets.only(top:40,right: 20,left: 20),
+            contentPadding: const EdgeInsets.only(top: 40, right: 20, left: 20),
           );
         },
       );
@@ -143,209 +146,225 @@ class _LoginPageState extends State<LoginPage> {
     _focusNode.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
     return GestureDetector(
-      onTap: (){
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          width: screenWidth,
-          height: screenHeight,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/home/login.png'),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Container(
-                      padding: const EdgeInsets.only(right: 10,top: 35),
-                      height: 70,
-                      width: 70,
-                      child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const SettingPage()),
-                            );
-                            print('setting click');
-                          },
-                          child: Image.asset('assets/images/setting.png')
-                      ),
-                    ),
-                  )
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Container(
+            width: screenWidth,
+            height: screenHeight,
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/home/login.png'),
+                fit: BoxFit.cover,
               ),
-              // SizedBox(height: screenHeight*0.115),
-              Center(
-                child: Container(
-                  height: screenHeight*0.6,
-                  width: screenWidth*0.78,
-                  decoration: BoxDecoration(
-                    color: const Color(0xe6fcf7f0),
-                    borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                    child: Align(
+                  alignment: Alignment.topRight,
+                  child: Container(
+                    padding: const EdgeInsets.only(right: 10, top: 35),
+                    height: 70,
+                    width: 70,
+                    child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SettingPage()),
+                          );
+                          print('setting click');
+                        },
+                        child: Image.asset('assets/images/setting.png')),
                   ),
-                  child:
-                  Center(
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(height: screenHeight*0.06),
-                        Container(
-                          padding: const EdgeInsets.all(10),
-                          child: const Center(
-                            child: Text(
-                              '登入',
-                              style: TextStyle(color: Colors.black, fontSize: 20,letterSpacing: 25),
-                            ),
-                          ),
-                        ),SizedBox(height: screenHeight*0.06),
-                        Container(
-                          height: 35,
-                          width: 200,
-                          decoration: BoxDecoration(
-                              color: const Color(0xffcab595),
-                              borderRadius: BorderRadius.circular(18),
-                              border: Border.all(
-                                  color: Colors.black
-                              )
-                          ),
-                          child: TextField(
-                            style: const TextStyle(color: Colors.white,fontSize: 13,letterSpacing: 2),
-                            controller: _usernameController,
-                            decoration: const InputDecoration(
-                              hintText: '學號',
-                              hintStyle: TextStyle(color: Colors.white,fontSize: 13,letterSpacing: 8),
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(vertical: 11.0,horizontal: 15),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: screenHeight*0.05),
-                        Container(
-                          height: 35,
-                          width: 200,
-                          decoration: BoxDecoration(
-                              color: const Color(0xffcab595),
-                              borderRadius: BorderRadius.circular(18),
-                              border: Border.all(
-                                  color: Colors.black
-                              )
-                          ),
-                          child: TextField(
-                            style: const TextStyle(color: Colors.white,fontSize: 13,letterSpacing: 2),
-                            controller: _passwordController,
-                            decoration: const InputDecoration(
-                              hintText: '密碼',
-                              hintStyle: TextStyle(color: Colors.white,fontSize: 13,letterSpacing: 8),
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(vertical: 11.0,horizontal: 15),
-                            ),
-                          ),
-                        ), SizedBox(height: screenHeight*0.005),
-                        SizedBox(
-                          width: 170,
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child: GestureDetector(
-
-                              onTap: () {
-                                // 在这里添加点击事件处理程序
-                                if (kDebugMode) {
-                                  print('Text was clicked!');
-                                }
-                              },
-                              child: const Text(
-                                '忘記密碼',
-                                style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  color: Color(0xffda8970),
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 13.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),SizedBox(height: screenHeight*0.05),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            const Text(
-                              '尚無帳號',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 13.0,
-                              ),
-                            ),
-                            const SizedBox(width: 10,),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => const SignInPage()),
-                                );
-                              },
-                              child: const Text(
-                                '點擊註冊',
-                                style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  color: Color(0xffda8970),
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 13.0,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      SizedBox(height: screenHeight*0.06),
-                        TextButton(
-                          style: ButtonStyle(
-                            side: MaterialStateProperty.all<BorderSide>(
-                              const BorderSide(width: 2, color: Colors.black),
-                            ),
-                            backgroundColor: MaterialStateProperty.all<Color>(const Color(0xffe87d42)),
-                            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                          ),
-                          onPressed: () {
-                            _login(apiUrl);
-                          },
-                          child: const SizedBox(
-                            width: 60,
-                            height: 25,
-                            child:
-                            Center(
+                )),
+                // SizedBox(height: screenHeight*0.115),
+                Center(
+                  child: Container(
+                    height: screenHeight * 0.6,
+                    width: screenWidth * 0.78,
+                    decoration: BoxDecoration(
+                      color: const Color(0xe6fcf7f0),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(height: screenHeight * 0.06),
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            child: const Center(
                               child: Text(
                                 '登入',
-                                textAlign: TextAlign.center,
                                 style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    letterSpacing: 25),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.06),
+                          Container(
+                            height: 35,
+                            width: 200,
+                            decoration: BoxDecoration(
+                                color: const Color(0xffcab595),
+                                borderRadius: BorderRadius.circular(18),
+                                border: Border.all(color: Colors.black)),
+                            child: TextField(
+                              style: const TextStyle(
                                   color: Colors.white,
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 15.0,
+                                  fontSize: 13,
+                                  letterSpacing: 2),
+                              controller: _usernameController,
+                              decoration: const InputDecoration(
+                                hintText: '學號',
+                                hintStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                    letterSpacing: 8),
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 11.0, horizontal: 15),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.05),
+                          Container(
+                            height: 35,
+                            width: 200,
+                            decoration: BoxDecoration(
+                                color: const Color(0xffcab595),
+                                borderRadius: BorderRadius.circular(18),
+                                border: Border.all(color: Colors.black)),
+                            child: TextField(
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  letterSpacing: 2),
+                              controller: _passwordController,
+                              decoration: const InputDecoration(
+                                hintText: '密碼',
+                                hintStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                    letterSpacing: 8),
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 11.0, horizontal: 15),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: screenHeight * 0.005),
+                          SizedBox(
+                            width: 170,
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: GestureDetector(
+                                onTap: () {
+                                  // 在这里添加点击事件处理程序
+                                  if (kDebugMode) {
+                                    print('Text was clicked!');
+                                  }
+                                },
+                                child: const Text(
+                                  '忘記密碼',
+                                  style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    color: Color(0xffda8970),
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 13.0,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                          SizedBox(height: screenHeight * 0.05),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              const Text(
+                                '尚無帳號',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 13.0,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SignInPage()),
+                                  );
+                                },
+                                child: const Text(
+                                  '點擊註冊',
+                                  style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    color: Color(0xffda8970),
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 13.0,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: screenHeight * 0.06),
+                          TextButton(
+                            style: ButtonStyle(
+                              side: MaterialStateProperty.all<BorderSide>(
+                                const BorderSide(width: 2, color: Colors.black),
+                              ),
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  const Color(0xffe87d42)),
+                              foregroundColor: MaterialStateProperty.all<Color>(
+                                  Colors.white),
+                            ),
+                            onPressed: () {
+                              _login(apiUrl);
+                            },
+                            child: const SizedBox(
+                              width: 60,
+                              height: 25,
+                              child: Center(
+                                child: Text(
+                                  '登入',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: screenHeight*0.185),
-            ],
+                SizedBox(height: screenHeight * 0.185),
+              ],
+            ),
           ),
-        ),
-      )
-    );
+        ));
   }
 }
