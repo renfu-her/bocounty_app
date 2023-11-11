@@ -1,13 +1,12 @@
 // import 'dart:math';
 
-
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'home.dart';
 
-import 'main.dart';
+import 'package:app/main.dart';
 import 'writeguild.dart';
 
 class GuildPage extends StatefulWidget {
@@ -25,16 +24,16 @@ class _GuildPageState extends State<GuildPage> {
   String Exec_time = "";
   String Intro = "";
   String Owner_id = "";
-  String Owner_name= "";
+  String Owner_name = "";
   String Start_time = "";
   String Title = "";
 
   bool showImage = true;
   bool isshowDialog = false;
   bool isLoading = false;
-  String title="";
-  String id="";
-  String ID="";
+  String title = "";
+  String id = "";
+  String ID = "";
 
   Timer? _timer;
 
@@ -56,19 +55,16 @@ class _GuildPageState extends State<GuildPage> {
     // String  tilte = _titleController.text;
     // String  content = _contentController.text;
 
-
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Cookie': 'User_Token=$User_Token',
     };
 
-
     // 發送登錄請求
     String getOpenOrderurl = ('$apiUrl:8000/getOpenOrder');
     try {
-      http.Response response = await http.get(Uri.parse(getOpenOrderurl), headers: headers);
-
-
+      http.Response response =
+          await http.get(Uri.parse(getOpenOrderurl), headers: headers);
 
       String responseData = response.body;
       var data = jsonDecode(responseData);
@@ -96,17 +92,18 @@ class _GuildPageState extends State<GuildPage> {
       if (status == 0) {
         // 登錄成功，處理成功的邏輯
         print('取得資料成功：$responseData');
-      } else if(status == 205) {
+      } else if (status == 205) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              content:
-              const SizedBox(
+              content: const SizedBox(
                 height: 50,
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text('輸入內容格式有誤，請檢查!',),
+                  child: Text(
+                    '輸入內容格式有誤，請檢查!',
+                  ),
                 ),
               ),
               actions: [
@@ -117,7 +114,8 @@ class _GuildPageState extends State<GuildPage> {
                   child: const Text('確定'),
                 ),
               ],
-              contentPadding: const EdgeInsets.only(top:40,right: 20,left: 20),
+              contentPadding:
+                  const EdgeInsets.only(top: 40, right: 20, left: 20),
             );
           },
         );
@@ -128,18 +126,19 @@ class _GuildPageState extends State<GuildPage> {
       // 异常处理
       print('api ERROR：$e');
 
-      if(isshowDialog==false){
-        isshowDialog=true;
+      if (isshowDialog == false) {
+        isshowDialog = true;
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              content:
-              const SizedBox(
+              content: const SizedBox(
                 height: 50,
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text('目前取得資料失敗，請稍後在嘗試',),
+                  child: Text(
+                    '目前取得資料失敗，請稍後在嘗試',
+                  ),
                 ),
               ),
               actions: [
@@ -154,7 +153,8 @@ class _GuildPageState extends State<GuildPage> {
                   child: const Text('确定'),
                 ),
               ],
-              contentPadding: const EdgeInsets.only(top:40,right: 20,left: 20),
+              contentPadding:
+                  const EdgeInsets.only(top: 40, right: 20, left: 20),
             );
           },
         );
@@ -163,20 +163,17 @@ class _GuildPageState extends State<GuildPage> {
   }
 
   Future<void> _getOrderInfo(apiUrl) async {
-
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       'Cookie': 'User_Token=$User_Token',
     };
 
-
     // 發送登錄請求
     print(ID);
     String getOrderInfourl = ('$apiUrl:8000/getOrderInfo/$ID');
     try {
-      http.Response response = await http.get(Uri.parse(getOrderInfourl), headers: headers);
-
-
+      http.Response response =
+          await http.get(Uri.parse(getOrderInfourl), headers: headers);
 
       String responseData = response.body;
       var data = jsonDecode(responseData);
@@ -190,7 +187,6 @@ class _GuildPageState extends State<GuildPage> {
       String title2 = data['title'];
       // print(data);
 
-
 // 标记加载完成
       isLoading = false;
 
@@ -201,23 +197,24 @@ class _GuildPageState extends State<GuildPage> {
         // Owner_id=owner_id;
         // Owner_name=owner_name;
         // Start_time=start_time;
-        Title=title2;
+        Title = title2;
       });
 
       if (status == 0) {
         // 登錄成功，處理成功的邏輯
         print('取得資料成功：$responseData');
-      } else if(status == 205) {
+      } else if (status == 205) {
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              content:
-              const SizedBox(
+              content: const SizedBox(
                 height: 50,
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text('輸入內容格式有誤，請檢查!',),
+                  child: Text(
+                    '輸入內容格式有誤，請檢查!',
+                  ),
                 ),
               ),
               actions: [
@@ -228,7 +225,8 @@ class _GuildPageState extends State<GuildPage> {
                   child: const Text('確定'),
                 ),
               ],
-              contentPadding: const EdgeInsets.only(top:40,right: 20,left: 20),
+              contentPadding:
+                  const EdgeInsets.only(top: 40, right: 20, left: 20),
             );
           },
         );
@@ -239,18 +237,19 @@ class _GuildPageState extends State<GuildPage> {
       // 异常处理
       print('api ERROR：$e');
 
-      if(isshowDialog==false){
-        isshowDialog=true;
+      if (isshowDialog == false) {
+        isshowDialog = true;
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              content:
-              const SizedBox(
+              content: const SizedBox(
                 height: 50,
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text('目前取得資料失敗，請稍後在嘗試',),
+                  child: Text(
+                    '目前取得資料失敗，請稍後在嘗試',
+                  ),
                 ),
               ),
               actions: [
@@ -265,7 +264,8 @@ class _GuildPageState extends State<GuildPage> {
                   child: const Text('确定'),
                 ),
               ],
-              contentPadding: const EdgeInsets.only(top:40,right: 20,left: 20),
+              contentPadding:
+                  const EdgeInsets.only(top: 40, right: 20, left: 20),
             );
           },
         );
@@ -301,181 +301,184 @@ class _GuildPageState extends State<GuildPage> {
     // _timer?.cancel();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
     return GestureDetector(
-        onTap: (){
+        onTap: () {
           FocusScope.of(context).unfocus();
-          setState(() {
-
-          });
+          setState(() {});
         },
         child: Scaffold(
-          body: Stack(
-              children: [
-                Container(
-                    width: screenWidth,
-                    height: screenHeight,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/guild.png'),
-                        fit: BoxFit.cover,
+          body: Stack(children: [
+            Container(
+                width: screenWidth,
+                height: screenHeight,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/guild.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    Expanded(
+                        child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        padding: const EdgeInsets.only(left: 25, top: 25),
+                        height: screenHeight * 0.08,
+                        width: screenHeight * 0.08,
+                        child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const HomePage()),
+                              );
+                              print('bakeButton click');
+                            },
+                            child: Image.asset('assets/images/back.png')),
                       ),
-                    ),
-                    child: Column(
+                    )),
+                    Center(
+                        child: Column(
                       children: [
-                        Expanded(
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Container(
-                                padding: const EdgeInsets.only(left: 25,top: 25),
-                                height: screenHeight*0.08,
-                                width: screenHeight*0.08,
-                                child: InkWell(
+                        Stack(
+                          children: [
+                            showImage
+                                ? Row(
+                                    children: [
+                                      SizedBox(
+                                        width: screenWidth * 0.1,
+                                      ),
+                                      Container(
+                                          alignment: Alignment.center,
+                                          height: screenHeight * 0.13,
+                                          child: Image.asset(
+                                            'assets/images/guilddialog.png',
+                                            fit: BoxFit.contain,
+                                          ))
+                                    ],
+                                  )
+                                : GestureDetector(
                                     onTap: () {
+                                      setState(() {
+                                        showImage = false;
+                                      });
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => const HomePage()),
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const RGuildPage()),
                                       );
-                                      print('bakeButton click');
                                     },
-                                    child: Image.asset('assets/images/back.png')
-                                ),
-                              ),
-                            )
-                        ),
-                        Center(
-                            child: Column(
-                              children: [
-
-                                Stack(
-                                  children: [
-                                    showImage ? Row(
+                                    child: Row(
                                       children: [
-                                        SizedBox(width: screenWidth*0.1,),
+                                        SizedBox(
+                                          width: screenWidth * 0.17,
+                                        ),
                                         Container(
-                                            alignment: Alignment.center,
-                                            height: screenHeight*0.13,
-                                            child:
-                                            Image.asset(
-                                              'assets/images/guilddialog.png',
-                                              fit: BoxFit.contain,
-                                            )
+                                          alignment: Alignment.topCenter,
+                                          height: screenHeight * 0.135,
+                                          width: screenWidth * 0.4,
+                                          child: Image.asset(
+                                            'assets/images/guildbtn.png',
+                                            fit: BoxFit.contain,
+                                          ),
                                         )
                                       ],
-                                    ):GestureDetector(
-                                      onTap: (){
-                                        setState(() {
-                                          showImage = false;
-                                        });
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => const RGuildPage()),
-                                        );
-                                      },
-                                      child: Row(
+                                    ),
+                                  )
+                          ],
+                        ),
+                        SizedBox(
+                          height: screenHeight * 0.15,
+                        ),
+                        Container(
+                            height: screenHeight * 0.52,
+                            width: screenWidth * 0.7,
+                            child: ListView.separated(
+                              itemCount: postList.length,
+                              separatorBuilder: (context, index) {
+                                // 这里定义项之间的分隔符
+                                return SizedBox(
+                                    height: screenHeight *
+                                        0.01); // 例如，这里设置垂直间距为16.0
+                              },
+                              itemBuilder: (context, index) {
+                                // 这里根据API响应数据生成矩形按钮
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      ID = postList[index]['id'];
+                                      _getOrderInfo(apiUrl);
+                                    });
+
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) => DetailPage(postList[index]['id']),
+                                    //   ),
+                                    // );
+                                  },
+                                  child: Row(
+                                    children: [
+                                      SizedBox(width: screenWidth * 0.05),
+                                      Stack(
                                         children: [
-                                          SizedBox(width: screenWidth*0.17,),
                                           Container(
                                             alignment: Alignment.topCenter,
-                                            height: screenHeight*0.135,
-                                            width: screenWidth*0.4,
-                                            child:
-                                            Image.asset(
-                                              'assets/images/guildbtn.png',
+                                            // height: screenHeight * 0.1,
+                                            width: screenWidth * 0.6,
+                                            child: Image.asset(
+                                              'assets/images/want.png',
                                               fit: BoxFit.contain,
                                             ),
+                                          ),
+                                          Column(
+                                            children: [
+                                              SizedBox(
+                                                height: screenHeight * 0.01,
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.only(
+                                                    left: 25), // 左侧间距
+                                                alignment: Alignment.centerLeft,
+                                                height: screenHeight * 0.06,
+                                                width: screenWidth * 0.4,
+                                                child: Text(
+                                                  postList[index]['title'],
+                                                  textAlign: TextAlign.left,
+                                                  style: TextStyle(
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      fontSize: 20.0,
+                                                      letterSpacing: 1),
+                                                ),
+                                              )
+                                            ],
                                           )
                                         ],
                                       ),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(height: screenHeight*0.15,),
-                                Container(
-                                  height: screenHeight*0.52,
-                                  width: screenWidth*0.7,
-                                  child: ListView.separated(
-                                    itemCount: postList.length,
-                                    separatorBuilder: (context, index) {
-                                      // 这里定义项之间的分隔符
-                                      return SizedBox(height: screenHeight*0.01); // 例如，这里设置垂直间距为16.0
-                                    },
-                                    itemBuilder: (context, index) {
-                                      // 这里根据API响应数据生成矩形按钮
-                                      return GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            ID=postList[index]['id'];
-                                            _getOrderInfo(apiUrl);
-                                          });
-
-                                          // Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //     builder: (context) => DetailPage(postList[index]['id']),
-                                          //   ),
-                                          // );
-                                        },
-                                        child: Row(
-                                          children: [
-                                            SizedBox(width: screenWidth * 0.05),
-                                            Stack(
-                                              children: [
-                                                Container(
-                                                  alignment: Alignment.topCenter,
-                                                  // height: screenHeight * 0.1,
-                                                  width: screenWidth * 0.6,
-                                                  child: Image.asset(
-                                                    'assets/images/want.png',
-                                                    fit: BoxFit.contain,
-                                                  ),
-                                                ),
-                                                Column(
-                                                  children: [
-                                                    SizedBox(
-                                                      height: screenHeight*0.01,
-                                                    ),
-                                                    Container(
-                                                      padding: EdgeInsets.only(left: 25), // 左侧间距
-                                                      alignment: Alignment.centerLeft,
-                                                      height: screenHeight*0.06,
-                                                      width: screenWidth*0.4,
-                                                      child: Text(
-                                                        postList[index]['title'],
-                                                        textAlign: TextAlign.left,
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight: FontWeight.normal,
-                                                            fontSize: 20.0,
-                                                            letterSpacing: 1
-                                                        ),
-                                                      ),
-                                                    )
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  )
-                                ),
-                                SizedBox(height: screenHeight*0.1,),
-                              ],
-                            )
+                                    ],
+                                  ),
+                                );
+                              },
+                            )),
+                        SizedBox(
+                          height: screenHeight * 0.1,
                         ),
                       ],
-                    )
-                )
-              ]
-          ),
-        )
-    );
+                    )),
+                  ],
+                ))
+          ]),
+        ));
   }
 }
 

@@ -7,7 +7,7 @@ import 'package:app/signin.dart';
 import 'package:app/home.dart';
 import 'package:http/http.dart' as http;
 
-import 'main.dart';
+import 'package:app/main.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

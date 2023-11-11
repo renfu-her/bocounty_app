@@ -73,6 +73,8 @@ flutter:
     - assets/images/item/else/
     - assets/images/item/face/
     - assets/images/item/hair/
+    - assets/images/background/
+    - assets/images/task/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

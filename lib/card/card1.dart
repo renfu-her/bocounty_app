@@ -7,7 +7,7 @@ import 'package:app/shop.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import 'main.dart';
+import 'package:app/main.dart';
 
 class Card1Page extends StatefulWidget {
   const Card1Page({super.key});
@@ -44,8 +44,8 @@ class _Card1PageState extends State<Card1Page> {
     String drawCardsurl = ('$apiUrl:8000/drawCards');
     try {
       String jsonData = jsonEncode(data1);
-      http.Response response = await http.post(
-          Uri.parse(drawCardsurl), headers: headers, body: jsonData);
+      http.Response response = await http.post(Uri.parse(drawCardsurl),
+          headers: headers, body: jsonData);
       String responseData = response.body;
       var data = jsonDecode(responseData);
       var status = data['status'];
@@ -65,12 +65,13 @@ class _Card1PageState extends State<Card1Page> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              content:
-              const SizedBox(
+              content: const SizedBox(
                 height: 50,
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text('取得資訊有誤請檢查網路或重啟應用程式',),
+                  child: Text(
+                    '取得資訊有誤請檢查網路或重啟應用程式',
+                  ),
                 ),
               ),
               actions: [
@@ -81,7 +82,8 @@ class _Card1PageState extends State<Card1Page> {
                   child: const Text('確定'),
                 ),
               ],
-              contentPadding: const EdgeInsets.only(top: 40, right: 20, left: 20),
+              contentPadding:
+                  const EdgeInsets.only(top: 40, right: 20, left: 20),
             );
           },
         );
@@ -102,14 +104,8 @@ class _Card1PageState extends State<Card1Page> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-    final screenHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     // 检查 _item 列表是否为空
     if (_item.isEmpty) {
@@ -166,9 +162,9 @@ class _Card1PageState extends State<Card1Page> {
                           width: screenWidth * 0.3,
                           child: _item.isNotEmpty
                               ? Image.asset(
-                            _item[0]['photo']!,
-                            fit: BoxFit.contain,
-                          )
+                                  _item[0]['photo']!,
+                                  fit: BoxFit.contain,
+                                )
                               : const CircularProgressIndicator(), // 或其他加载指示符
                         ),
                         SizedBox(height: screenHeight * 0.12),
@@ -177,15 +173,16 @@ class _Card1PageState extends State<Card1Page> {
                             side: MaterialStateProperty.all<BorderSide>(
                               const BorderSide(width: 2, color: Colors.black),
                             ),
-                            backgroundColor:
-                            MaterialStateProperty.all<Color>(const Color(0xff7A7186)),
-                            foregroundColor: MaterialStateProperty.all<Color>(
-                                Colors.white),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                const Color(0xff7A7186)),
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
                           ),
                           onPressed: () {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) =>const ShopPage()),
+                              MaterialPageRoute(
+                                  builder: (context) => const ShopPage()),
                             );
                             print('close click');
                           },
@@ -218,6 +215,7 @@ class _Card1PageState extends State<Card1Page> {
     );
   }
 }
+
 class Item {
   final int id;
   final String name;
