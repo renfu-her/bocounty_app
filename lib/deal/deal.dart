@@ -98,8 +98,63 @@ class _DealPageState extends State<DealPage>
                     child: Text('已參加委託', style: TextStyle(fontSize: 20)),
                   ),
                 ),
-                // 新增包含文字的閃動方塊
-                // 新增包含文字的閃動方塊
+                Positioned(
+                  top: 300,
+                  left: 70,
+                  right: 70,
+                  bottom: 82,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 Positioned(
                   right: 0, // 水平居中
                   top: 60, // 垂直居中,

@@ -85,6 +85,63 @@ class _JoinEntrustDealPageState extends State<JoinEntrustDealPage>
                   right: 70,
                   child: Text('已參加委託', style: TextStyle(fontSize: 20)),
                 ),
+                Positioned(
+                  top: 300,
+                  left: 70,
+                  right: 70,
+                  bottom: 82,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                        Image.asset(
+                          'assets/images/want.png', // 圖片路徑
+                          fit: BoxFit.cover,
+                          width: 300,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Container(
