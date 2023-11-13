@@ -123,19 +123,19 @@ class _ClientWriteState extends State<ClientWrite>
                         height: 35,
                         width: 200,
                         decoration: BoxDecoration(
-                            color: const Color(0xffcab595),
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(18),
                             border: Border.all(color: Colors.black)),
                         child: TextField(
                           style: const TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontSize: 13,
                               letterSpacing: 2),
                           controller: _titleController,
                           decoration: const InputDecoration(
                             hintText: '標題',
                             hintStyle: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontSize: 13,
                                 letterSpacing: 8),
                             border: InputBorder.none,
@@ -149,13 +149,13 @@ class _ClientWriteState extends State<ClientWrite>
                         height: 35,
                         width: 200,
                         decoration: BoxDecoration(
-                            color: const Color(0xffcab595),
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(18),
                             border: Border.all(color: Colors.black)),
                         child: TextField(
                           readOnly: true,
                           style: const TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontSize: 13,
                               letterSpacing: 2),
                           onTap: () => _selectDate(context, false),
@@ -166,7 +166,7 @@ class _ClientWriteState extends State<ClientWrite>
                           decoration: const InputDecoration(
                             hintText: '募集時間',
                             hintStyle: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontSize: 13,
                                 letterSpacing: 8),
                             border: InputBorder.none,
@@ -180,12 +180,12 @@ class _ClientWriteState extends State<ClientWrite>
                         height: 35,
                         width: 200,
                         decoration: BoxDecoration(
-                            color: const Color(0xffcab595),
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(18),
                             border: Border.all(color: Colors.black)),
                         child: TextField(
                           style: const TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontSize: 13,
                               letterSpacing: 2),
                           controller: _mobileController,
@@ -193,7 +193,7 @@ class _ClientWriteState extends State<ClientWrite>
                           decoration: const InputDecoration(
                             hintText: '聯絡方式',
                             hintStyle: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontSize: 13,
                                 letterSpacing: 8),
                             border: InputBorder.none,
@@ -209,13 +209,13 @@ class _ClientWriteState extends State<ClientWrite>
                             height: 35,
                             width: 140,
                             decoration: BoxDecoration(
-                              color: const Color(0xffcab595),
+                              color: Colors.white,
                               borderRadius: BorderRadius.circular(18),
                               border: Border.all(color: Colors.black),
                             ),
                             child: TextField(
                               style: const TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontSize: 13,
                                 letterSpacing: 2,
                               ),
@@ -224,7 +224,7 @@ class _ClientWriteState extends State<ClientWrite>
                               decoration: const InputDecoration(
                                 hintText: '報酬',
                                 hintStyle: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 13,
                                   letterSpacing: 8,
                                 ),
@@ -255,12 +255,12 @@ class _ClientWriteState extends State<ClientWrite>
                         height: 270,
                         width: 200,
                         decoration: BoxDecoration(
-                            color: const Color(0xffcab595),
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(18),
                             border: Border.all(color: Colors.black)),
                         child: TextField(
                           style: const TextStyle(
-                              color: Colors.white,
+                              color: Colors.black,
                               fontSize: 13,
                               letterSpacing: 2),
                           controller: _contentController,
@@ -268,7 +268,7 @@ class _ClientWriteState extends State<ClientWrite>
                           decoration: const InputDecoration(
                             hintText: '內容',
                             hintStyle: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontSize: 13,
                                 letterSpacing: 8),
                             border: InputBorder.none,
@@ -306,7 +306,7 @@ class _ClientWriteState extends State<ClientWrite>
 
                           var response = await dio.post(url, data: data);
 
-                          print(response);
+                          // print(response);
 
                           if (response.statusCode == 200) {
                             print('發佈成功');
@@ -318,7 +318,6 @@ class _ClientWriteState extends State<ClientWrite>
                           } else {
                             print('發佈失敗');
                           }
-                          
                         },
                         child: const SizedBox(
                           width: 60,

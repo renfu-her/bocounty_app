@@ -77,8 +77,8 @@ class _GuildPageState extends State<GuildPage>
             child: Stack(
               children: <Widget>[
                 Positioned(
-                  left: 80, // 水平居中
-                  top: 60, // 垂直居中,
+                  left: 50,
+                  top: 60,
                   child: Container(
                     width: 190, // 方塊的寬度
                     margin: const EdgeInsets.all(20), // 方塊的邊距
@@ -95,7 +95,7 @@ class _GuildPageState extends State<GuildPage>
                           child: Image.asset(
                             'assets/images/guildbtn.png',
                             fit: BoxFit.cover,
-                            width: 120,
+                            width: 140,
                           ),
                         ),
                       ],
