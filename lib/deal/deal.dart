@@ -65,7 +65,7 @@ class _DealPageState extends State<DealPage>
       if (response.statusCode == 200) {
         setState(() {
           items = response.data['data'];
-          // print(items);
+          print(items);
         });
       }
     } catch (e) {
@@ -150,12 +150,17 @@ class _DealPageState extends State<DealPage>
                                 fit: BoxFit.cover,
                                 width: 300,
                               ),
-                              Text(
-                                item['title'], // 顯示每個項目的名稱
-                                style: const TextStyle(
-                                  color: Colors.white, // 文字顏色
-                                  fontSize: 16, // 文字大小
-                                  fontWeight: FontWeight.bold, // 文字加粗
+                              Positioned(
+                                left: 35, // 或者您希望的邊距大小
+                                bottom: 35,
+                                right: 60, // 根據需要調整
+                                child: Text(
+                                  item['title'],
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ],
