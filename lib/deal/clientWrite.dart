@@ -199,31 +199,52 @@ class _ClientWriteState extends State<ClientWrite>
                         ),
                       ),
                       SizedBox(height: screenHeight * 0.01),
-                      Container(
-                        height: 35,
-                        width: 200,
-                        decoration: BoxDecoration(
-                            color: const Color(0xffcab595),
-                            borderRadius: BorderRadius.circular(18),
-                            border: Border.all(color: Colors.black)),
-                        child: TextField(
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              letterSpacing: 2),
-                          controller: _payController,
-                          keyboardType: TextInputType.phone,
-                          decoration: const InputDecoration(
-                            hintText: '報酬',
-                            hintStyle: TextStyle(
+                      Row(
+                        children: <Widget>[
+                          Container(
+                            height: 35,
+                            width: 140,
+                            decoration: BoxDecoration(
+                              color: const Color(0xffcab595),
+                              borderRadius: BorderRadius.circular(18),
+                              border: Border.all(color: Colors.black),
+                            ),
+                            child: TextField(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 13,
-                                letterSpacing: 8),
-                            border: InputBorder.none,
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 11.0, horizontal: 15),
+                                letterSpacing: 2,
+                              ),
+                              controller: _payController,
+                              keyboardType: TextInputType.phone,
+                              decoration: const InputDecoration(
+                                hintText: '報酬',
+                                hintStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  letterSpacing: 8,
+                                ),
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.symmetric(
+                                  vertical: 11.0,
+                                  horizontal: 15,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
+                          const Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text(
+                              'Bcoin',
+                              style: TextStyle(
+                                color: Colors.black, // 您可以調整顏色
+                                fontSize: 15, // 字體大小
+                                // 其他樣式...
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: screenHeight * 0.01),
                       Container(
