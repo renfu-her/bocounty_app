@@ -1,6 +1,8 @@
 import 'package:app/mail/mail.dart';
 import 'package:flutter/material.dart';
 import 'package:app/deal/joinEntrust.dart';
+import 'package:dio/dio.dart';
+import 'package:app/main.dart';
 
 class DealPage extends StatefulWidget {
   const DealPage({super.key});
@@ -15,6 +17,9 @@ class _DealPageState extends State<DealPage>
   bool isMenuOpen = true;
   late AnimationController _animationController;
   late Animation<double> _animation;
+  String? userToken = User_Token;
+
+  List<dynamic> items = [];
 
   @override
   void initState() {
@@ -34,6 +39,7 @@ class _DealPageState extends State<DealPage>
 
     // 創建Animation
     _animation = Tween(begin: 1.0, end: 0.0).animate(_animationController);
+    fetchData();
   }
 
   @override
@@ -41,6 +47,31 @@ class _DealPageState extends State<DealPage>
     _focusNode.dispose();
     _animationController.dispose(); // 釋放AnimationController資源
     super.dispose();
+  }
+
+  void fetchData() async {
+    var dio = Dio();
+    var data = {
+      'userToken': userToken,
+    };
+
+    // print(data);
+    try {
+      var response = await dio
+          .post('https://demo.dev-laravel.co/api/user/client/view', data: data);
+
+      // print(response.statusCode);
+
+      if (response.statusCode == 200) {
+        setState(() {
+          items = response.data['data'];
+          // print(items);
+        });
+      }
+    } catch (e) {
+      // 處理錯誤
+      print('Error fetching data: $e');
+    }
   }
 
   @override
@@ -105,53 +136,32 @@ class _DealPageState extends State<DealPage>
                   bottom: 82,
                   child: SingleChildScrollView(
                     child: Column(
-                      children: [
-                        Image.asset(
-                          'assets/images/want.png', // 圖片路徑
-                          fit: BoxFit.cover,
-                          width: 300,
-                        ),
-                        Image.asset(
-                          'assets/images/want.png', // 圖片路徑
-                          fit: BoxFit.cover,
-                          width: 300,
-                        ),
-                        Image.asset(
-                          'assets/images/want.png', // 圖片路徑
-                          fit: BoxFit.cover,
-                          width: 300,
-                        ),
-                        Image.asset(
-                          'assets/images/want.png', // 圖片路徑
-                          fit: BoxFit.cover,
-                          width: 300,
-                        ),
-                        Image.asset(
-                          'assets/images/want.png', // 圖片路徑
-                          fit: BoxFit.cover,
-                          width: 300,
-                        ),
-                        Image.asset(
-                          'assets/images/want.png', // 圖片路徑
-                          fit: BoxFit.cover,
-                          width: 300,
-                        ),
-                        Image.asset(
-                          'assets/images/want.png', // 圖片路徑
-                          fit: BoxFit.cover,
-                          width: 300,
-                        ),
-                        Image.asset(
-                          'assets/images/want.png', // 圖片路徑
-                          fit: BoxFit.cover,
-                          width: 300,
-                        ),
-                        Image.asset(
-                          'assets/images/want.png', // 圖片路徑
-                          fit: BoxFit.cover,
-                          width: 300,
-                        ),
-                      ],
+                      children: items.map((item) {
+                        return GestureDetector(
+                          onTap: () {
+                            print('Item tapped: ${item['id']}');
+                            // 在這裡添加點擊事件邏輯
+                          },
+                          child: Stack(
+                            alignment: Alignment.center, // 將文字居中對齊於圖片
+                            children: [
+                              Image.asset(
+                                'assets/images/want.png', // 圖片路徑
+                                fit: BoxFit.cover,
+                                width: 300,
+                              ),
+                              Text(
+                                item['title'], // 顯示每個項目的名稱
+                                style: const TextStyle(
+                                  color: Colors.white, // 文字顏色
+                                  fontSize: 16, // 文字大小
+                                  fontWeight: FontWeight.bold, // 文字加粗
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
                     ),
                   ),
                 ),

@@ -1,6 +1,8 @@
 import 'package:app/mail/mail.dart';
+import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:app/guild.dart';
+import 'package:dio/dio.dart';
 
 class ClientWrite extends StatefulWidget {
   const ClientWrite({super.key});
@@ -13,8 +15,9 @@ class _ClientWriteState extends State<ClientWrite>
     with SingleTickerProviderStateMixin {
   final _focusNode = FocusNode();
   bool isMenuOpen = true;
-  DateTime? startDate;
+  DateTime? startDate = DateTime.now();
   DateTime? endDate;
+  String? userToken = User_Token;
 
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _mobileController = TextEditingController();
@@ -27,7 +30,7 @@ class _ClientWriteState extends State<ClientWrite>
       initialDate:
           isStartDate ? startDate ?? DateTime.now() : endDate ?? DateTime.now(),
       firstDate: DateTime(2000),
-      lastDate: DateTime(2025),
+      lastDate: DateTime(2099),
     );
     if (picked != null && picked != (isStartDate ? startDate : endDate))
       setState(() {
@@ -41,6 +44,7 @@ class _ClientWriteState extends State<ClientWrite>
 
   @override
   void initState() {
+    // print('ID: $User_Token');
     super.initState();
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
@@ -283,13 +287,34 @@ class _ClientWriteState extends State<ClientWrite>
                           foregroundColor:
                               MaterialStateProperty.all<Color>(Colors.white),
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          var dio = Dio();
+                          var url =
+                              'https://demo.dev-laravel.co/api/user/client/write';
+                          var data = {
+                            'startDate':
+                                startDate.toString(), // 這裡假設 startDate 是一個變量
+                            'endDate':
+                                endDate.toString(), // 同上，假設 endDate 是一個變量
+                            'userToken': userToken, // 同上，userToken
+                            'title': _titleController.text,
+                            'mobile': _mobileController.text,
+                            'pay': _payController.text,
+                            'content': _contentController.text,
+                            'status': 1
+                          };
+
+                          var response = await dio.post(url, data: data);
+
+                          print(response);
+                          
+                        },
                         child: const SizedBox(
                           width: 60,
                           height: 25,
                           child: Center(
                             child: Text(
-                              '登入',
+                              '發 佈',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.white,
