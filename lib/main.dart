@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app/login.dart';
 
-String apiUrl = "http://192.168.0.195";
+String apiUrl = "http://10.8.0.6";
 String User_Token = "";
 
 void main() {
