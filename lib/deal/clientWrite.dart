@@ -67,7 +67,7 @@ class _ClientWriteState extends State<ClientWrite>
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.brown[50],
+      backgroundColor: Color(0xfff5eeda),
       body: Stack(
         children: [
           GestureDetector(
@@ -289,7 +289,7 @@ class _ClientWriteState extends State<ClientWrite>
                         ),
                         onPressed: () async {
                           var dio = Dio();
-                          var url = '${laravelUrl }api/user/client/write';
+                          var url = '${laravelUrl}api/user/client/write';
                           var data = {
                             'startDate':
                                 startDate.toString(), // 這裡假設 startDate 是一個變量

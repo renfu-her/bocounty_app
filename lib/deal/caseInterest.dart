@@ -1,10 +1,14 @@
+import 'dart:ffi';
+
 import 'package:app/mail/mail.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:app/main.dart';
+import 'package:app/guild/guild.dart';
 
 class InterestPage extends StatefulWidget {
-  const InterestPage({super.key});
+  final int itemId;
+  const InterestPage({super.key, required this.itemId});
 
   @override
   _InterestPageState createState() => _InterestPageState();
@@ -15,6 +19,13 @@ class _InterestPageState extends State<InterestPage>
   final _focusNode = FocusNode();
   bool isMenuOpen = true;
   String? userToken = User_Token;
+  List items = [];
+
+  TextEditingController _contentController = TextEditingController();
+  TextEditingController _titleController = TextEditingController();
+  String? _endDate = '';
+  String? _pay = '';
+  String? _title = '';
 
   @override
   void initState() {
@@ -29,32 +40,44 @@ class _InterestPageState extends State<InterestPage>
     fetchData();
   }
 
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    super.dispose();
-  }
-
   void fetchData() async {
     var dio = Dio();
     var data = {
       'userToken': userToken,
+      'itemId': widget.itemId,
     };
 
-    // print(data);
+    print(data);
     try {
       var response =
-          await dio.post('${laravelUrl}api/user/client/view', data: data);
+          await dio.get('${laravelUrl}api/user/case-detail', data: data);
 
-      // print(response.statusCode);
+      print(response.statusCode);
 
       if (response.statusCode == 200) {
-        setState(() {});
+        setState(() {
+          items = [response.data['data']];
+          if (items.isNotEmpty) {
+            _titleController.text = items[0]['title'];
+            _contentController.text = items[0]['content'];
+            _endDate = items[0]['end_date'];
+            _pay = items[0]['pay'];
+            _title = items[0]['title'];
+          }
+          // print(items.isNotEmpty);
+          // items.map((item) => print(item['title']));
+        });
       }
     } catch (e) {
       // 處理錯誤
       print('Error fetching data: $e');
     }
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -64,7 +87,7 @@ class _InterestPageState extends State<InterestPage>
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.brown[50],
+      backgroundColor: Color(0xfff5eeda),
       body: Stack(
         children: [
           GestureDetector(
@@ -75,7 +98,7 @@ class _InterestPageState extends State<InterestPage>
               });
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const MailPage()),
+                MaterialPageRoute(builder: (context) => const GuildPage()),
               );
             },
           ),
@@ -101,12 +124,101 @@ class _InterestPageState extends State<InterestPage>
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const MailPage()),
+                              builder: (context) => const GuildPage()),
                         );
                         print('backButton click');
                       },
                       child: Image.asset('assets/images/back.png'),
                     ),
+                  ),
+                ),
+                Positioned(
+                  top: 240, // 根据需要调整位置
+                  left: 105,
+                  right: 105,
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 60,
+                        width: 200,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            '${_title}',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 60,
+                        width: 200,
+                        child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Text(
+                              '${_endDate}',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Color(0xff757575),
+                                fontSize: 12,
+                              ),
+                            )),
+                      ),
+                      SizedBox(height: screenHeight * 0.01),
+                      Container(
+                        height: 250,
+                        width: 200,
+                        decoration: BoxDecoration(
+                            color: const Color(0xfff5eeda),
+                            borderRadius: BorderRadius.circular(18),
+                            border: Border.all(color: Colors.black)),
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0), // 这里设置上下左右的间隔
+                            child: Text(
+                              _contentController.text,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                letterSpacing: 2,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: screenHeight * 0.01),
+                      TextButton(
+                        style: ButtonStyle(
+                          side: MaterialStateProperty.all<BorderSide>(
+                            const BorderSide(width: 2, color: Colors.black),
+                          ),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color(0xffe0ac4e)),
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                        ),
+                        onPressed: () async {},
+                        child: const SizedBox(
+                          width: 100,
+                          height: 25,
+                          child: Center(
+                            child: Text(
+                              '我有興趣！',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 15.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

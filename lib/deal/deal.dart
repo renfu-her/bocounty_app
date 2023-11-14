@@ -65,7 +65,7 @@ class _DealPageState extends State<DealPage>
       if (response.statusCode == 200) {
         setState(() {
           items = response.data['data'];
-          print(items);
+          // print(items);
         });
       }
     } catch (e) {

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:app/deal/clientWrite.dart';
 import 'package:dio/dio.dart';
 import 'package:app/main.dart';
+import 'package:app/deal/caseInterest.dart';
+import 'package:app/home.dart';
 // import 'package:app/deal/joinEntrust.dart';
 
 class GuildPage extends StatefulWidget {
@@ -89,7 +91,7 @@ class _GuildPageState extends State<GuildPage>
               });
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const MailPage()),
+                MaterialPageRoute(builder: (context) => const HomePage()),
               );
             },
           ),
@@ -105,8 +107,8 @@ class _GuildPageState extends State<GuildPage>
             child: Stack(
               children: <Widget>[
                 Positioned(
-                  left: 50,
-                  top: 60,
+                  left: 45,
+                  top: 70,
                   child: Container(
                     width: 190, // 方塊的寬度
                     margin: const EdgeInsets.all(20), // 方塊的邊距
@@ -140,8 +142,13 @@ class _GuildPageState extends State<GuildPage>
                       children: items.map((item) {
                         return GestureDetector(
                           onTap: () {
-                            print('Item tapped: ${item['id']}');
-                            // 在這裡添加點擊事件邏輯
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    InterestPage(itemId: item['id']),
+                              ),
+                            );
                           },
                           child: Stack(
                             alignment: Alignment.center, // 將文字居中對齊於圖片
@@ -182,7 +189,7 @@ class _GuildPageState extends State<GuildPage>
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const MailPage()),
+                              builder: (context) => const HomePage()),
                         );
                         print('backButton click');
                       },
