@@ -4,10 +4,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'home.dart';
+import '../home.dart';
 
 import 'package:app/main.dart';
-import 'writeguild.dart';
+import '../writeguild.dart';
 
 class GuildPage extends StatefulWidget {
   const GuildPage({super.key});

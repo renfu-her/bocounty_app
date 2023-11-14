@@ -1,7 +1,7 @@
 // import 'package:app/mail/mail.dart';
 import 'package:app/main.dart';
 import 'package:flutter/material.dart';
-import 'package:app/guild.dart';
+import 'package:app/guild/guild.dart';
 import 'package:dio/dio.dart';
 
 class ClientWrite extends StatefulWidget {
@@ -289,8 +289,7 @@ class _ClientWriteState extends State<ClientWrite>
                         ),
                         onPressed: () async {
                           var dio = Dio();
-                          var url =
-                              'https://demo.dev-laravel.co/api/user/client/write';
+                          var url = '${laravelUrl }api/user/client/write';
                           var data = {
                             'startDate':
                                 startDate.toString(), // 這裡假設 startDate 是一個變量

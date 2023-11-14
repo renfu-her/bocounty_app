@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 
-import 'package:app/guild.dart';
+import 'package:app/guild/guild.dart';
 import 'package:app/shop.dart';
 import 'package:flutter/material.dart';
 import 'package:app/user.dart';

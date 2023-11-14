@@ -49,8 +49,7 @@ class _GuildPageState extends State<GuildPage>
 
     // print(data);
     try {
-      var response =
-          await dio.get('https://demo.dev-laravel.co/api/user/client/getAll');
+      var response = await dio.get('${laravelUrl}api/user/client/getAll');
 
       // print(response.statusCode);
 

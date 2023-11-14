@@ -57,8 +57,8 @@ class _DealPageState extends State<DealPage>
 
     // print(data);
     try {
-      var response = await dio
-          .post('https://demo.dev-laravel.co/api/user/client/view', data: data);
+      var response =
+          await dio.post('${laravelUrl}api/user/client/view', data: data);
 
       // print(response.statusCode);
 

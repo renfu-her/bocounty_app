@@ -7,7 +7,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
-import 'guild.dart';
+import 'guild/guild.dart';
 import 'home.dart';
 import 'package:app/main.dart';
 
