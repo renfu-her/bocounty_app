@@ -239,11 +239,6 @@ class _InterestPageState extends State<InterestPage>
                             'status': 0
                           };
 
-                          print(userToken);
-                          print(_caseId);
-                          print(_userId);
-                          print(_pay);
-
                           var response = await dio.post(url, data: data);
 
                           // Navigator.pushReplacement(
