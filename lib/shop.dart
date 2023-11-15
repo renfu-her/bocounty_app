@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:app/card/card1.dart';
 import 'package:app/card/card2.dart';
-import 'package:app/cardinfo.dart';
+import 'package:app/card/cardinfo.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:app/user.dart';
 import 'package:http/http.dart' as http;
 
-import 'login.dart';
+import 'package:app/login/login.dart';
 import 'mail/mail.dart';
 import 'package:app/main.dart';
 
