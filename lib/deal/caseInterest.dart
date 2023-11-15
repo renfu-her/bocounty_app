@@ -236,8 +236,13 @@ class _InterestPageState extends State<InterestPage>
                             'user_join_id': _userId,
                             'user_id': _userId,
                             'payment': _pay,
-                            'status': 1
+                            'status': 0
                           };
+
+                          print(userToken);
+                          print(_caseId);
+                          print(_userId);
+                          print(_pay);
 
                           var response = await dio.post(url, data: data);
 

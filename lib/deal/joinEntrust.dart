@@ -46,7 +46,7 @@ class _JoinEntrustDealPageState extends State<JoinEntrustDealPage>
     // print(data);
     try {
       var response =
-          await dio.post('https://demo.test/api/user/join/view', data: data);
+          await dio.post('${laravelUrl}api/user/join/view', data: data);
 
       // print(response.statusCode);
 
