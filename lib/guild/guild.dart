@@ -18,9 +18,7 @@ class _GuildPageState extends State<GuildPage>
     with SingleTickerProviderStateMixin {
   final _focusNode = FocusNode();
   bool isMenuOpen = true;
-  late AnimationController _animationController;
-  late Animation<double> _animation;
-
+  
   String? userToken = User_Token;
   List<dynamic> items = [];
 
@@ -34,21 +32,12 @@ class _GuildPageState extends State<GuildPage>
       }
     });
 
-    // 初始化AnimationController
-    _animationController = AnimationController(
-      duration: const Duration(seconds: 3),
-      vsync: this,
-    )..repeat(reverse: true); // 使動畫重複執行，並在每次迭代時反向
-
-    // 創建Animation
-    _animation = Tween(begin: 1.0, end: 0.0).animate(_animationController);
-
+  
     fetchData();
   }
 
   void fetchData() async {
     var dio = Dio();
-
     // print(data);
     try {
       var response = await dio.get('${laravelUrl}api/user/client/getAll');
@@ -70,7 +59,6 @@ class _GuildPageState extends State<GuildPage>
   @override
   void dispose() {
     _focusNode.dispose();
-    _animationController.dispose(); // 釋放AnimationController資源
     super.dispose();
   }
 

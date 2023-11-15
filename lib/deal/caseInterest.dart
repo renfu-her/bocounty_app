@@ -26,6 +26,9 @@ class _InterestPageState extends State<InterestPage>
   String? _endDate = '';
   String? _pay = '';
   String? _title = '';
+  String? _caseId;
+  String? _userId = '';
+  String? _name = '';
 
   @override
   void initState() {
@@ -60,9 +63,12 @@ class _InterestPageState extends State<InterestPage>
           if (items.isNotEmpty) {
             _titleController.text = items[0]['title'];
             _contentController.text = items[0]['content'];
+            _name = items[0]['name'];
             _endDate = items[0]['end_date'];
-            _pay = items[0]['pay'];
+            _pay = items[0]['bocoin']?.toString();
             _title = items[0]['title'];
+            _caseId = items[0]['case_id']?.toString();
+            _userId = items[0]['user_id'];
           }
           // print(items.isNotEmpty);
           // items.map((item) => print(item['title']));
@@ -133,13 +139,13 @@ class _InterestPageState extends State<InterestPage>
                   ),
                 ),
                 Positioned(
-                  top: 240, // 根据需要调整位置
+                  top: 225, // 根据需要调整位置
                   left: 105,
                   right: 105,
                   child: Column(
                     children: [
                       Container(
-                        height: 60,
+                        height: 35,
                         width: 200,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -154,23 +160,43 @@ class _InterestPageState extends State<InterestPage>
                         ),
                       ),
                       Container(
-                        height: 60,
+                        height: 16,
                         width: 200,
                         child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              '${_endDate}',
-                              textAlign: TextAlign.center,
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Text(
+                            '${_endDate}',
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Color(0xff757575),
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 70,
+                        width: 200,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start, // 修改這裡
+                          children: <Widget>[
+                            Image.asset('assets/images/profile.png',
+                                width: 80.0, height: 80.0),
+                            SizedBox(width: 10.0),
+                            Text(
+                              '${_name}\n募集時間：${_endDate}\n聯絡方式：${_pay}\n報酬${_pay}',
+                              textAlign: TextAlign.left,
                               style: const TextStyle(
-                                color: Color(0xff757575),
-                                fontSize: 12,
+                                color: Colors.black,
+                                fontSize: 10,
                               ),
-                            )),
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(height: screenHeight * 0.01),
                       Container(
-                        height: 250,
+                        height: 310,
                         width: 200,
                         decoration: BoxDecoration(
                             color: const Color(0xfff5eeda),
@@ -201,7 +227,26 @@ class _InterestPageState extends State<InterestPage>
                           foregroundColor:
                               MaterialStateProperty.all<Color>(Colors.white),
                         ),
-                        onPressed: () async {},
+                        onPressed: () async {
+                          var dio = Dio();
+                          var url = '${laravelUrl}api/user/join/write';
+                          var data = {
+                            'userToken': userToken,
+                            'case_client_id': _caseId,
+                            'user_join_id': _userId,
+                            'user_id': _userId,
+                            'payment': _pay,
+                            'status': 1
+                          };
+
+                          var response = await dio.post(url, data: data);
+
+                          // Navigator.pushReplacement(
+                          //   context,
+                          //   MaterialPageRoute(
+                          //       builder: (context) => const GuildPage()),
+                          // );
+                        },
                         child: const SizedBox(
                           width: 100,
                           height: 25,
