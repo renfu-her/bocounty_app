@@ -146,7 +146,7 @@ class _DealPageState extends State<DealPage>
                             alignment: Alignment.center, // 將文字居中對齊於圖片
                             children: [
                               Image.asset(
-                                'assets/images/want.png', // 圖片路徑
+                                'assets/images/banner-want.png', // 圖片路徑
                                 fit: BoxFit.cover,
                                 width: 300,
                               ),
