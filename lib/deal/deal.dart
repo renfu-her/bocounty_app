@@ -18,8 +18,8 @@ class _DealPageState extends State<DealPage>
   late AnimationController _animationController;
   late Animation<double> _animation;
   String? userToken = User_Token;
-
   List<dynamic> items = [];
+  bool openImage = true;
 
   @override
   void initState() {
@@ -74,6 +74,20 @@ class _DealPageState extends State<DealPage>
     }
   }
 
+  void navigateAndDisplayImage() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const JoinEntrustDealPage()),
+    );
+
+    // 更新圖片狀態
+    if (result != null && !result) {
+      setState(() {
+        openImage = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -118,13 +132,7 @@ class _DealPageState extends State<DealPage>
                   right: 70,
                   child: GestureDetector(
                     onTap: () {
-                      // 在這裡添加導航邏輯
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                JoinEntrustDealPage()), // 替換為另一個目標頁面
-                      );
+                      navigateAndDisplayImage();
                     },
                     child: Text('已參加委託', style: TextStyle(fontSize: 20)),
                   ),
@@ -171,52 +179,92 @@ class _DealPageState extends State<DealPage>
                   ),
                 ),
                 Positioned(
-                  right: 0, // 水平居中
-                  top: 60, // 垂直居中,
-                  child: FadeTransition(
-                    opacity: _animation,
-                    child: Container(
-                      width: 190, // 方塊的寬度
-                      height: 108, // 方塊的高度
-                      margin: EdgeInsets.all(20), // 方塊的邊距
-                      child: Stack(
-                        children: [
-                          Image.asset(
-                            'assets/images/task/popup.png', // 圖片路徑
-                            fit: BoxFit.cover,
-                            width: 190,
-                            height: 108,
-                          ),
-                          const Positioned(
-                            left: 10,
-                            right: 10,
-                            top: 10,
-                            bottom: 10, // 文字與底部邊緣的距離
-                            child: Text(
-                              "Warmmy", // 您想顯示的文字
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
+                    right: 0,
+                    top: 60,
+                    child: openImage
+                        ? FadeTransition(
+                            opacity: _animation,
+                            child: Container(
+                              width: 190, // 方塊的寬度
+                              height: 108, // 方塊的高度
+                              margin: EdgeInsets.all(20), // 方塊的邊距
+                              child: Stack(
+                                children: [
+                                  Image.asset(
+                                    'assets/images/task/popup.png', // 圖片路徑
+                                    fit: BoxFit.cover,
+                                    width: 190,
+                                    height: 108,
+                                  ),
+                                  const Positioned(
+                                    left: 10,
+                                    right: 10,
+                                    top: 10,
+                                    bottom: 10, // 文字與底部邊緣的距離
+                                    child: Text(
+                                      "Warmmy", // 您想顯示的文字
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  const Positioned(
+                                    left: 10,
+                                    right: 10,
+                                    top: 25,
+                                    bottom: 10, // 文字與底部邊緣的距離
+                                    child: Text(
+                                      "這裡可以看到你所有發布過的委託和接受過的委託，一起來豐富你的紀錄、豐富你的生活吧!", // 您想顯示的文字
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 13),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ),
-                          const Positioned(
-                            left: 10,
-                            right: 10,
-                            top: 25,
-                            bottom: 10, // 文字與底部邊緣的距離
-                            child: Text(
-                              "這裡可以看到你所有發布過的委託和接受過的委託，一起來豐富你的紀錄、豐富你的生活吧!", // 您想顯示的文字
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 13),
+                          )
+                        : Container(
+                            width: 190, // 方塊的寬度
+                            height: 108, // 方塊的高度
+                            margin: EdgeInsets.all(20), // 方塊的邊距
+                            child: Stack(
+                              children: [
+                                Image.asset(
+                                  'assets/images/task/popup.png', // 圖片路徑
+                                  fit: BoxFit.cover,
+                                  width: 190,
+                                  height: 108,
+                                ),
+                                const Positioned(
+                                  left: 10,
+                                  right: 10,
+                                  top: 10,
+                                  bottom: 10, // 文字與底部邊緣的距離
+                                  child: Text(
+                                    "Warmmy", // 您想顯示的文字
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                const Positioned(
+                                  left: 10,
+                                  right: 10,
+                                  top: 25,
+                                  bottom: 10, // 文字與底部邊緣的距離
+                                  child: Text(
+                                    "這裡可以看到你所有發布過的委託和接受過的委託，一起來豐富你的紀錄、豐富你的生活吧!", // 您想顯示的文字
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 13),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                          )),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Container(
