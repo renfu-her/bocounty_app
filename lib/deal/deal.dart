@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:app/deal/joinEntrust.dart';
 import 'package:dio/dio.dart';
 import 'package:app/main.dart';
+import 'package:app/message/msgCase.dart';
 
 class DealPage extends StatefulWidget {
   const DealPage({super.key});
@@ -147,8 +148,13 @@ class _DealPageState extends State<DealPage>
                       children: items.map((item) {
                         return GestureDetector(
                           onTap: () {
-                            print('Item tapped: ${item['id']}');
-                            // 在這裡添加點擊事件邏輯
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    MsgCasePage(itemId: item['id']),
+                              ),
+                            );
                           },
                           child: Stack(
                             alignment: Alignment.center, // 將文字居中對齊於圖片

@@ -100,15 +100,9 @@ class _JoinEntrustDealPageState extends State<JoinEntrustDealPage>
                   left: 70,
                   child: GestureDetector(
                     onTap: () {
-                      // // 在這裡添加導航邏輯
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (context) => DealPage()), // 替換為另一個目標頁面
-                      // );
                       Navigator.pop(context, false);
                     },
-                    child: Text('已發佈委託', style: TextStyle(fontSize: 20)),
+                    child: const Text('已發佈委託', style: TextStyle(fontSize: 20)),
                   ),
                 ),
                 const Positioned(
