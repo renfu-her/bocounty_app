@@ -37,11 +37,14 @@ class _GuildPageState extends State<GuildPage>
 
   void fetchData() async {
     var dio = Dio();
-    // print(data);
+    var data = {
+      'userToken': userToken,
+    };
     try {
-      var response = await dio.get('${laravelUrl}api/user/client/getAll');
+      var response =
+          await dio.get('${laravelUrl}api/user/client/getAll', data: data);
 
-      // print(response.statusCode);
+      print(response.statusCode);
 
       if (response.statusCode == 200) {
         setState(() {
@@ -141,7 +144,7 @@ class _GuildPageState extends State<GuildPage>
                             alignment: Alignment.center, // 將文字居中對齊於圖片
                             children: [
                               Image.asset(
-                                'assets/images/banner-want.png', // 圖片路徑
+                                'assets/images/icon/banner-want.png', // 圖片路徑
                                 fit: BoxFit.cover,
                                 width: 300,
                               ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app/login/login.dart';
 
-String apiUrl = "http://192.168.0.195";
+String apiUrl = "http://192.168.1.135";
 String laravelUrl = "https://demo.dev-laravel.co/";
 String User_Token = "";
 
