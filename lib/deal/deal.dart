@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:app/deal/joinEntrust.dart';
 import 'package:dio/dio.dart';
 import 'package:app/main.dart';
-import 'package:app/message/msgCase.dart';
+import 'package:app/deal/joinView.dart';
 
 class DealPage extends StatefulWidget {
   const DealPage({super.key});
@@ -152,7 +152,7 @@ class _DealPageState extends State<DealPage>
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    MsgCasePage(itemId: item['id']),
+                                    JoinViewAllPage(itemId: item['id']),
                               ),
                             );
                           },

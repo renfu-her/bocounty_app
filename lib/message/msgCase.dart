@@ -7,7 +7,7 @@ import 'package:app/main.dart';
 import 'package:app/deal/deal.dart';
 
 class MsgCasePage extends StatefulWidget {
-  final int itemId;
+  final String itemId;
   const MsgCasePage({super.key, required this.itemId});
 
   @override
@@ -20,15 +20,6 @@ class _MsgCasePageState extends State<MsgCasePage>
   bool isMenuOpen = true;
   String? userToken = User_Token;
   List items = [];
-
-  TextEditingController _contentController = TextEditingController();
-  TextEditingController _titleController = TextEditingController();
-  String? _endDate = '';
-  String? _pay = '';
-  String? _title = '';
-  String? _caseId;
-  String? _userId = '';
-  String? _name = '';
 
   @override
   void initState() {
@@ -45,31 +36,18 @@ class _MsgCasePageState extends State<MsgCasePage>
 
   void fetchData() async {
     var dio = Dio();
-    var data = {
-      'userToken': userToken,
-      'itemId': widget.itemId,
-    };
+    var data = {'userToken': userToken};
 
-    print(data);
     try {
       var response =
-          await dio.get('${laravelUrl}api/user/case-detail', data: data);
+          await dio.get('${laravelUrl}api/user/join/getAll', data: data);
 
       print(response.statusCode);
 
       if (response.statusCode == 200) {
         setState(() {
-          items = [response.data['data']];
-          if (items.isNotEmpty) {
-            _titleController.text = items[0]['title'];
-            _contentController.text = items[0]['content'];
-            _name = items[0]['name'];
-            _endDate = items[0]['end_date'];
-            _pay = items[0]['bocoin']?.toString();
-            _title = items[0]['title'];
-            _caseId = items[0]['case_id']?.toString();
-            _userId = items[0]['user_id'];
-          }
+          items = response.data['data'];
+
           // print(items.isNotEmpty);
           // items.map((item) => print(item['title']));
         });
@@ -113,7 +91,7 @@ class _MsgCasePageState extends State<MsgCasePage>
             height: screenHeight,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/background/interest.png'),
+                image: AssetImage('assets/images/background/running.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -136,121 +114,6 @@ class _MsgCasePageState extends State<MsgCasePage>
                       },
                       child: Image.asset('assets/images/back.png'),
                     ),
-                  ),
-                ),
-                Positioned(
-                  top: 225, // 根据需要调整位置
-                  left: 105,
-                  right: 105,
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 35,
-                        width: 200,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            '${_title}',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 16,
-                        width: 200,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Text(
-                            '${_endDate}',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Color(0xff757575),
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 70,
-                        width: 200,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start, // 修改這裡
-                          children: <Widget>[
-                            Image.asset('assets/images/profile.png',
-                                width: 80.0, height: 80.0),
-                            SizedBox(width: 10.0),
-                            Text(
-                              '${_name}\n募集時間：${_endDate}\n聯絡方式：${_pay}\n報酬${_pay}',
-                              textAlign: TextAlign.left,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 10,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: screenHeight * 0.01),
-                      Container(
-                        height: 310,
-                        width: 200,
-                        decoration: BoxDecoration(
-                            color: const Color(0xfff5eeda),
-                            borderRadius: BorderRadius.circular(18),
-                            border: Border.all(color: Colors.black)),
-                        child: SingleChildScrollView(
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0), // 这里设置上下左右的间隔
-                            child: Text(
-                              _contentController.text,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                letterSpacing: 2,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: screenHeight * 0.01),
-                      TextButton(
-                        style: ButtonStyle(
-                          side: MaterialStateProperty.all<BorderSide>(
-                            const BorderSide(width: 2, color: Colors.black),
-                          ),
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0xffe0ac4e)),
-                          foregroundColor:
-                              MaterialStateProperty.all<Color>(Colors.white),
-                        ),
-                        onPressed: () async {
-                          // Navigator.pushReplacement(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => const GuildPage()),
-                          // );
-                        },
-                        child: const SizedBox(
-                          width: 100,
-                          height: 25,
-                          child: Center(
-                            child: Text(
-                              '查看報名表',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 15.0,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
                 ),
               ],

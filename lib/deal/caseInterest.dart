@@ -29,6 +29,7 @@ class _InterestPageState extends State<InterestPage>
   String? _caseId;
   String? _userId = '';
   String? _name = '';
+  String? _isStatus = '0';
 
   @override
   void initState() {
@@ -69,6 +70,7 @@ class _InterestPageState extends State<InterestPage>
             _title = items[0]['title'];
             _caseId = items[0]['case_id']?.toString();
             _userId = items[0]['user_id'];
+            _isStatus = items[0]['status'];
           }
           // print(items.isNotEmpty);
           // items.map((item) => print(item['title']));
@@ -217,52 +219,86 @@ class _InterestPageState extends State<InterestPage>
                         ),
                       ),
                       SizedBox(height: screenHeight * 0.01),
-                      TextButton(
-                        style: ButtonStyle(
-                          side: MaterialStateProperty.all<BorderSide>(
-                            const BorderSide(width: 2, color: Colors.black),
-                          ),
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0xffe0ac4e)),
-                          foregroundColor:
-                              MaterialStateProperty.all<Color>(Colors.white),
-                        ),
-                        onPressed: () async {
-                          var dio = Dio();
-                          var url = '${laravelUrl}api/user/join/write';
-                          var data = {
-                            'userToken': userToken,
-                            'case_client_id': _caseId,
-                            'user_join_id': _userId,
-                            'user_id': _userId,
-                            'payment': _pay,
-                            'status': 0
-                          };
+                      _isStatus == '1'
+                          ? TextButton(
+                              style: ButtonStyle(
+                                side: MaterialStateProperty.all<BorderSide>(
+                                  const BorderSide(
+                                      width: 2, color: Colors.black),
+                                ),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        const Color(0xffe0ac4e)),
+                                foregroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.white),
+                              ),
+                              onPressed: () {},
+                              child: const SizedBox(
+                                width: 100,
+                                height: 25,
+                                child: Center(
+                                  child: Text(
+                                    '已有人參加',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 15.0,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : TextButton(
+                              style: ButtonStyle(
+                                side: MaterialStateProperty.all<BorderSide>(
+                                  const BorderSide(
+                                      width: 2, color: Colors.black),
+                                ),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        const Color(0xffe0ac4e)),
+                                foregroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.white),
+                              ),
+                              onPressed: () async {
+                                var dio = Dio();
+                                var url = '${laravelUrl}api/user/join/write';
+                                var data = {
+                                  'userToken': userToken,
+                                  'case_client_id': _caseId,
+                                  'user_join_id': _userId,
+                                  'user_id': _userId,
+                                  'payment': _pay,
+                                  'status': 0
+                                };
 
-                          var response = await dio.post(url, data: data);
+                                var response = await dio.post(url, data: data);
 
-                          // Navigator.pushReplacement(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => const GuildPage()),
-                          // );
-                        },
-                        child: const SizedBox(
-                          width: 100,
-                          height: 25,
-                          child: Center(
-                            child: Text(
-                              '我有興趣！',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.normal,
-                                fontSize: 15.0,
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const GuildPage()),
+                                );
+                              },
+                              child: const SizedBox(
+                                width: 100,
+                                height: 25,
+                                child: Center(
+                                  child: Text(
+                                    '我有興趣！',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.normal,
+                                      fontSize: 15.0,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
                 ),

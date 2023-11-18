@@ -120,17 +120,23 @@ class _JoinEntrustDealPageState extends State<JoinEntrustDealPage>
                       children: items.map((item) {
                         return GestureDetector(
                           onTap: () {
-                            print('Item tapped: ${item['id']}');
+                            print('Item status: ${item['status']}');
                             // 在這裡添加點擊事件邏輯
                           },
                           child: Stack(
                             alignment: Alignment.center, // 將文字居中對齊於圖片
                             children: [
-                              Image.asset(
-                                'assets/images/icon/banner-running.png', // 圖片路徑
-                                fit: BoxFit.cover,
-                                width: 300,
-                              ),
+                              item['status'] == '1'
+                                  ? Image.asset(
+                                      'assets/images/icon/banner-running.png', // 圖片路徑
+                                      fit: BoxFit.cover,
+                                      width: 300,
+                                    )
+                                  : Image.asset(
+                                      'assets/images/icon/banner-want.png', // 圖片路徑
+                                      fit: BoxFit.cover,
+                                      width: 300,
+                                    ),
                               Positioned(
                                 left: 35, // 或者您希望的邊距大小
                                 bottom: 35,
