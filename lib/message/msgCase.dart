@@ -68,7 +68,7 @@ class _MsgCasePageState extends State<MsgCasePage>
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color(0xfff5eeda),
+      backgroundColor: const Color(0xfff5eeda),
       body: Stack(
         children: [
           GestureDetector(
@@ -121,14 +121,35 @@ class _MsgCasePageState extends State<MsgCasePage>
                                 width: 300,
                               ),
                               Positioned(
-                                left: 20, // 或者您希望的邊距大小
+                                top: 0, // 調整為所需的位置
+                                left: 20,
+                                right: 0,
+                                bottom: 0,
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Container(
+                                    width: 50, // 調整容器的寬度
+                                    height: 50, // 調整容器的高度
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/images/profile.png'), // 頭像圖片路徑
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Positioned(
+                                left: 80, // 或者您希望的邊距大小
                                 bottom: 25,
                                 right: 60, // 根據需要調整
                                 child: Text(
-                                  item['title'],
+                                  item['name'],
                                   style: const TextStyle(
                                     color: Colors.black,
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -138,6 +159,7 @@ class _MsgCasePageState extends State<MsgCasePage>
                         );
                       }).toList(),
                     ),
+                    
                   ),
                 ),
                 Align(
