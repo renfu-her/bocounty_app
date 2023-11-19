@@ -159,11 +159,17 @@ class _DealPageState extends State<DealPage>
                           child: Stack(
                             alignment: Alignment.center, // 將文字居中對齊於圖片
                             children: [
-                              Image.asset(
-                                'assets/images/icon/banner-want.png', // 圖片路徑
-                                fit: BoxFit.cover,
-                                width: 300,
-                              ),
+                              item['status'] == '1'
+                                  ? Image.asset(
+                                      'assets/images/icon/banner-want.png', // 圖片路徑
+                                      fit: BoxFit.cover,
+                                      width: 300,
+                                    )
+                                  : Image.asset(
+                                      'assets/images/icon/banner-running.png', // 圖片路徑
+                                      fit: BoxFit.cover,
+                                      width: 300,
+                                    ),
                               Positioned(
                                 left: 35, // 或者您希望的邊距大小
                                 bottom: 35,

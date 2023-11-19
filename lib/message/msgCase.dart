@@ -36,20 +36,17 @@ class _MsgCasePageState extends State<MsgCasePage>
 
   void fetchData() async {
     var dio = Dio();
-    var data = {'userToken': userToken};
+    var data = {'userToken': userToken, 'itemId': widget.itemId};
 
     try {
       var response =
-          await dio.get('${laravelUrl}api/user/join/getAll', data: data);
+          await dio.post('${laravelUrl}api/user/join/getAll', data: data);
 
       print(response.statusCode);
 
       if (response.statusCode == 200) {
         setState(() {
           items = response.data['data'];
-
-          // print(items.isNotEmpty);
-          // items.map((item) => print(item['title']));
         });
       }
     } catch (e) {
@@ -97,6 +94,52 @@ class _MsgCasePageState extends State<MsgCasePage>
             ),
             child: Stack(
               children: <Widget>[
+                Positioned(
+                  top: 230,
+                  left: 80,
+                  right: 80,
+                  bottom: 100,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: items.map((item) {
+                        return GestureDetector(
+                          onTap: () {
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) =>
+                            //         JoinViewAllPage(itemId: item['id']),
+                            //   ),
+                            // );
+                          },
+                          child: Stack(
+                            alignment: Alignment.center, // 將文字居中對齊於圖片
+                            children: [
+                              Image.asset(
+                                'assets/images/icon/banner-list.png', // 圖片路徑
+                                fit: BoxFit.cover,
+                                width: 300,
+                              ),
+                              Positioned(
+                                left: 20, // 或者您希望的邊距大小
+                                bottom: 25,
+                                right: 60, // 根據需要調整
+                                child: Text(
+                                  item['title'],
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ),
                 Align(
                   alignment: Alignment.topLeft,
                   child: Container(
