@@ -30,6 +30,7 @@ class _InterestPageState extends State<InterestPage>
   String? _userId = '';
   String? _name = '';
   String? _isStatus = '0';
+  String? _mobile = '';
 
   @override
   void initState() {
@@ -61,16 +62,18 @@ class _InterestPageState extends State<InterestPage>
       if (response.statusCode == 200) {
         setState(() {
           items = [response.data['data']];
+          print(items);
           if (items.isNotEmpty) {
             _titleController.text = items[0]['title'];
             _contentController.text = items[0]['content'];
             _name = items[0]['name'];
             _endDate = items[0]['end_date'];
-            _pay = items[0]['bocoin']?.toString();
+            _pay = items[0]['pay']?.toString();
             _title = items[0]['title'];
             _caseId = items[0]['case_id']?.toString();
             _userId = items[0]['user_id'];
             _isStatus = items[0]['status'];
+            _mobile = items[0]['mobile'];
           }
           // print(items.isNotEmpty);
           // items.map((item) => print(item['title']));
@@ -186,7 +189,7 @@ class _InterestPageState extends State<InterestPage>
                                 width: 80.0, height: 80.0),
                             SizedBox(width: 10.0),
                             Text(
-                              '${_name}\n募集時間：${_endDate}\n聯絡方式：${_pay}\n報酬${_pay}',
+                              '${_name}\n募集時間：${_endDate}\n聯絡方式：${_mobile}\n報酬：${_pay}',
                               textAlign: TextAlign.left,
                               style: const TextStyle(
                                 color: Colors.black,

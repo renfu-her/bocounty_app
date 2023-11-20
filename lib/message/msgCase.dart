@@ -98,7 +98,7 @@ class _MsgCasePageState extends State<MsgCasePage>
                   top: 230,
                   left: 80,
                   right: 80,
-                  bottom: 100,
+                  bottom: 180,
                   child: SingleChildScrollView(
                     child: Column(
                       children: items.map((item) {
@@ -159,7 +159,46 @@ class _MsgCasePageState extends State<MsgCasePage>
                         );
                       }).toList(),
                     ),
-                    
+                  ),
+                ),
+                Positioned(
+                  bottom: 170, // 距离底部的距离
+                  left: 0,
+                  right: 0,
+                  child: Center(
+                    child: TextButton(
+                      style: ButtonStyle(
+                        side: MaterialStateProperty.all<BorderSide>(
+                          const BorderSide(width: 2, color: Colors.black),
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            const Color(0xffe0ac4e)),
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const DealPage()),
+                        );
+                      },
+                      child: const SizedBox(
+                        width: 100,
+                        height: 25,
+                        child: Center(
+                          child: Text(
+                            '關閉',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 15.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 Align(
