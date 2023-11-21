@@ -159,7 +159,7 @@ class _DealPageState extends State<DealPage>
                           child: Stack(
                             alignment: Alignment.center, // 將文字居中對齊於圖片
                             children: [
-                              item['status'] == '1'
+                              item['status'] == '0'
                                   ? Image.asset(
                                       'assets/images/icon/banner-want.png', // 圖片路徑
                                       fit: BoxFit.cover,
