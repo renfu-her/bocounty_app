@@ -146,6 +146,15 @@ class _DealPageState extends State<DealPage>
                   child: SingleChildScrollView(
                     child: Column(
                       children: items.map((item) {
+                        String imagePath;
+                        if (item['status'] == '1') {
+                          imagePath = 'assets/images/icon/banner-running.png';
+                        } else if (item['status'] == '2') {
+                          imagePath = 'assets/images/icon/banner-finish.png';
+                        } else {
+                          imagePath = 'assets/images/icon/banner-want.png';
+                        }
+
                         return GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -159,17 +168,11 @@ class _DealPageState extends State<DealPage>
                           child: Stack(
                             alignment: Alignment.center, // 將文字居中對齊於圖片
                             children: [
-                              item['status'] == '0'
-                                  ? Image.asset(
-                                      'assets/images/icon/banner-want.png', // 圖片路徑
-                                      fit: BoxFit.cover,
-                                      width: 300,
-                                    )
-                                  : Image.asset(
-                                      'assets/images/icon/banner-running.png', // 圖片路徑
-                                      fit: BoxFit.cover,
-                                      width: 300,
-                                    ),
+                              Image.asset(
+                                imagePath, // 圖片路徑
+                                fit: BoxFit.cover,
+                                width: 300,
+                              ),
                               Positioned(
                                 left: 35, // 或者您希望的邊距大小
                                 bottom: 35,
