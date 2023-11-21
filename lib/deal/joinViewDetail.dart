@@ -1,20 +1,19 @@
-import 'dart:ffi';
-
-import 'package:app/mail/mail.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:app/main.dart';
-import 'package:app/guild/guild.dart';
+import 'package:app/deal/deal.dart';
+import 'package:app/message/msgCase.dart';
+import 'package:app/deal/joinEntrust.dart';
 
-class InterestPage extends StatefulWidget {
+class JoinViewDetailPage extends StatefulWidget {
   final int itemId;
-  const InterestPage({super.key, required this.itemId});
+  const JoinViewDetailPage({super.key, required this.itemId});
 
   @override
-  _InterestPageState createState() => _InterestPageState();
+  _JoinViewDetailPageState createState() => _JoinViewDetailPageState();
 }
 
-class _InterestPageState extends State<InterestPage>
+class _JoinViewDetailPageState extends State<JoinViewDetailPage>
     with SingleTickerProviderStateMixin {
   final _focusNode = FocusNode();
   bool isMenuOpen = true;
@@ -29,8 +28,8 @@ class _InterestPageState extends State<InterestPage>
   String? _caseId;
   String? _userId = '';
   String? _name = '';
-  String? _status = '0';
   String? _mobile = '';
+  String? _status = '';
 
   @override
   void initState() {
@@ -62,7 +61,6 @@ class _InterestPageState extends State<InterestPage>
       if (response.statusCode == 200) {
         setState(() {
           items = [response.data['data']];
-          print(items);
           if (items.isNotEmpty) {
             _titleController.text = items[0]['title'];
             _contentController.text = items[0]['content'];
@@ -72,8 +70,8 @@ class _InterestPageState extends State<InterestPage>
             _title = items[0]['title'];
             _caseId = items[0]['case_id']?.toString();
             _userId = items[0]['user_id'];
-            _status = items[0]['status'];
             _mobile = items[0]['mobile'];
+            _status = items[0]['status'];
           }
           // print(items.isNotEmpty);
           // items.map((item) => print(item['title']));
@@ -109,7 +107,7 @@ class _InterestPageState extends State<InterestPage>
               });
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const GuildPage()),
+                MaterialPageRoute(builder: (context) => const DealPage()),
               );
             },
           ),
@@ -135,7 +133,8 @@ class _InterestPageState extends State<InterestPage>
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const GuildPage()),
+                              builder: (context) =>
+                                  const JoinEntrustDealPage()),
                         );
                         print('backButton click');
                       },
@@ -187,7 +186,7 @@ class _InterestPageState extends State<InterestPage>
                           children: <Widget>[
                             Image.asset('assets/images/profile.png',
                                 width: 80.0, height: 80.0),
-                            SizedBox(width: 10.0),
+                            const SizedBox(width: 10.0),
                             Text(
                               '${_name}\n募集時間：${_endDate}\n聯絡方式：${_mobile}\n報酬：${_pay}',
                               textAlign: TextAlign.left,
@@ -222,90 +221,56 @@ class _InterestPageState extends State<InterestPage>
                         ),
                       ),
                       SizedBox(height: screenHeight * 0.01),
-                      _status == '1'
-                          ? TextButton(
-                              style: ButtonStyle(
-                                side: MaterialStateProperty.all<BorderSide>(
-                                  const BorderSide(
-                                      width: 2, color: Colors.black),
-                                ),
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        const Color(0xffe0ac4e)),
-                                foregroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.white),
-                              ),
-                              onPressed: () {},
-                              child: const SizedBox(
-                                width: 100,
-                                height: 25,
-                                child: Center(
-                                  child: Text(
-                                    '已有人參加',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15.0,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          : TextButton(
-                              style: ButtonStyle(
-                                side: MaterialStateProperty.all<BorderSide>(
-                                  const BorderSide(
-                                      width: 2, color: Colors.black),
-                                ),
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        const Color(0xffe0ac4e)),
-                                foregroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.white),
-                              ),
-                              onPressed: () async {
-                                if (_status == '0') {
-                                  var dio = Dio();
-                                  var url = '${laravelUrl}api/user/join/write';
-                                  var data = {
-                                    'userToken': userToken,
-                                    'case_client_id': _caseId,
-                                    'user_join_id': _userId,
-                                    'user_id': _userId,
-                                    'payment': _pay,
-                                    'status': 0
-                                  };
+                      TextButton(
+                        style: ButtonStyle(
+                          side: MaterialStateProperty.all<BorderSide>(
+                            const BorderSide(width: 2, color: Colors.black),
+                          ),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              const Color(0xffe0ac4e)),
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                        ),
+                        onPressed: () async {
+                          if (_status == '1') {
+                            var dio = Dio();
+                            var data = {
+                              'userToken': userToken,
+                              'itemId': _caseId,
+                              'status': 2
+                            };
 
-                                  var response =
-                                      await dio.post(url, data: data);
+                            var response = await dio.post(
+                                '${laravelUrl}api/user/do-case',
+                                data: data);
 
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const GuildPage()),
-                                  );
-                                }
-                              },
-                              child: SizedBox(
-                                width: 100,
-                                height: 25,
-                                child: Center(
-                                  child: Text(
-                                    _status == '0' ? '我有興趣！' : '關閉',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.normal,
-                                      fontSize: 15.0,
-                                    ),
-                                  ),
-                                ),
+                            if (response.statusCode == 200) {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const JoinEntrustDealPage()));
+                            }
+                          }
+                        },
+                        child: SizedBox(
+                          width: 100,
+                          height: 25,
+                          child: Center(
+                            child: Text(
+                              _status == '0'
+                                  ? '關閉'
+                                  : (_status == '1' ? '已完成' : '關閉'),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 15.0,
                               ),
                             ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
