@@ -286,6 +286,12 @@ class _ClientWriteState extends State<ClientWrite>
                               const Color(0xffe87d42)),
                           foregroundColor:
                               MaterialStateProperty.all<Color>(Colors.white),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8), // 设置圆角的半径
+                            ),
+                          ),
                         ),
                         onPressed: () async {
                           var dio = Dio();

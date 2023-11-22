@@ -235,6 +235,13 @@ class _InterestPageState extends State<InterestPage>
                                 foregroundColor:
                                     MaterialStateProperty.all<Color>(
                                         Colors.white),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(8), // 设置圆角的半径
+                                  ),
+                                ),
                               ),
                               onPressed: () {},
                               child: const SizedBox(
@@ -265,6 +272,13 @@ class _InterestPageState extends State<InterestPage>
                                 foregroundColor:
                                     MaterialStateProperty.all<Color>(
                                         Colors.white),
+                                shape: MaterialStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(8), // 设置圆角的半径
+                                  ),
+                                ),
                               ),
                               onPressed: () async {
                                 if (_status == '0') {

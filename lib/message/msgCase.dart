@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:app/main.dart';
 import 'package:app/deal/deal.dart';
+import 'package:app/message/msgJobViewDetail.dart';
 
 class MsgCasePage extends StatefulWidget {
   final String itemId;
@@ -19,6 +20,7 @@ class _MsgCasePageState extends State<MsgCasePage>
   final _focusNode = FocusNode();
   bool isMenuOpen = true;
   String? userToken = User_Token;
+  String? msg;
   List items = [];
 
   @override
@@ -46,6 +48,7 @@ class _MsgCasePageState extends State<MsgCasePage>
 
       if (response.statusCode == 200) {
         setState(() {
+          msg = response.data['msg'];
           items = response.data['data'];
         });
       }
@@ -100,17 +103,19 @@ class _MsgCasePageState extends State<MsgCasePage>
                   right: 80,
                   bottom: 180,
                   child: SingleChildScrollView(
-                    child: Column(
-                      children: items.map((item) {
+                    child: Column(children: [
+                      ...items.map((item) {
                         return GestureDetector(
                           onTap: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) =>
-                            //         JoinViewAllPage(itemId: item['id']),
-                            //   ),
-                            // );
+                            if (msg == 'OK') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MsgJobViewDetailPage(
+                                      itemId: item['case_client_id']),
+                                ),
+                              );
+                            }
                           },
                           child: Stack(
                             alignment: Alignment.center, // 將文字居中對齊於圖片
@@ -124,7 +129,7 @@ class _MsgCasePageState extends State<MsgCasePage>
                                 top: 0, // 調整為所需的位置
                                 left: 20,
                                 right: 0,
-                                bottom: 0,
+                                bottom: 20,
                                 child: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Container(
@@ -143,7 +148,7 @@ class _MsgCasePageState extends State<MsgCasePage>
                               ),
                               Positioned(
                                 left: 80, // 或者您希望的邊距大小
-                                bottom: 25,
+                                bottom: 45,
                                 right: 60, // 根據需要調整
                                 child: Text(
                                   item['name'],
@@ -158,7 +163,7 @@ class _MsgCasePageState extends State<MsgCasePage>
                           ),
                         );
                       }).toList(),
-                    ),
+                    ]),
                   ),
                 ),
                 Positioned(
