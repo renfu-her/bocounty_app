@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'edit.dart';
 import 'package:app/main.dart';
 
+import 'package:dio/dio.dart';
+
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
 

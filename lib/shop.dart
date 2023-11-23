@@ -1,7 +1,6 @@
 // import 'dart:math';
 
 import 'dart:async';
-import 'dart:convert';
 import 'package:app/card/card1.dart';
 import 'package:app/card/card2.dart';
 import 'package:app/card/cardinfo.dart';
@@ -96,7 +95,11 @@ class _ShopPageState extends State<ShopPage> {
       'Cookie': 'user_token=$User_Token',
     };
 
-    var response = await dio.get('${apiUrl}/user/123456789',
+    var userVerify = await dio.post('${apiUrl}/auth/verify',
+        options: Options(headers: headers));
+    var userData = userVerify.data['user'];
+
+    var response = await dio.get('${apiUrl}/user/' + userData['student_id'],
         options: Options(headers: headers));
 
     var data = response.data['data'];
