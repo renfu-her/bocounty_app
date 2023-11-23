@@ -30,6 +30,7 @@ class _JoinViewDetailPageState extends State<JoinViewDetailPage>
   String? _name = '';
   String? _mobile = '';
   String? _status = '';
+  String? _join_id = '';
 
   @override
   void initState() {
@@ -72,6 +73,7 @@ class _JoinViewDetailPageState extends State<JoinViewDetailPage>
             _userId = items[0]['user_id'];
             _mobile = items[0]['mobile'];
             _status = items[0]['status'];
+            _join_id = items[0]['join_id'];
           }
           // print(items.isNotEmpty);
           // items.map((item) => print(item['title']));
@@ -242,8 +244,11 @@ class _JoinViewDetailPageState extends State<JoinViewDetailPage>
                             var data = {
                               'userToken': userToken,
                               'itemId': _caseId,
-                              'status': 2
+                              "join_id": _join_id,
+                              'status': "2"
                             };
+
+                            print(data);
 
                             var response = await dio.post(
                                 '${laravelUrl}api/user/do-case',
