@@ -44,12 +44,9 @@ class _GuildPageState extends State<GuildPage>
       var response =
           await dio.get('${laravelUrl}api/user/client/getAll', data: data);
 
-      print(response.statusCode);
-
       if (response.statusCode == 200) {
         setState(() {
           items = response.data['data'];
-          print(items);
         });
       }
     } catch (e) {
@@ -181,7 +178,6 @@ class _GuildPageState extends State<GuildPage>
                           MaterialPageRoute(
                               builder: (context) => const HomePage()),
                         );
-                        print('backButton click');
                       },
                       child: Image.asset('assets/images/back.png'),
                     ),

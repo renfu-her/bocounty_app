@@ -44,7 +44,6 @@ class _MsgCasePageState extends State<MsgCasePage>
       var response =
           await dio.post('${laravelUrl}api/user/join/getAll', data: data);
 
-      print(response.statusCode);
 
       if (response.statusCode == 200) {
         setState(() {
@@ -219,7 +218,6 @@ class _MsgCasePageState extends State<MsgCasePage>
                           MaterialPageRoute(
                               builder: (context) => const DealPage()),
                         );
-                        print('backButton click');
                       },
                       child: Image.asset('assets/images/back.png'),
                     ),

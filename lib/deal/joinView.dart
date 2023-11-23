@@ -49,12 +49,9 @@ class _JoinViewAllPageState extends State<JoinViewAllPage>
       'itemId': widget.itemId,
     };
 
-    print(data);
     try {
       var response =
           await dio.get('${laravelUrl}api/user/case-detail', data: data);
-
-      print(response.statusCode);
 
       if (response.statusCode == 200) {
         setState(() {
@@ -70,8 +67,6 @@ class _JoinViewAllPageState extends State<JoinViewAllPage>
             _userId = items[0]['user_id'];
             _mobile = items[0]['mobile'];
           }
-          // print(items.isNotEmpty);
-          // items.map((item) => print(item['title']));
         });
       }
     } catch (e) {
@@ -235,9 +230,6 @@ class _JoinViewAllPageState extends State<JoinViewAllPage>
                                   builder: (context) =>
                                       MsgCasePage(itemId: _caseId!)),
                             );
-                          } else {
-                            // 這裡可以處理 _caseId 為 null 或空字符串的情況
-                            print('Case ID is null or empty');
                           }
                         },
                         child: const SizedBox(

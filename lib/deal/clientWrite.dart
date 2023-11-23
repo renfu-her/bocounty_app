@@ -107,7 +107,6 @@ class _ClientWriteState extends State<ClientWrite>
                           MaterialPageRoute(
                               builder: (context) => const GuildPage()),
                         );
-                        print('backButton click');
                       },
                       child: Image.asset('assets/images/back.png'),
                     ),
@@ -311,17 +310,12 @@ class _ClientWriteState extends State<ClientWrite>
 
                           var response = await dio.post(url, data: data);
 
-                          // print(response);
-
                           if (response.statusCode == 200) {
-                            print('發佈成功');
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const GuildPage()),
                             );
-                          } else {
-                            print('發佈失敗');
                           }
                         },
                         child: const SizedBox(

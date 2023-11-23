@@ -293,7 +293,6 @@ class _DealPageState extends State<DealPage>
                           MaterialPageRoute(
                               builder: (context) => const MailPage()),
                         );
-                        print('backButton click');
                       },
                       child: Image.asset('assets/images/back.png'),
                     ),

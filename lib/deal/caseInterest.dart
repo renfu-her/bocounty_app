@@ -52,17 +52,14 @@ class _InterestPageState extends State<InterestPage>
       'itemId': widget.itemId,
     };
 
-    print(data);
     try {
       var response =
           await dio.get('${laravelUrl}api/user/case-detail', data: data);
 
-      print(response.statusCode);
-
       if (response.statusCode == 200) {
         setState(() {
           items = [response.data['data']];
-          print(items);
+
           if (items.isNotEmpty) {
             _titleController.text = items[0]['title'];
             _contentController.text = items[0]['content'];
@@ -75,8 +72,6 @@ class _InterestPageState extends State<InterestPage>
             _status = items[0]['status'];
             _mobile = items[0]['mobile'];
           }
-          // print(items.isNotEmpty);
-          // items.map((item) => print(item['title']));
         });
       }
     } catch (e) {

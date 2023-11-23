@@ -54,7 +54,6 @@ class _JoinEntrustDealPageState extends State<JoinEntrustDealPage>
       if (response.statusCode == 200) {
         setState(() {
           items = response.data['data'];
-          print(items);
         });
       }
     } catch (e) {
@@ -184,7 +183,6 @@ class _JoinEntrustDealPageState extends State<JoinEntrustDealPage>
                           MaterialPageRoute(
                               builder: (context) => const MailPage()),
                         );
-                        print('backButton click');
                       },
                       child: Image.asset('assets/images/back.png'),
                     ),

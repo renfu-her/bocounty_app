@@ -52,12 +52,9 @@ class _JoinViewDetailPageState extends State<JoinViewDetailPage>
       'itemId': widget.itemId,
     };
 
-    print(data);
     try {
       var response =
           await dio.get('${laravelUrl}api/user/case-detail', data: data);
-
-      print(response.statusCode);
 
       if (response.statusCode == 200) {
         setState(() {
@@ -247,8 +244,6 @@ class _JoinViewDetailPageState extends State<JoinViewDetailPage>
                               "join_id": _join_id,
                               'status': "2"
                             };
-
-                            print(data);
 
                             var response = await dio.post(
                                 '${laravelUrl}api/user/do-case',
