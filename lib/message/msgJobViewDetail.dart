@@ -24,6 +24,8 @@ class _MsgJobViewDetailPageState extends State<MsgJobViewDetailPage>
   String? _name = '';
   String? _pay = '';
   String? _status = '';
+  int? _case_id = 0;
+  int? _join_id = 0;
 
   @override
   void initState() {
@@ -57,6 +59,8 @@ class _MsgJobViewDetailPageState extends State<MsgJobViewDetailPage>
           _name = items[0]['name'];
           _pay = items[0]['pay'];
           _status = items[0]['status'];
+          _case_id = items[0]['case_id'];
+          _join_id = items[0]['join_id'];
         }
       } else {
         // 處理非200的響應
@@ -181,7 +185,20 @@ class _MsgJobViewDetailPageState extends State<MsgJobViewDetailPage>
                           ),
                         ),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        var dio = Dio();
+                        var url = '${laravelUrl}api/user/set-status';
+                        var data = {
+                          'userToken': userToken,
+                          'itemId': widget.itemId,
+                          'join_id': _join_id.toString(),
+                          'status': "1"
+                        };
+
+                        print(data);
+
+                        var response = await dio.post(url, data: data);
+
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
