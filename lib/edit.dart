@@ -59,7 +59,7 @@ class _EditPageState extends State<EditPage> {
       'Cookie': 'User_Token=$User_Token',
     };
 
-    String getUserOutlookurl = ('$apiUrl:8000/getUserOutlook');
+    String getUserOutlookurl = ('$apiUrl/getUserOutlook');
     try {
       http.Response response =
           await http.get(Uri.parse(getUserOutlookurl), headers: headers);
@@ -155,7 +155,7 @@ class _EditPageState extends State<EditPage> {
       'Cookie': 'User_Token=$User_Token',
     };
 
-    String getUserItemurl = ('$apiUrl:8000/getUserItem');
+    String getUserItemurl = ('$apiUrl/getUserItem');
     try {
       http.Response response =
           await http.get(Uri.parse(getUserItemurl), headers: headers);
@@ -279,7 +279,7 @@ class _EditPageState extends State<EditPage> {
     };
 
     // 發送登錄請求
-    String ChangeItemurl = ('$apiUrl:8000/changeUserOutlook');
+    String ChangeItemurl = ('$apiUrl/changeUserOutlook');
     try {
       http.Response response = await http.post(Uri.parse(ChangeItemurl),
           headers: headers, body: jsonData);

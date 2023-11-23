@@ -80,7 +80,7 @@ class _RGuildPageState extends State<RGuildPage> {
     };
 
     // 發送登錄請求
-    String Posturl = ('$apiUrl:8000/createOrder');
+    String Posturl = ('$apiUrl/createOrder');
     try {
       http.Response response =
           await http.post(Uri.parse(Posturl), headers: headers, body: jsonData);

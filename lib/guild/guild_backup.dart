@@ -61,7 +61,7 @@ class _GuildPageState extends State<GuildPage> {
     };
 
     // 發送登錄請求
-    String getOpenOrderurl = ('$apiUrl:8000/getOpenOrder');
+    String getOpenOrderurl = ('$apiUrl/getOpenOrder');
     try {
       http.Response response =
           await http.get(Uri.parse(getOpenOrderurl), headers: headers);
@@ -170,7 +170,7 @@ class _GuildPageState extends State<GuildPage> {
 
     // 發送登錄請求
     print(ID);
-    String getOrderInfourl = ('$apiUrl:8000/getOrderInfo/$ID');
+    String getOrderInfourl = ('$apiUrl/getOrderInfo/$ID');
     try {
       http.Response response =
           await http.get(Uri.parse(getOrderInfourl), headers: headers);

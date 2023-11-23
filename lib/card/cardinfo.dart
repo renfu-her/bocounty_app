@@ -38,7 +38,7 @@ class _CardInfoPageState extends State<CardInfoPage> {
       'Cookie': 'User_Token=$User_Token',
     };
 
-    String getPoolItemListurl = ('$apiUrl:8000/getPoolItemList/1');
+    String getPoolItemListurl = ('$apiUrl/getPoolItemList/1');
     try {
       http.Response response =
           await http.get(Uri.parse(getPoolItemListurl), headers: headers);

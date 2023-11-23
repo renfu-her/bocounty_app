@@ -6,10 +6,13 @@ import 'package:app/card/card1.dart';
 import 'package:app/card/card2.dart';
 import 'package:app/card/cardinfo.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 
 import 'home.dart';
 import 'package:app/main.dart';
+import 'package:dio/dio.dart';
+
+var dio = Dio();
 
 class ShopPage extends StatefulWidget {
   const ShopPage({super.key});
@@ -38,59 +41,97 @@ class _ShopPageState extends State<ShopPage> {
   }
 
   Future<void> _listPool(apiUrl) async {
-    Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'Cookie': 'User_Token=$User_Token',
+    var headers = {
+      'Cookie': 'user_token=$User_Token',
     };
 
-    String getUserOutlookurl = ('$apiUrl:8000/listPool');
-    try {
-      http.Response response =
-          await http.get(Uri.parse(getUserOutlookurl), headers: headers);
-      String responseData = response.body;
-      var data = jsonDecode(responseData);
-      var status = data['status'];
-      var pool = data['pools'][0];
+    var response = await dio.get('${apiUrl}/admin/pool',
+        options: Options(headers: headers));
 
-      if (status == 0) {
-        // print("成功取得抽獎池! ,$pool");
-        setState(() {
-          card = pool['photo']!;
-          // print(card);
-        });
-        print("成功取得抽獎池! ,$data");
-      } else {
-        print('取得抽獎池錯誤：$responseData');
-      }
-    } catch (e) {
-      print('api ERROR：$e');
+    var data = response.data['data'];
+    var message = response.data['message'];
+    var status = message;
+
+    if (status == 'OK') {
+      var pool = data[0];
+      setState(() {
+        card = apiUrl + pool['photo']!;
+      });
+      print("成功取得抽獎池! ,$data");
+    } else {
+      print('取得抽獎池錯誤：$message');
     }
+
+    // Map<String, String> headers = {
+    //   'Content-Type': 'application/json',
+    //   'Cookie': 'User_Token=$User_Token',
+    // };
+
+    // String getUserOutlookurl = ('$apiUrl/listPool');
+    // try {
+    //   http.Response response =
+    //       await http.get(Uri.parse(getUserOutlookurl), headers: headers);
+    //   String responseData = response.body;
+    //   var data = jsonDecode(responseData);
+    //   var status = data['status'];
+    //   var pool = data['pools'][0];
+
+    //   if (status == 0) {
+    //     // print("成功取得抽獎池! ,$pool");
+    //     setState(() {
+    //       card = pool['photo']!;
+    //       // print(card);
+    //     });
+    //     print("成功取得抽獎池! ,$data");
+    //   } else {
+    //     print('取得抽獎池錯誤：$responseData');
+    //   }
+    // } catch (e) {
+    //   print('api ERROR：$e');
+    // }
   }
 
   Future<void> _getUserInfo(apiUrl) async {
-    Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'Cookie': 'User_Token=$User_Token',
+    var headers = {
+      'Cookie': 'user_token=$User_Token',
     };
 
-    String getUserInfourl = ('$apiUrl:8000/getUserInfo');
-    try {
-      http.Response response =
-          await http.get(Uri.parse(getUserInfourl), headers: headers);
-      String responseData = response.body;
-      var data = jsonDecode(responseData);
-      var status = data['status'];
-      bocoin = data['bocoin'];
+    var response = await dio.get('${apiUrl}/user/123456789',
+        options: Options(headers: headers));
 
-      if (status == 0) {
-        print('取得使用者資料：$responseData');
-        print(bocoin);
-      } else {
-        print('取得資訊錯誤：$responseData');
-      }
-    } catch (e) {
-      print('api ERROR：$e');
+    var data = response.data['data'];
+    var message = response.data['message'];
+    var status = message;
+
+    if (status == 'OK') {
+      setState(() {
+        bocoin = data['bocoin'];
+      });
     }
+
+    // Map<String, String> headers = {
+    //   'Content-Type': 'application/json',
+    //   'Cookie': 'User_Token=$User_Token',
+    // };
+
+    // String getUserInfourl = ('$apiUrl/getUserInfo');
+    // try {
+    //   http.Response response =
+    //       await http.get(Uri.parse(getUserInfourl), headers: headers);
+    //   String responseData = response.body;
+    //   var data = jsonDecode(responseData);
+    //   var status = data['status'];
+    //   bocoin = data['bocoin'];
+
+    //   if (status == 0) {
+    //     print('取得使用者資料：$responseData');
+    //     print(bocoin);
+    //   } else {
+    //     print('取得資訊錯誤：$responseData');
+    //   }
+    // } catch (e) {
+    //   print('api ERROR：$e');
+    // }
   }
 
   @override
@@ -214,7 +255,7 @@ class _ShopPageState extends State<ShopPage> {
                                         height: screenWidth * 0.475,
                                         width: screenWidth * 0.475,
                                         child: card.isNotEmpty
-                                            ? Image.asset(card)
+                                            ? Image.network(card)
                                             :
                                             // Container(
                                             //   height: screenHeight*0.1,

@@ -41,7 +41,7 @@ class _Card1PageState extends State<Card1Page> {
       "type": 0,
     };
 
-    String drawCardsurl = ('$apiUrl:8000/drawCards');
+    String drawCardsurl = ('$apiUrl/drawCards');
     try {
       String jsonData = jsonEncode(data1);
       http.Response response = await http.post(Uri.parse(drawCardsurl),

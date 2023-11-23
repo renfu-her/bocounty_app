@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
       'Cookie': 'User_Token=$User_Token',
     };
 
-    String logoffurl = ('$apiUrl:8000/Logoff');
+    String logoffurl = ('$apiUrl/Logoff');
     try {
       http.Response response =
           await http.post(Uri.parse(logoffurl), headers: headers);

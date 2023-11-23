@@ -54,7 +54,7 @@ class _UserPageState extends State<UserPage> {
     Future.delayed(const Duration(milliseconds: 200), () {
       setState(() {
         isStackVisible = true;
-      }); 
+      });
     });
   }
 
@@ -64,7 +64,7 @@ class _UserPageState extends State<UserPage> {
       'Cookie': 'User_Token=$User_Token',
     };
 
-    String getUserInfourl = ('$apiUrl:8000/getUserInfo');
+    String getUserInfourl = ('$apiUrl/getUserInfo');
     try {
       http.Response response =
           await http.get(Uri.parse(getUserInfourl), headers: headers);
@@ -130,7 +130,7 @@ class _UserPageState extends State<UserPage> {
       'Cookie': 'User_Token=$User_Token',
     };
 
-    String getUserOutlookurl = ('$apiUrl:8000/getUserOutlook');
+    String getUserOutlookurl = ('$apiUrl/getUserOutlook');
     try {
       http.Response response =
           await http.get(Uri.parse(getUserOutlookurl), headers: headers);
@@ -231,7 +231,7 @@ class _UserPageState extends State<UserPage> {
       'Cookie': 'User_Token=$User_Token',
     };
 
-    String changeUserInfourl = ('$apiUrl:8000/changeUserInfo');
+    String changeUserInfourl = ('$apiUrl/changeUserInfo');
     try {
       String jsonData = jsonEncode(data2);
       http.Response response = await http.post(Uri.parse(changeUserInfourl),

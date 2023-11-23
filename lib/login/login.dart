@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
     };
 
     // 發送登錄請求
-    String Loginurl = ('$apiUrl:8000/auth/login');
+    String Loginurl = ('${apiUrl}/auth/login');
     try {
       print(jsonData);
       http.Response response = await http.post(Uri.parse(Loginurl),

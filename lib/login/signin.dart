@@ -146,7 +146,7 @@ class _SignInPageState extends State<SignInPage> {
         };
 
         // 發送登錄請求
-        String Loginurl = ('$apiUrl:8000/Register');
+        String Loginurl = ('${apiUrl}/Register');
         try {
           http.Response response = await http.post(Uri.parse(Loginurl),
               headers: headers, body: jsonData);
