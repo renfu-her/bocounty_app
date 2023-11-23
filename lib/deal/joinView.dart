@@ -221,6 +221,12 @@ class _JoinViewAllPageState extends State<JoinViewAllPage>
                               const Color(0xffe0ac4e)),
                           foregroundColor:
                               MaterialStateProperty.all<Color>(Colors.white),
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8), // 设置圆角的半径
+                            ),
+                          ),
                         ),
                         onPressed: () async {
                           if (_caseId != null && _caseId!.isNotEmpty) {

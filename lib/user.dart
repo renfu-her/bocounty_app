@@ -54,7 +54,7 @@ class _UserPageState extends State<UserPage> {
     Future.delayed(const Duration(milliseconds: 200), () {
       setState(() {
         isStackVisible = true;
-      });
+      }); 
     });
   }
 

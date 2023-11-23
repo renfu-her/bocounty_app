@@ -44,7 +44,6 @@ class _MsgCasePageState extends State<MsgCasePage>
       var response =
           await dio.post('${laravelUrl}api/user/join/getAll', data: data);
 
-
       if (response.statusCode == 200) {
         setState(() {
           msg = response.data['msg'];
@@ -179,6 +178,12 @@ class _MsgCasePageState extends State<MsgCasePage>
                             const Color(0xffe0ac4e)),
                         foregroundColor:
                             MaterialStateProperty.all<Color>(Colors.white),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8), // 设置圆角的半径
+                          ),
+                        ),
                       ),
                       onPressed: () {
                         Navigator.pushReplacement(
