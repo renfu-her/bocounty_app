@@ -9,6 +9,8 @@ import 'package:app/main.dart';
 
 import 'package:dio/dio.dart';
 
+var dio = Dio();
+
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
 
@@ -61,24 +63,23 @@ class _UserPageState extends State<UserPage> {
   }
 
   Future<void> _getUserInfo(apiUrl) async {
-    Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'Cookie': 'User_Token=$User_Token',
+    var headers = {
+      'Cookie': 'user_token=$User_Token',
     };
 
-    String getUserInfourl = ('$apiUrl/getUserInfo');
+    var userVerify = await dio.post('${apiUrl}/auth/verify',
+        options: Options(headers: headers));
+    var userData = userVerify.data['user'];
+
     try {
-      http.Response response =
-          await http.get(Uri.parse(getUserInfourl), headers: headers);
-      String responseData = response.body;
-      var data = jsonDecode(responseData);
-      var status = data['status'];
+      var data = userData;
+      var status = userVerify.data['message'];
       var name = data['name'];
       var intro = data['intro'];
       var bocoin = data['bocoin'];
 
       if (status == 0) {
-        print('取得使用者資料：$responseData');
+        print('取得使用者資料：$userData');
         username = name;
         userbocoin = bocoin;
         userintro = intro;
@@ -118,7 +119,7 @@ class _UserPageState extends State<UserPage> {
           },
         );
         // 登錄失敗，處理失敗的邏輯
-        print('取得資訊錯誤：$responseData');
+        print('取得資訊錯誤：${userVerify.statusCode}');
       }
     } catch (e) {
       // 异常处理

@@ -60,34 +60,6 @@ class _ShopPageState extends State<ShopPage> {
     } else {
       print('取得抽獎池錯誤：$message');
     }
-
-    // Map<String, String> headers = {
-    //   'Content-Type': 'application/json',
-    //   'Cookie': 'User_Token=$User_Token',
-    // };
-
-    // String getUserOutlookurl = ('$apiUrl/listPool');
-    // try {
-    //   http.Response response =
-    //       await http.get(Uri.parse(getUserOutlookurl), headers: headers);
-    //   String responseData = response.body;
-    //   var data = jsonDecode(responseData);
-    //   var status = data['status'];
-    //   var pool = data['pools'][0];
-
-    //   if (status == 0) {
-    //     // print("成功取得抽獎池! ,$pool");
-    //     setState(() {
-    //       card = pool['photo']!;
-    //       // print(card);
-    //     });
-    //     print("成功取得抽獎池! ,$data");
-    //   } else {
-    //     print('取得抽獎池錯誤：$responseData');
-    //   }
-    // } catch (e) {
-    //   print('api ERROR：$e');
-    // }
   }
 
   Future<void> _getUserInfo(apiUrl) async {
@@ -111,30 +83,6 @@ class _ShopPageState extends State<ShopPage> {
         bocoin = data['bocoin'];
       });
     }
-
-    // Map<String, String> headers = {
-    //   'Content-Type': 'application/json',
-    //   'Cookie': 'User_Token=$User_Token',
-    // };
-
-    // String getUserInfourl = ('$apiUrl/getUserInfo');
-    // try {
-    //   http.Response response =
-    //       await http.get(Uri.parse(getUserInfourl), headers: headers);
-    //   String responseData = response.body;
-    //   var data = jsonDecode(responseData);
-    //   var status = data['status'];
-    //   bocoin = data['bocoin'];
-
-    //   if (status == 0) {
-    //     print('取得使用者資料：$responseData');
-    //     print(bocoin);
-    //   } else {
-    //     print('取得資訊錯誤：$responseData');
-    //   }
-    // } catch (e) {
-    //   print('api ERROR：$e');
-    // }
   }
 
   @override
