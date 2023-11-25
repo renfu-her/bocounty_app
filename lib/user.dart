@@ -78,7 +78,7 @@ class _UserPageState extends State<UserPage> {
       var intro = data['intro'];
       var bocoin = data['bocoin'];
 
-      if (status == 0) {
+      if (status == 'OK') {
         print('取得使用者資料：$userData');
         username = name;
         userbocoin = bocoin;
@@ -224,26 +224,27 @@ class _UserPageState extends State<UserPage> {
   }
 
   Future<void> _changeUserInfo(apiUrl) async {
-    Map<String, String> data2 = {
+    var data2 = {
       'name': changeName,
       'intro': changeIntro,
     };
 
-    Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'Cookie': 'User_Token=$User_Token',
+    var headers = {
+      'Cookie': 'user_token=$User_Token',
     };
+    var userVerify = await dio.post('${apiUrl}/auth/verify',
+        options: Options(headers: headers));
+    var userData = userVerify.data['user'];
 
-    String changeUserInfourl = ('$apiUrl/changeUserInfo');
+    var user = await dio.get('${apiUrl}/user/' + userData['student_id'],
+        options: Options(headers: headers));
+    var userData2 = user.data['message'];
+
     try {
-      String jsonData = jsonEncode(data2);
-      http.Response response = await http.post(Uri.parse(changeUserInfourl),
-          headers: headers, body: jsonData);
-      String responseData = response.body;
-      var data = jsonDecode(responseData);
-      var status = data['status'];
+      var data = userData2;
+      var status = data;
 
-      if (status == 0) {
+      if (status == "OK") {
         print('更新資料成功');
       } else {
         showDialog(
@@ -273,7 +274,7 @@ class _UserPageState extends State<UserPage> {
           },
         );
         // 登錄失敗，處理失敗的邏輯
-        print('取得資訊錯誤：$responseData');
+        print('取得資訊錯誤：${user.statusCode}');
       }
     } catch (e) {
       // 异常处理
