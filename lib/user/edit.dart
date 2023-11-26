@@ -1,8 +1,12 @@
 import 'dart:convert';
-import 'package:app/user.dart';
+import 'package:app/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:app/main.dart';
+
+import 'package:dio/dio.dart';
+
+var dio = Dio();
 
 bool isStackVisible = false;
 // bool isears =false;
@@ -54,19 +58,16 @@ class _EditPageState extends State<EditPage> {
   }
 
   Future<void> _getUserOutlook(apiUrl) async {
-    Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'Cookie': 'User_Token=$User_Token',
+    var headers = {
+      'Cookie': 'user_token=$User_Token',
     };
+    var itemOwn =
+        await dio.get('${apiUrl}/item/own', options: Options(headers: headers));
+    var itemOwnData = itemOwn.data['data'];
 
-    String getUserOutlookurl = ('$apiUrl/getUserOutlook');
     try {
-      http.Response response =
-          await http.get(Uri.parse(getUserOutlookurl), headers: headers);
-      String responseData = response.body;
-      var data = jsonDecode(responseData);
-      var status = data['status'];
-      var list = data['list'];
+      var status = itemOwn.data['message'];
+      var list = itemOwnData;
       int getImg = 0;
 
       for (int i = 0; i < list.length; i++) {
@@ -75,22 +76,22 @@ class _EditPageState extends State<EditPage> {
         if (photo.isNotEmpty) {
           if (list[i]['type'] == 1) {
             setState(() {
-              _hair = photo;
+              _hair = apiUrl + photo;
               getImg++;
             });
           } else if (list[i]['type'] == 2) {
             setState(() {
-              _face = photo;
+              _face = apiUrl + photo;
               getImg++;
             });
           } else if (list[i]['type'] == 3) {
             setState(() {
-              _clothes = photo;
+              _clothes = apiUrl + photo;
               getImg++;
             });
           } else if (list[i]['type'] == 4) {
             setState(() {
-              _else = photo;
+              _else = apiUrl + photo;
               getImg++;
             });
             List else_ = [
@@ -112,9 +113,9 @@ class _EditPageState extends State<EditPage> {
         }
       }
 
-      if (status == 0) {
+      if (status == "OK") {
         print("成功取得外觀! ,$getImg");
-        print(data);
+        print(list);
       } else {
         showDialog(
           context: context,
@@ -142,27 +143,24 @@ class _EditPageState extends State<EditPage> {
             );
           },
         );
-        print('取得圖片錯誤：$responseData');
+        print('取得圖片錯誤：${itemOwn.statusCode}');
       }
     } catch (e) {
-      print('api ERROR：$e');
+      print('api _getUserOutlook ERROR：$e');
     }
   }
 
   Future<void> _getUserItem(apiUrl) async {
-    Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'Cookie': 'User_Token=$User_Token',
+    var headers = {
+      'Cookie': 'user_token=$User_Token',
     };
+    var itemOwn =
+        await dio.get('${apiUrl}/item/own', options: Options(headers: headers));
+    var itemOwnData = itemOwn.data['data'];
 
-    String getUserItemurl = ('$apiUrl/getUserItem');
     try {
-      http.Response response =
-          await http.get(Uri.parse(getUserItemurl), headers: headers);
-      String responseData = response.body;
-      var data = jsonDecode(responseData);
-      var status = data['status'];
-      var list = data['list'];
+      var status = itemOwn.data['message'];
+      var list = itemOwnData;
 
       for (int i = 0; i < list.length; i++) {
         print("123333" + list[i]['photo']);
@@ -171,18 +169,18 @@ class _EditPageState extends State<EditPage> {
 
         if (photo.isNotEmpty) {
           Map<String, String> accessory = {
-            'item_id': list[i]['item_id'],
-            'photo': photo,
+            'item_id': list[i]['id'],
+            'photo': apiUrl + photo,
           };
 
           switch (type) {
-            case 1:
+            case 3:
               hairAccessories.add(accessory);
               break;
             case 2:
               faceAccessories.add(accessory);
               break;
-            case 3:
+            case 1:
               clothesAccessories.add(accessory);
               break;
             case 4:
@@ -195,9 +193,9 @@ class _EditPageState extends State<EditPage> {
         }
       }
 
-      if (status == 0) {
+      if (status == 'OK') {
         print("成功取得物品!");
-        print(data);
+        print(list);
       } else {
         showDialog(
           context: context,
@@ -225,10 +223,10 @@ class _EditPageState extends State<EditPage> {
             );
           },
         );
-        print('取得物品錯誤：$responseData');
+        print('取得物品錯誤：${itemOwn.statusCode}');
       }
     } catch (e) {
-      print('api ERROR：$e');
+      print('api _getUserItem ERROR：$e');
     }
   }
 
@@ -330,6 +328,17 @@ class _EditPageState extends State<EditPage> {
     super.dispose();
   }
 
+  Widget loadImage(String imagePath) {
+    if (imagePath.startsWith('asset')) {
+      return Image.asset(imagePath);
+    } else if (imagePath.startsWith('http')) {
+      return Image.network(imagePath);
+    } else {
+      // 如果路徑不符合上述兩種情況，可以返回一個默認圖像或錯誤處理
+      return Image.asset('assets/images/default.png');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -404,7 +413,7 @@ class _EditPageState extends State<EditPage> {
                                             child: FractionalTranslation(
                                               translation:
                                                   const Offset(0.025, 0),
-                                              child: Image?.asset(_face),
+                                              child: loadImage(_face),
                                             ))),
                                     Align(
                                         alignment: Alignment.center,
@@ -413,7 +422,7 @@ class _EditPageState extends State<EditPage> {
                                             child: FractionalTranslation(
                                               translation:
                                                   const Offset(0.025, 0),
-                                              child: Image.asset(_hair),
+                                              child: loadImage(_hair),
                                             ))),
                                     Align(
                                         alignment: Alignment.center,
@@ -422,7 +431,7 @@ class _EditPageState extends State<EditPage> {
                                             child: FractionalTranslation(
                                               translation:
                                                   const Offset(0.025, 0),
-                                              child: Image.asset(_clothes),
+                                              child: loadImage(_clothes),
                                             ))),
                                     Align(
                                         alignment: Alignment.center,
@@ -432,7 +441,7 @@ class _EditPageState extends State<EditPage> {
                                               translation:
                                                   const Offset(0.025, 0),
                                               // translation: isears ? const Offset(-0.02, -0.58) : const Offset(-0.02,-0.02),
-                                              child: Image.asset(_else),
+                                              child: loadImage(_else),
                                             ))),
                                   ],
                                 )
@@ -672,7 +681,7 @@ class _CategoryRowState extends State<CategoryRow> {
                     width: 60,
                     height: 60,
                     child: Center(
-                      child: Image.asset(accessory['photo']!),
+                      child: Image.network(accessory['photo']!),
                     )));
           }).toList(),
         ),

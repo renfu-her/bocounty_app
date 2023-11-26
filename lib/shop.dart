@@ -44,8 +44,8 @@ class _ShopPageState extends State<ShopPage> {
       'Cookie': 'user_token=$User_Token',
     };
 
-    var response = await dio.get('${apiUrl}/admin/pool',
-        options: Options(headers: headers));
+    var response =
+        await dio.get('${apiUrl}/pool', options: Options(headers: headers));
 
     var data = response.data['data'];
     var message = response.data['message'];

@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:app/guild/guild.dart';
 import 'package:app/shop.dart';
 import 'package:flutter/material.dart';
-import 'package:app/user.dart';
+import 'package:app/user/user.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:app/login/login.dart';

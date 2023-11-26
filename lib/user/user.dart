@@ -219,7 +219,7 @@ class _UserPageState extends State<UserPage> {
         print('取得圖片錯誤：$responseData');
       }
     } catch (e) {
-      print('api ERROR：$e');
+      print('api getUserOutlook  ERROR：$e');
     }
   }
 
@@ -236,15 +236,17 @@ class _UserPageState extends State<UserPage> {
         options: Options(headers: headers));
     var userData = userVerify.data['user'];
 
-    var user = await dio.get('${apiUrl}/user/' + userData['student_id'],
-        options: Options(headers: headers));
-    var userData2 = user.data['message'];
-
     try {
-      var data = userData2;
-      var status = data;
+      var data = userData;
+      var status = userVerify.data['message'];
 
       if (status == "OK") {
+        print(data2);
+        print('${apiUrl}/user');
+        // var user = await dio.put('${apiUrl}/user',
+        //     data: data2, options: Options(headers: headers));
+        // var userData2 = user.data['message'];
+
         print('更新資料成功');
       } else {
         showDialog(
@@ -274,7 +276,7 @@ class _UserPageState extends State<UserPage> {
           },
         );
         // 登錄失敗，處理失敗的邏輯
-        print('取得資訊錯誤：${user.statusCode}');
+        print('取得資訊錯誤：${userVerify.statusCode}');
       }
     } catch (e) {
       // 异常处理
