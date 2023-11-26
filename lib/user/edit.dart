@@ -61,13 +61,21 @@ class _EditPageState extends State<EditPage> {
     var headers = {
       'Cookie': 'user_token=$User_Token',
     };
-    var itemOwn =
-        await dio.get('${apiUrl}/item/own', options: Options(headers: headers));
-    var itemOwnData = itemOwn.data['data'];
+
+    var userVerify = await dio.post('${apiUrl}/auth/verify',
+        options: Options(headers: headers));
+    var userData = userVerify.data['user'];
+
+    var itemWear = await dio.get(
+        '${apiUrl}/item/wear/' + userData['student_id'],
+        options: Options(headers: headers));
+    var itemWearData = itemWear.data['data'];
+
+    print(userData);
 
     try {
-      var status = itemOwn.data['message'];
-      var list = itemOwnData;
+      var status = itemWear.data['message'];
+      var list = itemWearData;
       int getImg = 0;
 
       for (int i = 0; i < list.length; i++) {
@@ -143,7 +151,7 @@ class _EditPageState extends State<EditPage> {
             );
           },
         );
-        print('取得圖片錯誤：${itemOwn.statusCode}');
+        print('取得圖片錯誤：${itemWear.statusCode}');
       }
     } catch (e) {
       print('api _getUserOutlook ERROR：$e');
