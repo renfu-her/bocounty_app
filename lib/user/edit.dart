@@ -31,7 +31,7 @@ class EditPage extends StatefulWidget {
 }
 
 class _EditPageState extends State<EditPage> {
-  List<String> categories = ['五官', '髮型', '衣服', '配件'];
+  List<String> categories = ['五官', '衣服', '髮型', '配件'];
   int selectedCategoryIndex = 0;
 
   List<Map<String, String>> hairAccessories = [];
@@ -76,7 +76,7 @@ class _EditPageState extends State<EditPage> {
         if (photo.isNotEmpty) {
           if (list[i]['type'] == 1) {
             setState(() {
-              _hair = apiUrl + photo;
+              _clothes = apiUrl + photo;
               getImg++;
             });
           } else if (list[i]['type'] == 2) {
@@ -86,7 +86,7 @@ class _EditPageState extends State<EditPage> {
             });
           } else if (list[i]['type'] == 3) {
             setState(() {
-              _clothes = apiUrl + photo;
+              _hair = apiUrl + photo;
               getImg++;
             });
           } else if (list[i]['type'] == 4) {
@@ -174,14 +174,14 @@ class _EditPageState extends State<EditPage> {
           };
 
           switch (type) {
+            case 1:
+              clothesAccessories.add(accessory);
+              break;
             case 3:
               hairAccessories.add(accessory);
               break;
             case 2:
               faceAccessories.add(accessory);
-              break;
-            case 1:
-              clothesAccessories.add(accessory);
               break;
             case 4:
               otherAccessories.add(accessory);
@@ -239,34 +239,18 @@ class _EditPageState extends State<EditPage> {
           'id': hair,
           'action': 1,
         },
-        // {
-        //   'id': phair,
-        //   'action':0,
-        // },
         {
           'id': face,
           'action': 1,
         },
-        // {
-        //   'id': pface,
-        //   'action':0,
-        // },
         {
           'id': clothes,
           'action': 1,
         },
-        // {
-        //   'id': pclothes,
-        //   'action':0,
-        // },
         {
           'id': el,
           'action': 1,
         },
-        // {
-        //   'id': pel,
-        //   'action':0,
-        // },
       ]
     };
 
@@ -510,7 +494,7 @@ class _EditPageState extends State<EditPage> {
                           width: screenWidth * 0.18,
                           height: 30,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
+                            padding: const EdgeInsets.symmetric(horizontal: 1),
                             child: ElevatedButton(
                               onPressed: () {
                                 setState(() {
