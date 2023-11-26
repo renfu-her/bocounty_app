@@ -160,7 +160,7 @@ class _EditPageState extends State<EditPage> {
 
   Future<void> _getUserItem(apiUrl) async {
     var headers = {
-      'Cookie': 'user_token=$User_Token',
+      'Cookie': 'user_token=${User_Token}',
     };
     var itemOwn =
         await dio.get('${apiUrl}/item/own', options: Options(headers: headers));
@@ -241,43 +241,43 @@ class _EditPageState extends State<EditPage> {
   Future<void> _changeItem(
       apiUrl, hair, face, clothes, el, phair, pface, pclothes, pel) async {
     // 構建登錄請求的資料
-    Map<String, dynamic> data = {
-      'list': [
+
+    var headers = {
+      'Cookie': 'user_token=${User_Token}',
+    };
+
+    var data = {
+      'update_list': [
         {
-          'id': hair,
-          'action': 1,
+          'item_id': hair,
+          'action': 2,
         },
         {
-          'id': face,
-          'action': 1,
+          'item_id': face,
+          'action': 2,
         },
         {
-          'id': clothes,
-          'action': 1,
+          'item_id': clothes,
+          'action': 2,
         },
         {
-          'id': el,
-          'action': 1,
+          'item_id': el,
+          'action': 2,
         },
       ]
     };
 
-    String jsonData = jsonEncode(data);
-    Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      'Cookie': 'User_Token=$User_Token',
-    };
+    print(data.toString());
 
-    // 發送登錄請求
-    String ChangeItemurl = ('$apiUrl/changeUserOutlook');
+    var itemWear = await dio.request('${apiUrl}/item/wear',
+        data: data, options: Options(headers: headers, method: "PUT"));
+    var itemWearData = itemWear;
+
     try {
-      http.Response response = await http.post(Uri.parse(ChangeItemurl),
-          headers: headers, body: jsonData);
-      String responseData = response.body;
-      var res = jsonDecode(responseData);
-      var status = res['cause'];
+      var res = itemWearData;
+      var status = itemWearData.data['message'];
 
-      if (status == 0) {
+      if (status == "OK") {
         print(context);
       } else if (status == 101) {
         showDialog(
@@ -307,11 +307,11 @@ class _EditPageState extends State<EditPage> {
           },
         );
         // 登錄失敗，處理失敗的邏輯
-        print('換裝失敗：$responseData');
+        print('換裝失敗：${itemWear.statusCode}');
       }
     } catch (e) {
       // 异常处理
-      print('ERROR：$e');
+      print('_changeItem ERROR：$e');
     }
   }
 

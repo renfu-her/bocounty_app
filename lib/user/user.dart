@@ -246,9 +246,9 @@ class _UserPageState extends State<UserPage> {
       if (status == "OK") {
         print(data2);
         print('${apiUrl}/user');
-        // var user = await dio.put('${apiUrl}/user',
-        //     data: data2, options: Options(headers: headers));
-        // var userData2 = user.data['message'];
+        var user = await dio.request('${apiUrl}/user',
+            data: data2, options: Options(headers: headers, method: "PUT"));
+        var userData2 = user.data['message'];
 
         print('更新資料成功');
       } else {
