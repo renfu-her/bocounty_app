@@ -527,7 +527,7 @@ class _EditPageState extends State<EditPage> {
                               child: Text(
                                 categories[index],
                                 style: const TextStyle(
-                                  letterSpacing: 1,
+                                  // letterSpacing: 1,
                                   fontSize: 11,
                                   color: Colors.white,
                                 ),
