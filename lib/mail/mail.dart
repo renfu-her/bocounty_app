@@ -1,4 +1,5 @@
 // import 'dart:math';
+
 import 'package:app/notify.dart';
 import 'package:flutter/material.dart';
 
@@ -56,7 +57,6 @@ class _MailPageState extends State<MailPage> {
                       image: DecorationImage(
                         image: AssetImage('assets/images/mail/mail.png'),
                         fit: BoxFit.cover,
-                        alignment: Alignment.topCenter,
                       ),
                     ),
                     child: Column(
@@ -87,7 +87,7 @@ class _MailPageState extends State<MailPage> {
                             Container(
                               alignment: Alignment.center,
                               width: screenWidth * 0.6,
-                              height: screenHeight,
+                              // height: screenHeight,
                               child: InkWell(
                                   onTap: () {
                                     if (isMenuOpen == true) {
@@ -107,34 +107,9 @@ class _MailPageState extends State<MailPage> {
                                   child: Image.asset(
                                       'assets/images/mail/deal.png')),
                             ),
-                            // SizedBox(
-                            //   height: screenHeight * 0.1,
-                            // ),
-                            // Container(
-                            //   alignment: Alignment.center,
-                            //   width: screenWidth * 0.6,
-                            //   child: InkWell(
-                            //       onTap: () {
-                            //         if (isMenuOpen == true) {
-                            //           Navigator.push(
-                            //             context,
-                            //             MaterialPageRoute(
-                            //                 builder: (context) =>
-                            //                     const NotifyPage()),
-                            //           );
-                            //           print('notify click');
-                            //         } else {
-                            //           setState(() {
-                            //             isMenuOpen = true;
-                            //           });
-                            //         }
-                            //       },
-                            //       child: Image.asset(
-                            //           'assets/images/mail/notify.png')),
-                            // ),
-                            // SizedBox(
-                            //   height: screenHeight * 0.15,
-                            // )
+                            SizedBox(
+                              height: screenHeight * 1 / 2,
+                            )
                           ],
                         ))
                       ],
