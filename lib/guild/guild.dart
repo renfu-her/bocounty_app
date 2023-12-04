@@ -121,7 +121,7 @@ class _GuildPageState extends State<GuildPage>
                   ),
                 ),
                 Positioned(
-                  top: 360,
+                  top: 310,
                   left: 70,
                   right: 70,
                   bottom: 82,
