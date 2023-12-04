@@ -91,6 +91,7 @@ class _MsgCasePageState extends State<MsgCasePage>
               image: DecorationImage(
                 image: AssetImage('assets/images/background/running.png'),
                 fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
               ),
             ),
             child: Stack(

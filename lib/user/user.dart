@@ -342,6 +342,7 @@ class _UserPageState extends State<UserPage> {
                 image: DecorationImage(
                   image: AssetImage('assets/images/user/background.png'),
                   fit: BoxFit.cover,
+                  alignment: Alignment.topCenter,
                 ),
               ),
               child: Column(

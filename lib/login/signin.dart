@@ -219,6 +219,7 @@ class _SignInPageState extends State<SignInPage> {
               image: DecorationImage(
                 image: AssetImage('assets/images/home/login.png'),
                 fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
               ),
             ),
             child: Column(

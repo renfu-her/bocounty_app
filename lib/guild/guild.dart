@@ -89,6 +89,7 @@ class _GuildPageState extends State<GuildPage>
               image: DecorationImage(
                 image: AssetImage('assets/images/guild.png'),
                 fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
               ),
             ),
             child: Stack(

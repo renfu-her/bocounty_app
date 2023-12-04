@@ -117,6 +117,7 @@ class _DealPageState extends State<DealPage>
               image: DecorationImage(
                 image: AssetImage('assets/images/background/bg01.png'),
                 fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
               ),
             ),
             child: Stack(
