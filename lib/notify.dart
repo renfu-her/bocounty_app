@@ -1,7 +1,7 @@
 // import 'dart:math';
 
 
-import 'package:app/mail.dart';
+import 'package:app/mail/mail.dart';
 import 'package:flutter/material.dart';
 
 

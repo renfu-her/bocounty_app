@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:app/setting.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:app/signin.dart';
+import 'package:app/login/signin.dart';
 import 'package:app/home.dart';
 import 'package:http/http.dart' as http;
 
-import 'main.dart';
+import 'package:app/main.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
     };
 
     // 發送登錄請求
-    String Loginurl = ('$apiUrl:8000/auth/login');
+    String Loginurl = ('${apiUrl}/auth/login');
     try {
       print(jsonData);
       http.Response response = await http.post(Uri.parse(Loginurl),

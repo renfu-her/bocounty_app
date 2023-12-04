@@ -4,8 +4,8 @@
 import 'package:app/notify.dart';
 import 'package:flutter/material.dart';
 
-import 'deal.dart';
-import 'home.dart';
+import 'package:app/deal/deal.dart';
+import 'package:app/home.dart';
 
 class MailPage extends StatefulWidget {
   const MailPage({super.key});
