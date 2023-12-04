@@ -249,21 +249,6 @@ class _EditPageState extends State<EditPage> {
     var data = {
       'update_list': [
         {
-<<<<<<< HEAD
-          'item_id': hair['id'],
-          'action': 2,
-        },
-        {
-          'item_id': face['id'],
-          'action': 2,
-        },
-        {
-          'item_id': clothes['id'],
-          'action': 2,
-        },
-        {
-          'item_id': el['id'],
-=======
           'item_id': hair,
           'action': 2,
         },
@@ -277,7 +262,6 @@ class _EditPageState extends State<EditPage> {
         },
         {
           'item_id': el,
->>>>>>> a4b8c0c923903f64bc749dea185b6b72da1afd73
           'action': 2,
         },
       ]
@@ -479,13 +463,8 @@ class _EditPageState extends State<EditPage> {
                     print("---");
                     // print(isears);
                     print("---");
-<<<<<<< HEAD
-                    _changeItem(apiUrl, _hair, _face, _clothes, _else, _hairPID,
-                        _facePID, _clothesPID, _elsePID);
-=======
                     _changeItem(apiUrl, _hairID, _faceID, _clothesID, _elseID,
                         _hairPID, _facePID, _clothesPID, _elsePID);
->>>>>>> a4b8c0c923903f64bc749dea185b6b72da1afd73
                   },
                   child: const SizedBox(
                     width: 50,
