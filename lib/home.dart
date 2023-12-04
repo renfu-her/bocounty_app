@@ -77,247 +77,251 @@ class _HomePageState extends State<HomePage> {
           });
         },
         child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: Stack(
+            resizeToAvoidBottomInset: true,
+            body: SingleChildScrollView(
+                child: Container(
+                    width: screenWidth,
+                    // height: screenHeight,
+                    child: Stack(
+                      children: [
+                        buildMainContent(screenWidth, screenHeight),
+                        buildSideMenu(
+                          screenHeight,
+                        )
+                      ],
+                    )))));
+  }
+
+  Widget buildMainContent(double screenWidth, double screenHeight) {
+    return Container(
+        width: screenWidth,
+        height: screenHeight,
+        decoration: const BoxDecoration(color: Color(0xffF0E7D3)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Expanded(
+                child: Align(
+              alignment: Alignment.topRight,
+              child: Container(
+                padding: const EdgeInsets.only(right: 25, top: 25),
+                height: screenHeight * 0.075,
+                width: screenHeight * 0.075,
+                child: InkWell(
+                    onTap: () {
+                      setState(() {
+                        isMenuOpen = !isMenuOpen;
+                      });
+                      // 當用戶點擊圖片按鈕時，執行一些操作
+                      print('burger click');
+                    },
+                    child: Image.asset('assets/images/home/burger.png')),
+              ),
+            )),
+            Center(
+                child: Column(
               children: [
                 Container(
-                    width: screenWidth,
-                    height: screenHeight,
-                    decoration: const BoxDecoration(color: Color(0xffF0E7D3)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                            child: Align(
-                          alignment: Alignment.topRight,
-                          child: Container(
-                            padding: const EdgeInsets.only(right: 25, top: 25),
-                            height: screenHeight * 0.075,
-                            width: screenHeight * 0.075,
-                            child: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    isMenuOpen = !isMenuOpen;
-                                  });
-                                  // 當用戶點擊圖片按鈕時，執行一些操作
-                                  print('burger click');
-                                },
-                                child: Image.asset(
-                                    'assets/images/home/burger.png')),
-                          ),
-                        )),
-                        Center(
-                            child: Column(
-                          children: [
-                            Container(
-                              alignment: Alignment.center,
-                              width: screenWidth * 0.8,
-                              child: InkWell(
-                                  onTap: () {
-                                    if (isMenuOpen == true) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const UserPage()),
-                                      );
-                                      print('user click');
-                                    } else {
-                                      setState(() {
-                                        isMenuOpen = true;
-                                      });
-                                    }
-                                  },
-                                  child: Image.asset(
-                                      'assets/images/home/user.png')),
-                            ),
-                            SizedBox(
-                              height: screenWidth * 0.04,
-                            ),
-                            Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: screenWidth * 0.38,
-                                    child: InkWell(
-                                        onTap: () {
-                                          if (isMenuOpen == true) {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const MailPage()),
-                                            );
-                                            print('mail click');
-                                          } else {
-                                            setState(() {
-                                              isMenuOpen = true;
-                                            });
-                                          }
-                                        },
-                                        child: Image.asset(
-                                            'assets/images/home/mail.png')),
-                                  ),
-                                  SizedBox(
-                                    width: screenWidth * 0.04,
-                                  ),
-                                  Container(
-                                    alignment: Alignment.center,
-                                    width: screenWidth * 0.38,
-                                    child: InkWell(
-                                        onTap: () {
-                                          if (isMenuOpen == true) {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const ShopPage()),
-                                            );
-                                            print('shop click');
-                                          } else {
-                                            setState(() {
-                                              isMenuOpen = true;
-                                            });
-                                          }
-                                        },
-                                        splashColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        child: Image.asset(
-                                            'assets/images/home/shop.png')),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              height: screenWidth * 0.015,
-                            ),
-                            Container(
-                              alignment: Alignment.center,
-                              width: screenWidth * 0.8,
-                              child: InkWell(
-                                  onTap: () {
-                                    if (isMenuOpen == true) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const GuildPage()),
-                                      );
-                                      print('guild click');
-                                    } else {
-                                      setState(() {
-                                        isMenuOpen = true;
-                                      });
-                                    }
-                                  },
-                                  child: Image.asset(
-                                      'assets/images/home/guild.png')),
-                            ),
-                            SizedBox(
-                              height: screenHeight * 0.05,
-                            ),
-                          ],
-                        ))
-                      ],
-                    )),
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                  transform: Matrix4.translationValues(
-                    isMenuOpen ? -200.0 : 0.0,
-                    0.0,
-                    0.0,
-                  ),
-                  child: Container(
-                    width: 200,
-                    height: screenHeight,
-                    color: const Color(0xFFAB8E68),
-                    child: Center(
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(
-                            height: screenHeight * 0.1,
-                          ),
-                          GestureDetector(
-                              onTap: () {
-                                // Navigator.pushReplacement(
-                                //   context,
-                                //   MaterialPageRoute(builder: (context) => LoginPage()),
-                                // );
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                height: 50,
-                                width: 200,
-                                child: const Text(
-                                  '關於我們',
-                                  style: TextStyle(
-                                    color: Color(0xffffffff),
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18.0,
-                                    letterSpacing: 5,
-                                  ),
-                                ),
-                              )),
-                          SizedBox(
-                            height: screenHeight * 0.05,
-                          ),
-                          GestureDetector(
-                              onTap: () {
-                                // Navigator.pushReplacement(
-                                //   context,
-                                //   MaterialPageRoute(builder: (context) => LoginPage()),
-                                // );
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                height: 50,
-                                width: 200,
-                                child: const Text(
-                                  '聯絡我們',
-                                  style: TextStyle(
-                                    color: Color(0xffffffff),
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18.0,
-                                    letterSpacing: 5,
-                                  ),
-                                ),
-                              )),
-                          SizedBox(
-                            height: screenHeight * 0.2,
-                          ),
-                          GestureDetector(
-                              onTap: () async {
-                                _logoff(apiUrl);
-                                await Future.delayed(
-                                    const Duration(milliseconds: 500));
-                                Navigator.pushReplacement(
+                  alignment: Alignment.center,
+                  width: screenWidth * 0.8,
+                  child: InkWell(
+                      onTap: () {
+                        if (isMenuOpen == true) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const UserPage()),
+                          );
+                          print('user click');
+                        } else {
+                          setState(() {
+                            isMenuOpen = true;
+                          });
+                        }
+                      },
+                      child: Image.asset('assets/images/home/user.png')),
+                ),
+                SizedBox(
+                  height: screenWidth * 0.04,
+                ),
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: screenWidth * 0.38,
+                        child: InkWell(
+                            onTap: () {
+                              if (isMenuOpen == true) {
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const LoginPage()),
+                                      builder: (context) => const MailPage()),
                                 );
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                height: 50,
-                                width: 200,
-                                child: const Text(
-                                  '登出',
-                                  style: TextStyle(
-                                    color: Color(0xffffffff),
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 18.0,
-                                    letterSpacing: 5,
-                                  ),
-                                ),
-                              )),
-                        ],
+                                print('mail click');
+                              } else {
+                                setState(() {
+                                  isMenuOpen = true;
+                                });
+                              }
+                            },
+                            child: Image.asset('assets/images/home/mail.png')),
                       ),
-                    ),
+                      SizedBox(
+                        width: screenWidth * 0.04,
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        width: screenWidth * 0.38,
+                        child: InkWell(
+                            onTap: () {
+                              if (isMenuOpen == true) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const ShopPage()),
+                                );
+                                print('shop click');
+                              } else {
+                                setState(() {
+                                  isMenuOpen = true;
+                                });
+                              }
+                            },
+                            splashColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            child: Image.asset('assets/images/home/shop.png')),
+                      ),
+                    ],
                   ),
                 ),
+                Container(
+                  height: screenWidth * 0.015,
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  width: screenWidth * 0.8,
+                  child: InkWell(
+                      onTap: () {
+                        if (isMenuOpen == true) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const GuildPage()),
+                          );
+                          print('guild click');
+                        } else {
+                          setState(() {
+                            isMenuOpen = true;
+                          });
+                        }
+                      },
+                      child: Image.asset('assets/images/home/guild.png')),
+                ),
+                SizedBox(
+                  height: screenHeight * 0.05,
+                ),
               ],
-            )));
+            ))
+          ],
+        ));
+  }
+
+  Widget buildSideMenu(double screenHeight) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+      transform: Matrix4.translationValues(
+        isMenuOpen ? -200.0 : 0.0,
+        0.0,
+        0.0,
+      ),
+      child: Container(
+        width: 200,
+        height: screenHeight,
+        color: const Color(0xFFAB8E68),
+        child: Center(
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: screenHeight * 0.1,
+              ),
+              GestureDetector(
+                  onTap: () {
+                    // Navigator.pushReplacement(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => LoginPage()),
+                    // );
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 50,
+                    width: 200,
+                    child: const Text(
+                      '關於我們',
+                      style: TextStyle(
+                        color: Color(0xffffffff),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18.0,
+                        letterSpacing: 5,
+                      ),
+                    ),
+                  )),
+              SizedBox(
+                height: screenHeight * 0.05,
+              ),
+              GestureDetector(
+                  onTap: () {
+                    // Navigator.pushReplacement(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => LoginPage()),
+                    // );
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 50,
+                    width: 200,
+                    child: const Text(
+                      '聯絡我們',
+                      style: TextStyle(
+                        color: Color(0xffffffff),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18.0,
+                        letterSpacing: 5,
+                      ),
+                    ),
+                  )),
+              SizedBox(
+                height: screenHeight * 0.2,
+              ),
+              GestureDetector(
+                  onTap: () async {
+                    _logoff(apiUrl);
+                    await Future.delayed(const Duration(milliseconds: 500));
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginPage()),
+                    );
+                  },
+                  child: Container(
+                    alignment: Alignment.center,
+                    height: 50,
+                    width: 200,
+                    child: const Text(
+                      '登出',
+                      style: TextStyle(
+                        color: Color(0xffffffff),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18.0,
+                        letterSpacing: 5,
+                      ),
+                    ),
+                  )),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
