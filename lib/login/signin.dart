@@ -79,7 +79,7 @@ class _SignInPageState extends State<SignInPage> {
     // 構建登錄請求的資料
     Map<String, String> data = {
       'student_id': username,
-      'name': username,
+      // 'name': username,
       'password': password,
     };
 
@@ -146,18 +146,19 @@ class _SignInPageState extends State<SignInPage> {
         };
 
         // 發送登錄請求
-        String Loginurl = ('${apiUrl}/Register');
+        String Loginurl = ('$apiUrl/user/');
         try {
           http.Response response = await http.post(Uri.parse(Loginurl),
               headers: headers, body: jsonData);
           print(jsonData);
           String responseData = response.body;
           var res = jsonDecode(responseData);
-          var status = res['cause'];
+          var status = res['message'];
+          print(status);
 
           if (status == 0) {
             _showAlertDialog(context);
-          } else if (status == 101) {
+          } else if (status == 'student id conflict') {
             showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -188,7 +189,7 @@ class _SignInPageState extends State<SignInPage> {
             print('登錄失敗：$responseData');
           }
         } catch (e) {
-          // 异常处理
+          // 例外處理
           print('api ERROR：$e');
         }
       }

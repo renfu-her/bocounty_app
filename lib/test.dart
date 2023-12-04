@@ -54,7 +54,7 @@ class _YourWidgetState extends State<YourWidget> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        decoration: backgroundImage, // 应用背景图片的装饰
+        decoration: backgroundImage, // 應用背景圖片的裝飾
         // 其他内容...
       ),
     );

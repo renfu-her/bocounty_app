@@ -43,7 +43,7 @@ class _MsgJobViewDetailPageState extends State<MsgJobViewDetailPage>
   void fetchData() async {
     var dio = Dio();
     var data = {'userToken': userToken, 'itemId': widget.itemId};
-
+    
     try {
       var response =
           await dio.post('${laravelUrl}api/user/case-to-confirm', data: data);
