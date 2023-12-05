@@ -90,6 +90,7 @@ class _JoinEntrustDealPageState extends State<JoinEntrustDealPage>
               image: DecorationImage(
                 image: AssetImage('assets/images/background/bg02.png'),
                 fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
               ),
             ),
             child: Stack(

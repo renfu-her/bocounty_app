@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:http/http.dart' as http;
 
 import 'edit.dart';
 import 'package:app/main.dart';
@@ -244,11 +243,11 @@ class _UserPageState extends State<UserPage> {
       var status = userVerify.data['message'];
 
       if (status == "OK") {
-        print(data2);
-        print('${apiUrl}/user');
-        var user = await dio.request('${apiUrl}/user',
-            data: data2, options: Options(headers: headers, method: "PUT"));
-        var userData2 = user.data['message'];
+        // print(data2);
+        // print('${apiUrl}/user');
+        // var user = await dio.request('${apiUrl}/user',
+        //     data: data2, options: Options(headers: headers, method: "PUT"));
+        // var userData2 = user.data['message'];
 
         print('更新資料成功');
       } else {
@@ -283,7 +282,7 @@ class _UserPageState extends State<UserPage> {
       }
     } catch (e) {
       // 异常处理
-      print('api ERROR：$e');
+      print('api user ERROR：$e');
     }
   }
 
@@ -342,7 +341,7 @@ class _UserPageState extends State<UserPage> {
                 image: DecorationImage(
                   image: AssetImage('assets/images/user/background.png'),
                   fit: BoxFit.cover,
-                  alignment: Alignment.topCenter,
+                  // alignment: Alignment.topCenter,
                 ),
               ),
               child: Column(
@@ -517,6 +516,18 @@ class _UserPageState extends State<UserPage> {
                                                 _changeIntroController.text;
                                             print(changeName);
                                             print(changeIntro);
+
+                                            var headers = {
+                                              'Cookie':
+                                                  'user_token=$User_Token',
+                                            };
+                                            var data2 = {
+                                              'name': changeName,
+                                              'intro': changeIntro,
+                                            };
+
+                                            print(data2);
+
                                             _changeUserInfo(apiUrl);
                                           });
                                         },
