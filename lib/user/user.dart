@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'edit.dart';
 import 'package:app/main.dart';
 
+import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 
 var dio = Dio();
@@ -304,6 +305,26 @@ class _UserPageState extends State<UserPage> {
     }
   }
 
+  Future<void> makePutRequest(
+      apiUrl, Map<String, String> headers, Map<String, dynamic> data) async {
+    var url = Uri.parse('${apiUrl}/user');
+    var response = await http.put(
+      url,
+      headers: headers,
+      body: jsonEncode(data),
+    );
+
+    print(headers);
+    print(data);
+    if (response.statusCode == 200) {
+      // 處理成功的響應
+      print('Response body: ${response.body}');
+    } else {
+      // 處理錯誤
+      print('Request failed with status: ${response.statusCode}.');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -525,6 +546,9 @@ class _UserPageState extends State<UserPage> {
                                               'name': changeName,
                                               'intro': changeIntro,
                                             };
+
+                                            makePutRequest(
+                                                apiUrl, headers, data2);
 
                                             print(data2);
 
