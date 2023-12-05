@@ -134,7 +134,7 @@ class _ShopPageState extends State<ShopPage> {
                       image: DecorationImage(
                         image: AssetImage('assets/images/shop.png'),
                         fit: BoxFit.cover,
-                        alignment: Alignment.topCenter,
+                        // alignment: Alignment.topCenter,
                       ),
                     ),
                     child: Column(
