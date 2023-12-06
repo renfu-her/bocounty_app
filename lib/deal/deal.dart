@@ -71,7 +71,7 @@ class _DealPageState extends State<DealPage>
       }
     } catch (e) {
       // 處理錯誤
-      print('Error fetching data: $e');
+      print('Error fetching data user/client/view: $e');
     }
   }
 

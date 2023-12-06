@@ -71,7 +71,7 @@ class _JoinViewAllPageState extends State<JoinViewAllPage>
       }
     } catch (e) {
       // 處理錯誤
-      print('Error fetching data: $e');
+      print('Error fetching data user/case-detail: $e');
     }
   }
 
