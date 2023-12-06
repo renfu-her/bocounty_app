@@ -245,10 +245,10 @@ class _UserPageState extends State<UserPage> {
 
       if (status == "OK") {
         // print(data2);
-        // print('${apiUrl}/user');
-        // var user = await dio.request('${apiUrl}/user',
-        //     data: data2, options: Options(headers: headers, method: "PUT"));
-        // var userData2 = user.data['message'];
+
+        var user = await dio.request('${apiUrl}/user/',
+            data: data2, options: Options(headers: headers, method: "PUT"));
+        var userData2 = user.data['message'];
 
         print('更新資料成功');
       } else {
@@ -302,26 +302,6 @@ class _UserPageState extends State<UserPage> {
     } else {
       // 如果路徑不符合上述兩種情況，可以返回一個默認圖像或錯誤處理
       return Image.asset('assets/images/default.png');
-    }
-  }
-
-  Future<void> makePutRequest(
-      apiUrl, Map<String, String> headers, Map<String, dynamic> data) async {
-    var url = Uri.parse('${apiUrl}/user');
-    var response = await http.put(
-      url,
-      headers: headers,
-      body: jsonEncode(data),
-    );
-
-    print(headers);
-    print(data);
-    if (response.statusCode == 200) {
-      // 處理成功的響應
-      print('Response body: ${response.body}');
-    } else {
-      // 處理錯誤
-      print('Request failed with status: ${response.statusCode}.');
     }
   }
 
@@ -537,20 +517,6 @@ class _UserPageState extends State<UserPage> {
                                                 _changeIntroController.text;
                                             print(changeName);
                                             print(changeIntro);
-
-                                            var headers = {
-                                              'Cookie':
-                                                  'user_token=$User_Token',
-                                            };
-                                            var data2 = {
-                                              'name': changeName,
-                                              'intro': changeIntro,
-                                            };
-
-                                            makePutRequest(
-                                                apiUrl, headers, data2);
-
-                                            print(data2);
 
                                             _changeUserInfo(apiUrl);
                                           });
