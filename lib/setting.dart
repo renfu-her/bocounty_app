@@ -54,6 +54,7 @@ class _SettingPageState extends State<SettingPage> {
               image: DecorationImage(
                 image: AssetImage('assets/images/home/login.png'),
                 fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
               ),
             ),
             child: Column(

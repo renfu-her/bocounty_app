@@ -104,6 +104,7 @@ class _MsgJobViewDetailPageState extends State<MsgJobViewDetailPage>
               image: DecorationImage(
                 image: AssetImage('assets/images/background/running.png'),
                 fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
               ),
             ),
             child: Stack(
@@ -153,7 +154,7 @@ class _MsgJobViewDetailPageState extends State<MsgJobViewDetailPage>
                     // 使用 Center 小部件
                     child: Row(
                       mainAxisAlignment:
-                          MainAxisAlignment.center, // 這會使得 Row 中的内容居中
+                          MainAxisAlignment.center, // 这会使得 Row 中的内容居中
                       children: <Widget>[
                         Image.asset('assets/images/icon/coin.png'),
                         const SizedBox(width: 10.0), // 间距
@@ -163,7 +164,7 @@ class _MsgJobViewDetailPageState extends State<MsgJobViewDetailPage>
                   ),
                 ),
                 Positioned(
-                  bottom: 280, // 距離底部的距離
+                  bottom: 280, // 距离底部的距离
                   left: 0,
                   right: 0,
                   child: Center(
@@ -179,7 +180,7 @@ class _MsgJobViewDetailPageState extends State<MsgJobViewDetailPage>
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8), // 設定圓角的半徑
+                            borderRadius: BorderRadius.circular(8), // 设置圆角的半径
                           ),
                         ),
                       ),

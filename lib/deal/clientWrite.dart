@@ -90,6 +90,7 @@ class _ClientWriteState extends State<ClientWrite>
                 image:
                     AssetImage('assets/images/background/img-client-write.png'),
                 fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
               ),
             ),
             child: Stack(

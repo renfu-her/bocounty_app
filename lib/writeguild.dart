@@ -216,6 +216,7 @@ class _RGuildPageState extends State<RGuildPage> {
                   image: DecorationImage(
                     image: AssetImage('assets/images/writeguild.png'),
                     fit: BoxFit.cover,
+                    alignment: Alignment.topCenter,
                   ),
                 ),
                 child: Column(

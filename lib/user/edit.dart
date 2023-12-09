@@ -260,10 +260,10 @@ class _EditPageState extends State<EditPage> {
           'item_id': clothes,
           'action': 2,
         },
-        {
-          'item_id': el,
-          'action': 2,
-        },
+        // {
+        //   'item_id': el,
+        //   'action': 2,
+        // },
       ]
     };
 
@@ -351,7 +351,7 @@ class _EditPageState extends State<EditPage> {
           width: screenWidth,
           height: screenHeight,
           fit: BoxFit.cover,
-          alignment: Alignment.center,
+          alignment: Alignment.topCenter,
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -463,6 +463,10 @@ class _EditPageState extends State<EditPage> {
                     print("---");
                     // print(isears);
                     print("---");
+                    print(_hairID);
+                    print(_faceID);
+                    print(_clothesID);
+
                     _changeItem(apiUrl, _hairID, _faceID, _clothesID, _elseID,
                         _hairPID, _facePID, _clothesPID, _elsePID);
                   },

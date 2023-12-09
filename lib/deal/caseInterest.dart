@@ -76,7 +76,7 @@ class _InterestPageState extends State<InterestPage>
       }
     } catch (e) {
       // 處理錯誤
-      print('Error fetching data: $e');
+      print('Error fetching data user/case-detail: $e');
     }
   }
 
@@ -115,6 +115,7 @@ class _InterestPageState extends State<InterestPage>
               image: DecorationImage(
                 image: AssetImage('assets/images/background/interest.png'),
                 fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
               ),
             ),
             child: Stack(

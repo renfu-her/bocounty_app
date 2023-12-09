@@ -143,6 +143,7 @@ class _Card2PageState extends State<Card2Page> {
             image: DecorationImage(
               image: AssetImage('assets/images/getCard.png'),
               fit: BoxFit.cover,
+              alignment: Alignment.topCenter,
             ),
           ),
           child: Column(

@@ -71,7 +71,7 @@ class _DealPageState extends State<DealPage>
       }
     } catch (e) {
       // 處理錯誤
-      print('Error fetching data: $e');
+      print('Error fetching data user/client/view: $e');
     }
   }
 
@@ -117,6 +117,7 @@ class _DealPageState extends State<DealPage>
               image: DecorationImage(
                 image: AssetImage('assets/images/background/bg01.png'),
                 fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
               ),
             ),
             child: Stack(
