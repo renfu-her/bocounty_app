@@ -72,8 +72,11 @@ class _LoginPageState extends State<LoginPage> {
 
       if (status == "OK") {
         // 登錄成功，處理成功的邏輯
+        student_id = username;
         print('登錄成功：$responseData');
         print('User_Token:$User_Token');
+        print('Student id: ${student_id}');
+
         await Future.delayed(const Duration(milliseconds: 300));
         Navigator.push(
           context,

@@ -26,6 +26,7 @@ class _ShopPageState extends State<ShopPage> {
   bool showImage = true;
   late String card = "";
   var bocoin;
+  String? userToken = User_Token;
 
   Timer? _timer;
 
@@ -67,11 +68,9 @@ class _ShopPageState extends State<ShopPage> {
       'Cookie': 'user_token=$User_Token',
     };
 
-    var userVerify = await dio.post('${apiUrl}/auth/verify',
-        options: Options(headers: headers));
-    var userData = userVerify.data['user'];
+    print('User Token: ${User_Token}');
 
-    var response = await dio.get('${apiUrl}/user/' + userData['student_id'],
+    var response = await dio.get('${apiUrl}/user/' + student_id,
         options: Options(headers: headers));
 
     var data = response.data['data'];
@@ -79,8 +78,17 @@ class _ShopPageState extends State<ShopPage> {
     var status = message;
 
     if (status == 'OK') {
+      var dataToken = {
+        'userToken': User_Token,
+      };
+      var coins = await dio.get('${laravelUrl}api/user/coin', data: dataToken);
+
+      var coinData = coins.data['data'];
+
+      print(coinData);
+
       setState(() {
-        bocoin = data['bocoin'];
+        bocoin = data['bocoin'] + coinData['coin'];
       });
     }
   }
@@ -275,7 +283,7 @@ class _ShopPageState extends State<ShopPage> {
                                                                       0.30),
                                                           Container(
                                                             child: const Text(
-                                                              '目前持有Bocoin數：',
+                                                              '目前持有Bcoin數：',
                                                               style: TextStyle(
                                                                 color: Color(
                                                                     0xff050505),

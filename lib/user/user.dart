@@ -67,9 +67,9 @@ class _UserPageState extends State<UserPage> {
       'Cookie': 'user_token=$User_Token',
     };
 
-    var userVerify = await dio.post('${apiUrl}/auth/verify',
+    var userVerify = await dio.get('${apiUrl}/user/${student_id}',
         options: Options(headers: headers));
-    var userData = userVerify.data['user'];
+    var userData = userVerify.data['data'];
 
     try {
       var data = userData;
@@ -79,6 +79,16 @@ class _UserPageState extends State<UserPage> {
       var bocoin = data['bocoin'];
 
       if (status == 'OK') {
+        var userToken = {
+          'userToken': User_Token,
+        };
+
+        var coins =
+            await dio.get('${laravelUrl}api/user/coin', data: userToken);
+        var userCoin = coins.data['data'];
+
+        bocoin = data['bocoin'] + userCoin['coin'];
+
         print('取得使用者資料：$userData');
         username = name;
         userbocoin = bocoin;
@@ -132,12 +142,7 @@ class _UserPageState extends State<UserPage> {
       'Cookie': 'user_token=$User_Token',
     };
 
-    var userVerify = await dio.post('${apiUrl}/auth/verify',
-        options: Options(headers: headers));
-    var userData = userVerify.data['user'];
-
-    var itemWear = await dio.get(
-        '${apiUrl}/item/wear/' + userData['student_id'],
+    var itemWear = await dio.get('${apiUrl}/item/wear/${student_id}',
         options: Options(headers: headers));
     var itemWearData = itemWear.data['data'];
 
@@ -235,9 +240,9 @@ class _UserPageState extends State<UserPage> {
     var headers = {
       'Cookie': 'user_token=$User_Token',
     };
-    var userVerify = await dio.post('${apiUrl}/auth/verify',
+    var userVerify = await dio.get('${apiUrl}/user/${student_id}',
         options: Options(headers: headers));
-    var userData = userVerify.data['user'];
+    var userData = userVerify.data['data'];
 
     try {
       var data = userData;
