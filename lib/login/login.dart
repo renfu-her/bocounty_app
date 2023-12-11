@@ -70,6 +70,8 @@ class _LoginPageState extends State<LoginPage> {
       int equalsIndex = cookie.indexOf('=');
       User_Token = cookie.substring(equalsIndex + 1);
 
+      print(status);
+
       if (status == "OK") {
         // 登錄成功，處理成功的邏輯
         student_id = username;
@@ -82,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
           context,
           MaterialPageRoute(builder: (context) => const HomePage()),
         );
-      } else if (status == 205) {
+      } else if (status == 'incorrect student id or password') {
         showDialog(
           context: context,
           builder: (BuildContext context) {
