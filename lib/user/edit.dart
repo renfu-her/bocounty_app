@@ -62,16 +62,9 @@ class _EditPageState extends State<EditPage> {
       'Cookie': 'user_token=$User_Token',
     };
 
-    var userVerify = await dio.post('${apiUrl}/auth/verify',
-        options: Options(headers: headers));
-    var userData = userVerify.data['user'];
-
-    var itemWear = await dio.get(
-        '${apiUrl}/item/wear/' + userData['student_id'],
+    var itemWear = await dio.get('${apiUrl}/item/wear/${student_id}',
         options: Options(headers: headers));
     var itemWearData = itemWear.data['data'];
-
-    print(userData);
 
     try {
       var status = itemWear.data['message'];
@@ -246,32 +239,32 @@ class _EditPageState extends State<EditPage> {
       'Cookie': 'user_token=${User_Token}',
     };
 
-    var data = {
-      'update_list': [
-        {
-          'item_id': hair,
-          'action': 2,
-        },
-        {
-          'item_id': face,
-          'action': 2,
-        },
-        {
-          'item_id': clothes,
-          'action': 2,
-        },
-        // {
-        //   'item_id': el,
-        //   'action': 2,
-        // },
-      ]
-    };
+    List<Map<String, dynamic>> updateList = [];
+
+    // 只有當 hair 不是 1 時，才添加到 update_list
+    if (hair != '1' && hair != '9' && hair != '15') {
+      updateList.add({'item_id': hair, 'action': 2});
+    }
+
+    // 只有當 face 不是 1 時，才添加到 update_list
+    if (face != '1' && face != '9' && face != '15') {
+      updateList.add({'item_id': face, 'action': 2});
+    }
+
+    // 只有當 clothes 不是 1 時，才添加到 update_list
+    if (clothes != '1' && clothes != '9' && clothes != '15') {
+      updateList.add({'item_id': clothes, 'action': 2});
+    }
+
+    var data = {'update_list': updateList};
 
     print(data.toString());
 
     var itemWear = await dio.request('${apiUrl}/item/wear',
         data: data, options: Options(headers: headers, method: "PUT"));
     var itemWearData = itemWear;
+
+    print('${apiUrl}/item/wear');
 
     try {
       var res = itemWearData;

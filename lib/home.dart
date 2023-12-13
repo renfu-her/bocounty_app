@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
             body: SingleChildScrollView(
                 child: Container(
                     width: screenWidth,
-                    // height: screenHeight,
+                    // height: double.infinity,
                     child: Stack(
                       children: [
                         buildMainContent(screenWidth, screenHeight),

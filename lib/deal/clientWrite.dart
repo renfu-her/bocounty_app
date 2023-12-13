@@ -264,7 +264,7 @@ class _ClientWriteState extends State<ClientWrite>
                               fontSize: 13,
                               letterSpacing: 2),
                           controller: _contentController,
-                          maxLines: 10,
+                          maxLines: 8,
                           decoration: const InputDecoration(
                             hintText: '內容',
                             hintStyle: TextStyle(
@@ -310,6 +310,9 @@ class _ClientWriteState extends State<ClientWrite>
                           };
 
                           var response = await dio.post(url, data: data);
+
+                          print(data);
+                          print(response.statusCode);
 
                           if (response.statusCode == 200) {
                             Navigator.pushReplacement(

@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:app/card/card1.dart';
 import 'package:app/card/card2.dart';
 import 'package:app/card/cardinfo.dart';
+import 'package:app/bonus/bonus.dart';
 import 'package:flutter/material.dart';
 // import 'package:http/http.dart' as http;
 
@@ -25,7 +26,7 @@ class _ShopPageState extends State<ShopPage> {
   bool isMenuOpen = false;
   bool showImage = true;
   late String card = "";
-  var bocoin;
+  String? userToken = User_Token;
 
   Timer? _timer;
 
@@ -67,11 +68,9 @@ class _ShopPageState extends State<ShopPage> {
       'Cookie': 'user_token=$User_Token',
     };
 
-    var userVerify = await dio.post('${apiUrl}/auth/verify',
-        options: Options(headers: headers));
-    var userData = userVerify.data['user'];
+    print('User Token: ${User_Token}');
 
-    var response = await dio.get('${apiUrl}/user/' + userData['student_id'],
+    var response = await dio.get('${apiUrl}/user/' + student_id,
         options: Options(headers: headers));
 
     var data = response.data['data'];
@@ -79,8 +78,17 @@ class _ShopPageState extends State<ShopPage> {
     var status = message;
 
     if (status == 'OK') {
+      var dataToken = {
+        'userToken': User_Token,
+      };
+      var coins = await dio.get('${laravelUrl}api/user/coin', data: dataToken);
+
+      var coinData = coins.data['data'];
+
+      print(coinData);
+
       setState(() {
-        bocoin = data['bocoin'];
+        bocoin = data['bocoin'] + coinData['coin'];
       });
     }
   }
@@ -159,6 +167,70 @@ class _ShopPageState extends State<ShopPage> {
                                 child: Image.asset('assets/images/back.png')),
                           ),
                         )),
+                        SizedBox(
+                          // height: screenHeight*0.104,
+                          child: Row(
+                            mainAxisAlignment:
+                                MainAxisAlignment.end, // 水平方向对齐到行的末端
+                            children: [
+                              TextButton(
+                                style: ButtonStyle(
+                                  side: MaterialStateProperty.all<BorderSide>(
+                                    const BorderSide(
+                                        width: 2, color: Colors.black),
+                                  ),
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          const Color(0xffdfb785)),
+                                  foregroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Colors.white),
+                                  shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(15), // 圆角大小
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  _getUserInfo(apiUrl);
+
+                                  if (bocoin == 0) {
+                                    print('zero coin');
+                                  } else {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const BonusPage()),
+                                    );
+
+                                    print(bocoin.toString() + ' coin');
+                                  }
+                                },
+                                child: const SizedBox(
+                                  width: 118,
+                                  height: 40,
+                                  child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '兑换折抵券',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        letterSpacing: 2,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.normal,
+                                        fontSize: 15.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: 20), // 右边 20px 的空白
+                            ],
+                          ),
+                        ),
                         Center(
                             child: Column(
                           children: [
@@ -275,7 +347,7 @@ class _ShopPageState extends State<ShopPage> {
                                                                       0.30),
                                                           Container(
                                                             child: const Text(
-                                                              '目前持有Bocoin數：',
+                                                              '目前持有Bcoin數：',
                                                               style: TextStyle(
                                                                 color: Color(
                                                                     0xff050505),
