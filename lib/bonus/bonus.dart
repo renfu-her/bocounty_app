@@ -6,6 +6,8 @@ import 'package:app/main.dart';
 import 'package:app/home.dart';
 import 'package:app/shop.dart';
 
+var dio = Dio();
+
 class BonusPage extends StatefulWidget {
   const BonusPage({super.key});
 
@@ -14,28 +16,35 @@ class BonusPage extends StatefulWidget {
 }
 
 class _BonusHomePage extends State<BonusPage> {
+  var headers = {
+    'Cookie': 'user_token=$User_Token',
+  };
   final _focusNode = FocusNode();
   bool isMenuOpen = true;
   final List<Map<String, dynamic>> coupons = [
     {
+      'id': 1,
       'icon': 'assets/images/bonus/bonus-1.png',
       'title': '顔太煮奶茶-壽豐東華店',
       'subtitle': '加料仙草凍 兌換 * 1',
       'expiryDate': '2023/12/31',
     },
     {
+      'id': 2,
       'icon': 'assets/images/bonus/bonus-1.png',
       'title': '顏太煮奶茶-壽豐東華店',
       'subtitle': '加料杏仁凍 兌換 * 1',
       'expiryDate': '2023/12/31',
     },
     {
+      'id': 3,
       'icon': 'assets/images/bonus/bonus-2.png',
       'title': '田舍',
       'subtitle': "50＄內品項任選\n價格超過50＄自行補超額",
       'expiryDate': '2023/12/31',
     },
     {
+      'id': 4,
       'icon': 'assets/images/bonus/bonus-3.png',
       'title': '燃 • 酒水龍頭室 SHOT兌換券',
       'subtitle': '低消一杯酒水即可兌換SHOT兩杯',
@@ -112,17 +121,44 @@ class _BonusHomePage extends State<BonusPage> {
                   left: 30,
                   right: 30,
                   bottom: 82,
-                  child: Container(
-                    child: ListView.builder(
-                      itemCount: coupons.length,
-                      itemBuilder: (context, index) {
-                        return CouponCard(
-                          iconData: coupons[index]['icon'],
-                          title: coupons[index]['title'],
-                          subtitle: coupons[index]['subtitle'],
-                          expiryDate: coupons[index]['expiryDate'],
-                        );
-                      },
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: List.generate(
+                        coupons.length,
+                        (index) {
+                          return CouponCard(
+                            iconData: coupons[index]['icon'],
+                            title: coupons[index]['title'],
+                            subtitle: coupons[index]['subtitle'],
+                            expiryDate: coupons[index]['expiryDate'],
+                            onPressed: () async {
+                              var users = await dio.get(
+                                  '${apiUrl}/user/' + student_id,
+                                  options: Options(headers: headers));
+
+                              var userInfo = users.data['data'];
+
+                              print(headers);
+                              print(student_id);
+                              print(userInfo);
+
+                              // var bonus_id = coupons[index]['id'];
+                              // var data = {
+                              //   'userToken': User_Token,
+                              //   'user_id': userInfo['user_id'],
+                              //   'bonus_id': bonus_id,
+                              //   'coins': 10
+                              // };
+
+                              // print(data);
+
+                              // var userBonus = await dio.post(
+                              //     'https://demo.dev-laravel.co/api/user/bonus/save',
+                              //     data: data);
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -158,6 +194,7 @@ class CouponCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final String expiryDate;
+  final VoidCallback? onPressed;
 
   const CouponCard({
     Key? key,
@@ -165,32 +202,36 @@ class CouponCard extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.expiryDate,
+    this.onPressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(10.0),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Row(
-          children: <Widget>[
-            Image.asset(iconData, width: 100, height: 100),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(title,
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 5),
-                  Text(subtitle),
-                  const SizedBox(height: 5),
-                  Text('使用期限：$expiryDate'),
-                ],
+    return GestureDetector(
+      onTap: onPressed, // 使用 GestureDetector 來偵測點擊
+      child: Card(
+        margin: const EdgeInsets.all(10.0),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
+            children: <Widget>[
+              Image.asset(iconData, width: 100, height: 100),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(title,
+                        style: const TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 5),
+                    Text(subtitle),
+                    const SizedBox(height: 5),
+                    Text('使用期限：$expiryDate'),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -7,6 +7,7 @@ String laravelUrl = "https://demo.dev-laravel.co/";
 String User_Token = "";
 String student_id = "";
 int bocoin = 0;
+int user_id = 0;
 
 void main() {
   runApp(const MyApp());
