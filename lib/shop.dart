@@ -193,11 +193,28 @@ class _ShopPageState extends State<ShopPage> {
                                     ),
                                   ),
                                 ),
-                                onPressed: () {
-                                  _getUserInfo(apiUrl);
+                                onPressed: () async {
+                                  await _getUserInfo(apiUrl);
 
                                   if (bocoin == 0) {
-                                    print('zero coin');
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text('提示'),
+                                          content: Text('您的 Bcoin 餘額為零。'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: Text('關閉'),
+                                              onPressed: () {
+                                                Navigator.of(context)
+                                                    .pop(); // 关闭对话框
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
                                   } else {
                                     Navigator.push(
                                       context,
