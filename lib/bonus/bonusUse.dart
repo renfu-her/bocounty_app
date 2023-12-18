@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:app/main.dart';
@@ -131,7 +129,7 @@ class _BonusHomePage extends State<BonusUsePage> {
                           Card(
                             elevation: 0, // 可以设置为0以移除卡片的阴影效果
                             shape: RoundedRectangleBorder(
-                              side: BorderSide(
+                              side: const BorderSide(
                                   color: Colors.black, width: 1.0), // 添加黑色边框
                               borderRadius:
                                   BorderRadius.circular(4.0), // 如果需要可以设置边框的圆角

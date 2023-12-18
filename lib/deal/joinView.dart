@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:app/main.dart';
 import 'package:app/deal/deal.dart';
 import 'package:app/message/msgCase.dart';
+import 'package:app/deal/dealType.dart';
+import 'package:app/deal/dealTypeOne.dart';
 
 class JoinViewAllPage extends StatefulWidget {
   final int itemId;
@@ -99,7 +101,8 @@ class _JoinViewAllPageState extends State<JoinViewAllPage>
               });
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const DealPage()),
+                MaterialPageRoute(
+                    builder: (context) => const DealTypeOnePage()),
               );
             },
           ),
@@ -126,7 +129,7 @@ class _JoinViewAllPageState extends State<JoinViewAllPage>
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const DealPage()),
+                              builder: (context) => const DealTypeOnePage()),
                         );
                         print('backButton click');
                       },
