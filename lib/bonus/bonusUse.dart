@@ -1,20 +1,23 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:app/main.dart';
 import 'package:app/home.dart';
 import 'package:app/shop.dart';
-import 'package:app/bonus/bonusUse.dart';
+import 'package:app/bonus/bonus.dart';
 
 var dio = Dio();
 
-class BonusPage extends StatefulWidget {
-  const BonusPage({super.key});
+class BonusUsePage extends StatefulWidget {
+  final int bonus_id;
+  const BonusUsePage({super.key, required this.bonus_id});
 
   @override
   _BonusHomePage createState() => _BonusHomePage();
 }
 
-class _BonusHomePage extends State<BonusPage> {
+class _BonusHomePage extends State<BonusUsePage> {
   var headers = {
     'Cookie': 'user_token=$User_Token',
   };
@@ -49,7 +52,6 @@ class _BonusHomePage extends State<BonusPage> {
       'subtitle': '低消一杯酒水即可兌換SHOT兩杯',
       'expiryDate': '2023/12/31',
     },
-    // 可以添加更多的優惠券
   ];
 
   @override
@@ -103,13 +105,13 @@ class _BonusHomePage extends State<BonusPage> {
                     children: <Widget>[
                       SizedBox(height: 80),
                       Text(
-                        '可兌換優惠券列表',
+                        '確定要使用票劵嗎？',
                         style: TextStyle(
                             fontSize: 22, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 10), // 添加一點空間
                       Text(
-                        '請在使用期限內兌換完畢，每張票券只可使用一次。',
+                        '請將本頁面交給店家查看，並由店家協助操作!',
                         style: TextStyle(fontSize: 13),
                       ),
                     ],
@@ -130,8 +132,28 @@ class _BonusHomePage extends State<BonusPage> {
                             title: coupons[index]['title'],
                             subtitle: coupons[index]['subtitle'],
                             expiryDate: coupons[index]['expiryDate'],
-                            bonusId: coupons[index]['id'],
-                            onPressed: () {},
+                            onPressed: () async {
+                              var userVerify = await dio.get(
+                                  '${apiUrl}/user/${student_id}',
+                                  options: Options(headers: headers));
+                              var userData = userVerify.data['data'];
+
+                              print(headers);
+                              print(student_id);
+                              print(userData['id']);
+
+                              var bonus_id = coupons[index]['id'];
+                              var data = {
+                                'userToken': User_Token,
+                                'user_id': userData['id'],
+                                'bonus_id': bonus_id,
+                                'coins': 10
+                              };
+
+                              var userBonus = await dio.post(
+                                  'https://demo.dev-laravel.co/api/user/bonus/save',
+                                  data: data);
+                            },
                           );
                         },
                       ),
@@ -149,7 +171,7 @@ class _BonusHomePage extends State<BonusPage> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ShopPage()),
+                              builder: (context) => const BonusPage()),
                         );
                       },
                       child: Image.asset('assets/images/back.png'),
@@ -171,7 +193,6 @@ class CouponCard extends StatelessWidget {
   final String subtitle;
   final String expiryDate;
   final VoidCallback? onPressed;
-  final int bonusId;
 
   const CouponCard({
     Key? key,
@@ -180,26 +201,12 @@ class CouponCard extends StatelessWidget {
     required this.subtitle,
     required this.expiryDate,
     this.onPressed,
-    required this.bonusId,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        if (onPressed != null) {
-          onPressed!();
-        } else {
-          // 默認行為，如果沒有提供 onPressed
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  BonusUsePage(bonus_id: bonusId), // 使用 bonusId
-            ),
-          );
-        }
-      }, // 使用 GestureDetector 來偵測點擊
+      onTap: onPressed, // 使用 GestureDetector 來偵測點擊
       child: Card(
         margin: const EdgeInsets.all(10.0),
         child: Padding(
