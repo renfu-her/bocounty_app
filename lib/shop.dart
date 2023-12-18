@@ -196,13 +196,13 @@ class _ShopPageState extends State<ShopPage> {
                                 onPressed: () async {
                                   await _getUserInfo(apiUrl);
 
-                                  if (bocoin == 0) {
+                                  if (bocoin < 10) {
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
                                           title: Text('提示'),
-                                          content: Text('您的 Bcoin 餘額為零。'),
+                                          content: Text('您的 Bcoin 餘額不足。'),
                                           actions: <Widget>[
                                             TextButton(
                                               child: Text('關閉'),
