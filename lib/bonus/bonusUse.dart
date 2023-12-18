@@ -23,36 +23,9 @@ class _BonusHomePage extends State<BonusUsePage> {
   };
   final _focusNode = FocusNode();
   bool isMenuOpen = true;
-  final List<Map<String, dynamic>> coupons = [
-    {
-      'id': 1,
-      'icon': 'assets/images/bonus/bonus-1.png',
-      'title': '顔太煮奶茶-壽豐東華店',
-      'subtitle': '加料仙草凍 兌換 * 1',
-      'expiryDate': '2023/12/31',
-    },
-    {
-      'id': 2,
-      'icon': 'assets/images/bonus/bonus-1.png',
-      'title': '顏太煮奶茶-壽豐東華店',
-      'subtitle': '加料杏仁凍 兌換 * 1',
-      'expiryDate': '2023/12/31',
-    },
-    {
-      'id': 3,
-      'icon': 'assets/images/bonus/bonus-2.png',
-      'title': '田舍',
-      'subtitle': "50＄內品項任選\n價格超過50＄自行補超額",
-      'expiryDate': '2023/12/31',
-    },
-    {
-      'id': 4,
-      'icon': 'assets/images/bonus/bonus-3.png',
-      'title': '燃 • 酒水龍頭室 SHOT兌換券',
-      'subtitle': '低消一杯酒水即可兌換SHOT兩杯',
-      'expiryDate': '2023/12/31',
-    },
-  ];
+  bool isLoading = true;
+  String? userToken = User_Token;
+  Map<String, dynamic>? bonusDetail;
 
   @override
   void initState() {
@@ -63,6 +36,8 @@ class _BonusHomePage extends State<BonusUsePage> {
         FocusScope.of(context).unfocus();
       }
     });
+
+    fetchData();
   }
 
   @override
@@ -71,10 +46,37 @@ class _BonusHomePage extends State<BonusUsePage> {
     super.dispose();
   }
 
+  void fetchData() async {
+    var dio = Dio();
+    var data = {'userToken': userToken, 'bonus_id': widget.bonus_id};
+
+    print(data);
+
+    // print(data);
+    try {
+      var response = await dio.get('${laravelUrl}api/user/bonus', data: data);
+
+      print(response.statusCode);
+
+      if (response.statusCode == 200) {
+        setState(() {
+          bonusDetail = response.data['data'];
+          isLoading = false;
+          // print(items);
+        });
+      }
+    } catch (e) {
+      // 處理錯誤
+      print('Error fetching data bonus/detail: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    var dio = Dio();
+    var data = {'userToken': userToken, 'bonus_id': widget.bonus_id};
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -105,7 +107,7 @@ class _BonusHomePage extends State<BonusUsePage> {
                     children: <Widget>[
                       SizedBox(height: 80),
                       Text(
-                        '確定要使用票劵嗎？',
+                        '確定要使用票券嗎？',
                         style: TextStyle(
                             fontSize: 22, fontWeight: FontWeight.bold),
                       ),
@@ -124,39 +126,82 @@ class _BonusHomePage extends State<BonusUsePage> {
                   bottom: 82,
                   child: SingleChildScrollView(
                     child: Column(
-                      children: List.generate(
-                        coupons.length,
-                        (index) {
-                          return CouponCard(
-                            iconData: coupons[index]['icon'],
-                            title: coupons[index]['title'],
-                            subtitle: coupons[index]['subtitle'],
-                            expiryDate: coupons[index]['expiryDate'],
-                            onPressed: () async {
-                              var userVerify = await dio.get(
-                                  '${apiUrl}/user/${student_id}',
-                                  options: Options(headers: headers));
-                              var userData = userVerify.data['data'];
+                      children: [
+                        if (bonusDetail != null) ...[
+                          Card(
+                            elevation: 0, // 可以设置为0以移除卡片的阴影效果
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                  color: Colors.black, width: 1.0), // 添加黑色边框
+                              borderRadius:
+                                  BorderRadius.circular(4.0), // 如果需要可以设置边框的圆角
+                            ),
+                            color: Color(0xFFcab595), // 卡片的背景颜色
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                ListTile(
+                                  leading: Image.asset(bonusDetail!['icon'],
+                                      width: 100, height: 100),
+                                  title: Text(bonusDetail!['title']),
+                                  subtitle: Text(bonusDetail!['sub_title']),
+                                ),
+                                Text('有效期至: ${bonusDetail!['expiry_date']}'),
+                                SizedBox(height: 20),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Color(0xFFe0ac4e), // 背景色
+                                    onPrimary: Colors.white, // 文字色
+                                    side: BorderSide(
+                                        width: 1, color: Colors.black), // 邊框
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(6), // 圓角邊框
+                                    ),
+                                  ),
+                                  onPressed: () async {
+                                    var res = await dio.post(
+                                        '${laravelUrl}api/user/bonus',
+                                        data: data);
 
-                              print(headers);
-                              print(student_id);
-                              print(userData['id']);
+                                    print(res.statusCode);
 
-                              var bonus_id = coupons[index]['id'];
-                              var data = {
-                                'userToken': User_Token,
-                                'user_id': userData['id'],
-                                'bonus_id': bonus_id,
-                                'coins': 10
-                              };
-
-                              var userBonus = await dio.post(
-                                  'https://demo.dev-laravel.co/api/user/bonus/save',
-                                  data: data);
+                                    if (res.statusCode == 200) {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ShopPage()),
+                                      );
+                                    }
+                                  },
+                                  child: Text('使用優惠'),
+                                ),
+                                SizedBox(height: 20),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: Color(0xFFe87d42), // 背景色
+                              onPrimary: Colors.white, // 文字色
+                              side: BorderSide(
+                                  width: 1, color: Colors.black), // 邊框
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6), // 圓角邊框
+                              ),
+                            ),
+                            onPressed: () {
+                              // 这里使用Navigator.of(context).pop()返回到上一个页面
+                              Navigator.of(context).pop();
                             },
-                          );
-                        },
-                      ),
+                            child: Text('關閉'),
+                          ),
+                        ] else ...[
+                          Text('正在加載...'),
+                        ],
+                      ],
                     ),
                   ),
                 ),
@@ -182,55 +227,6 @@ class _BonusHomePage extends State<BonusUsePage> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class CouponCard extends StatelessWidget {
-  final String iconData;
-  final String title;
-  final String subtitle;
-  final String expiryDate;
-  final VoidCallback? onPressed;
-
-  const CouponCard({
-    Key? key,
-    required this.iconData,
-    required this.title,
-    required this.subtitle,
-    required this.expiryDate,
-    this.onPressed,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed, // 使用 GestureDetector 來偵測點擊
-      child: Card(
-        margin: const EdgeInsets.all(10.0),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Row(
-            children: <Widget>[
-              Image.asset(iconData, width: 100, height: 100),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(title,
-                        style: const TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold)),
-                    const SizedBox(height: 5),
-                    Text(subtitle),
-                    const SizedBox(height: 5),
-                    Text('使用期限：$expiryDate'),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

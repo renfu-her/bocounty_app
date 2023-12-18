@@ -131,9 +131,67 @@ class _BonusHomePage extends State<BonusPage> {
                             subtitle: coupons[index]['subtitle'],
                             expiryDate: coupons[index]['expiryDate'],
                             bonusId: coupons[index]['id'],
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BonusUsePage(
+                                      bonus_id: coupons[index]
+                                          ['id']), // 使用 bonusId
+                                ),
+                              );
+                            },
                           );
                         },
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom:
+                        MediaQuery.of(context).viewInsets.bottom + 30, // 增加底部距離
+                  ),
+                  child: Align(
+                    alignment: Alignment.bottomCenter, // 按钮对齐到右边
+                    child: TextButton(
+                      style: ButtonStyle(
+                        side: MaterialStateProperty.all<BorderSide>(
+                          const BorderSide(width: 2, color: Colors.black),
+                        ),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            const Color(0xffe87d42)),
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ShopPage(),
+                          ),
+                        );
+                      },
+                      child: const SizedBox(
+                        width: 100,
+                        height: 25,
+                        child: Center(
+                          child: Text(
+                            '關閉',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 15.0,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -201,6 +259,12 @@ class CouponCard extends StatelessWidget {
         }
       }, // 使用 GestureDetector 來偵測點擊
       child: Card(
+        elevation: 0, // 可以设置为0以移除卡片的阴影效果
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Colors.black, width: 1.0), // 添加黑色边框
+          borderRadius: BorderRadius.circular(12.0), // 如果需要可以设置边框的圆角
+        ),
+        color: Color(0xFFcab595), // 卡片的背景颜色
         margin: const EdgeInsets.all(10.0),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
