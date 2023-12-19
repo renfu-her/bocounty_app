@@ -89,11 +89,14 @@ class _DealTypeTwoPageState extends State<DealTypeTwoPage>
             child: Stack(
               children: <Widget>[
                 // 第一個Text元件
-                const Positioned(
-                  top: 100, // 可以根據需要調整這些值
-                  left: 70,
-                  right: 70,
-                  child: Text('已參加委託', style: TextStyle(fontSize: 20)),
+                const SizedBox(
+                  height: 200, // 指定高度
+                  child: Center(
+                    child: Text(
+                      '已發佈委託',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
                 ),
                 Positioned(
                   top: 150,
