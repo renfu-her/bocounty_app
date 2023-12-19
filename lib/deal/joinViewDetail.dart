@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:app/main.dart';
 import 'package:app/deal/deal.dart';
 import 'package:app/deal/dealType.dart';
+import 'package:app/deal/dealTypeTwo.dart';
 import 'package:app/message/msgCase.dart';
 import 'package:app/deal/joinEntrust.dart';
 
@@ -134,8 +135,7 @@ class _JoinViewDetailPageState extends State<JoinViewDetailPage>
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                                  const JoinEntrustDealPage()),
+                              builder: (context) => const DealTypeTwoPage()),
                         );
                       },
                       child: Image.asset('assets/images/back.png'),
@@ -256,7 +256,7 @@ class _JoinViewDetailPageState extends State<JoinViewDetailPage>
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const JoinEntrustDealPage()));
+                                          const DealTypeTwoPage()));
                             }
                           }
                         },

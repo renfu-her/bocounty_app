@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:app/main.dart';
 import 'package:app/deal/joinView.dart';
 import 'package:app/deal/dealTypeOne.dart';
+import 'package:app/deal/dealTypeTwo.dart';
 
 class DealTypePage extends StatefulWidget {
   const DealTypePage({super.key});
@@ -100,7 +101,11 @@ class _DealTypePageState extends State<DealTypePage>
                     ),
                   ),
                   onPressed: () {
-                    // 已参加委托的点击事件处理
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const DealTypeTwoPage()),
+                    );
                   },
                   child: Text(
                     '已參加委託',
