@@ -60,7 +60,7 @@ class _Card2PageState extends State<Card2Page> {
       String responseData = response.body;
       var data = jsonDecode(responseData);
       var status = data['message'];
-      final itemsList = data['list'];
+      final itemsList = data['data'];
       // final List<Map<String, dynamic>> items = List<Map<String, dynamic>>.from(jsonDecode(itemsList));
       // final List<Item> item = items.map((itemData) => Item.fromJson(itemData)).toList();
 
