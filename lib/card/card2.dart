@@ -46,27 +46,26 @@ class _Card2PageState extends State<Card2Page> {
   Future<void> _drawCards(apiUrl) async {
     Map<String, String> headers = {
       'Content-Type': 'application/json',
-      'Cookie': 'User_Token=$User_Token',
+      'Cookie': 'user_token=$User_Token',
     };
     Map<String, dynamic> data1 = {
-      "pool": "1",
-      "type": 1,
+      "type": 2,
     };
 
-    String drawCardsurl = ('$apiUrl/drawCards');
+    String drawCardsurl = ('$apiUrl/pool/draw/$pool_id');
     try {
       String jsonData = jsonEncode(data1);
       http.Response response = await http.post(Uri.parse(drawCardsurl),
           headers: headers, body: jsonData);
       String responseData = response.body;
       var data = jsonDecode(responseData);
-      var status = data['status'];
+      var status = data['message'];
       final itemsList = data['list'];
       // final List<Map<String, dynamic>> items = List<Map<String, dynamic>>.from(jsonDecode(itemsList));
       // final List<Item> item = items.map((itemData) => Item.fromJson(itemData)).toList();
 
       _item = [];
-      if (status == 0) {
+      if (status == "OK") {
         print(itemsList);
         setState(() {
           _item = itemsList;
@@ -191,8 +190,8 @@ class _Card2PageState extends State<Card2Page> {
                                           ),
                                           width: screenWidth * 0.11,
                                           height: screenWidth * 0.11,
-                                          child: Image.asset(
-                                            itemsForRow[0]['photo'],
+                                          child: Image.network(
+                                            apiUrl + itemsForRow[0]['photo'],
                                             fit: BoxFit.contain,
                                           ),
                                         ),
@@ -226,8 +225,8 @@ class _Card2PageState extends State<Card2Page> {
                                         ),
                                         width: screenWidth * 0.11,
                                         height: screenWidth * 0.11,
-                                        child: Image.asset(
-                                          itemsForRow[1]['photo'],
+                                        child: Image.network(
+                                          apiUrl + itemsForRow[1]['photo'],
                                           fit: BoxFit.contain,
                                         ),
                                       ),

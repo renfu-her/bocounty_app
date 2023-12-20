@@ -9,7 +9,6 @@ String student_id = "";
 String pool_id = "";
 int bocoin = 0;
 int user_id = 0;
-
 void main() {
   runApp(const MyApp());
   WidgetsFlutterBinding.ensureInitialized();

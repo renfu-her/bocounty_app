@@ -25,7 +25,7 @@ class _ShopPageState extends State<ShopPage> {
   final _focusNode = FocusNode();
   bool isMenuOpen = false;
   bool showImage = true;
-  late String caswzard = "";
+  late String card = "";
   String? userToken = User_Token;
 
   Timer? _timer;

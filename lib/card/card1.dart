@@ -19,6 +19,7 @@ class Card1Page extends StatefulWidget {
 class _Card1PageState extends State<Card1Page> {
   final _focusNode = FocusNode();
   late List<dynamic> _item = [];
+  late String drawCardResult = "";
 
   @override
   void initState() {
@@ -58,6 +59,7 @@ class _Card1PageState extends State<Card1Page> {
         print(itemsList);
         setState(() {
           _item = itemsList;
+          drawCardResult = apiUrl + _item[0]['photo'];
         });
         // print(_item[0]['photo']);
       } else {
@@ -162,8 +164,8 @@ class _Card1PageState extends State<Card1Page> {
                           height: screenWidth * 0.3,
                           width: screenWidth * 0.3,
                           child: _item.isNotEmpty
-                              ? Image.asset(
-                                  _item[0]['photo']!,
+                              ? Image.network(
+                                  drawCardResult,
                                   fit: BoxFit.contain,
                                 )
                               : const CircularProgressIndicator(), // 或其他加载指示符
