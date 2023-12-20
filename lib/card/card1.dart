@@ -34,27 +34,27 @@ class _Card1PageState extends State<Card1Page> {
   Future<void> _drawCards(apiUrl) async {
     Map<String, String> headers = {
       'Content-Type': 'application/json',
-      'Cookie': 'User_Token=$User_Token',
+      'Cookie': 'user_token=$User_Token',
     };
     Map<String, dynamic> data1 = {
-      "pool": "1",
-      "type": 0,
+      // "pool": "1",
+      "type": 1,
     };
 
-    String drawCardsurl = ('$apiUrl/drawCards');
+    String drawCardsurl = ('$apiUrl/pool/draw/$pool_id');
     try {
       String jsonData = jsonEncode(data1);
       http.Response response = await http.post(Uri.parse(drawCardsurl),
           headers: headers, body: jsonData);
       String responseData = response.body;
       var data = jsonDecode(responseData);
-      var status = data['status'];
-      final itemsList = data['list'];
+      var status = data['message'];
+      final itemsList = data['data'];
       // final List<Map<String, dynamic>> items = List<Map<String, dynamic>>.from(jsonDecode(itemsList));
       // final List<Item> item = items.map((itemData) => Item.fromJson(itemData)).toList();
 
       _item = [];
-      if (status == 0) {
+      if (status == "OK") {
         print(itemsList);
         setState(() {
           _item = itemsList;

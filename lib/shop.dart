@@ -25,7 +25,7 @@ class _ShopPageState extends State<ShopPage> {
   final _focusNode = FocusNode();
   bool isMenuOpen = false;
   bool showImage = true;
-  late String card = "";
+  late String caswzard = "";
   String? userToken = User_Token;
 
   Timer? _timer;
@@ -46,11 +46,13 @@ class _ShopPageState extends State<ShopPage> {
     };
 
     var response =
-        await dio.get('${apiUrl}/pool', options: Options(headers: headers));
+        await dio.get('$apiUrl/pool', options: Options(headers: headers));
 
     var data = response.data['data'];
     var message = response.data['message'];
     var status = message;
+    pool_id = data[0]['id'].toString();
+    debugPrint('pool_id: $pool_id');
 
     if (status == 'OK') {
       var pool = data[0];
@@ -68,9 +70,9 @@ class _ShopPageState extends State<ShopPage> {
       'Cookie': 'user_token=$User_Token',
     };
 
-    print('User Token: ${User_Token}');
+    print('User Token: $User_Token');
 
-    var response = await dio.get('${apiUrl}/user/' + student_id,
+    var response = await dio.get('$apiUrl/user/$student_id',
         options: Options(headers: headers));
 
     var data = response.data['data'];
@@ -193,11 +195,28 @@ class _ShopPageState extends State<ShopPage> {
                                     ),
                                   ),
                                 ),
-                                onPressed: () {
-                                  _getUserInfo(apiUrl);
+                                onPressed: () async {
+                                  await _getUserInfo(apiUrl);
 
-                                  if (bocoin == 0) {
-                                    print('zero coin');
+                                  if (bocoin < 10) {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text('提示'),
+                                          content: const Text('您的 Bcoin 餘額不足。'),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: const Text('關閉'),
+                                              onPressed: () {
+                                                Navigator.of(context)
+                                                    .pop(); // 关闭对话框
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
                                   } else {
                                     Navigator.push(
                                       context,
@@ -206,7 +225,7 @@ class _ShopPageState extends State<ShopPage> {
                                               const BonusPage()),
                                     );
 
-                                    print(bocoin.toString() + ' coin');
+                                    print('$bocoin coin');
                                   }
                                 },
                                 child: const SizedBox(
@@ -227,7 +246,7 @@ class _ShopPageState extends State<ShopPage> {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 20), // 右边 20px 的空白
+                              const SizedBox(width: 20), // 右边 20px 的空白
                             ],
                           ),
                         ),
@@ -252,7 +271,7 @@ class _ShopPageState extends State<ShopPage> {
                                           );
                                           print('CardInfo click');
                                         },
-                                        child: Container(
+                                        child: SizedBox(
                                           // color: Colors.cyan,
                                           height: screenHeight * 0.06,
                                           width: screenHeight * 0.035,
@@ -272,9 +291,9 @@ class _ShopPageState extends State<ShopPage> {
                                   print('confirm click');
                                 },
                                 child: Align(
-                                  alignment: Alignment(0.0045, 0),
+                                  alignment: const Alignment(0.0045, 0),
                                   child: Transform.translate(
-                                    offset: Offset(0, 0.5),
+                                    offset: const Offset(0, 0.5),
                                     child: SizedBox(
                                         height: screenWidth * 0.475,
                                         width: screenWidth * 0.475,

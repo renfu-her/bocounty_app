@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:app/main.dart';
 import 'package:app/deal/deal.dart';
+import 'package:app/deal/dealType.dart';
 
 class MsgJobViewDetailPage extends StatefulWidget {
   final String itemId;
@@ -43,7 +44,7 @@ class _MsgJobViewDetailPageState extends State<MsgJobViewDetailPage>
   void fetchData() async {
     var dio = Dio();
     var data = {'userToken': userToken, 'itemId': widget.itemId};
-    
+
     try {
       var response =
           await dio.post('${laravelUrl}api/user/case-to-confirm', data: data);
@@ -93,7 +94,7 @@ class _MsgJobViewDetailPageState extends State<MsgJobViewDetailPage>
               });
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const DealPage()),
+                MaterialPageRoute(builder: (context) => const DealTypePage()),
               );
             },
           ),
@@ -199,7 +200,7 @@ class _MsgJobViewDetailPageState extends State<MsgJobViewDetailPage>
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const DealPage()),
+                              builder: (context) => const DealTypePage()),
                         );
                       },
                       child: const SizedBox(
@@ -245,7 +246,7 @@ class _MsgJobViewDetailPageState extends State<MsgJobViewDetailPage>
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const DealPage()),
+                              builder: (context) => const DealTypePage()),
                         );
                       },
                       child: const SizedBox(
@@ -277,7 +278,7 @@ class _MsgJobViewDetailPageState extends State<MsgJobViewDetailPage>
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const DealPage()),
+                              builder: (context) => const DealTypePage()),
                         );
                         print('backButton click');
                       },

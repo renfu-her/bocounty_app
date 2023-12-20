@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:app/main.dart';
 import 'package:app/deal/deal.dart';
+import 'package:app/deal/dealType.dart';
 import 'package:app/message/msgJobViewDetail.dart';
 
 class MsgCasePage extends StatefulWidget {
@@ -80,7 +81,7 @@ class _MsgCasePageState extends State<MsgCasePage>
               });
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const DealPage()),
+                MaterialPageRoute(builder: (context) => const DealTypePage()),
               );
             },
           ),
@@ -190,7 +191,7 @@ class _MsgCasePageState extends State<MsgCasePage>
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const DealPage()),
+                              builder: (context) => const DealTypePage()),
                         );
                       },
                       child: const SizedBox(
@@ -222,7 +223,7 @@ class _MsgCasePageState extends State<MsgCasePage>
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const DealPage()),
+                              builder: (context) => const DealTypePage()),
                         );
                       },
                       child: Image.asset('assets/images/back.png'),

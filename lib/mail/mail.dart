@@ -1,9 +1,9 @@
 // import 'dart:math';
 
-import 'package:app/notify.dart';
+// import 'package:app/notify.dart';
 import 'package:flutter/material.dart';
 
-import 'package:app/deal/deal.dart';
+import 'package:app/deal/dealType.dart';
 import 'package:app/home.dart';
 
 class MailPage extends StatefulWidget {
@@ -95,7 +95,7 @@ class _MailPageState extends State<MailPage> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const DealPage()),
+                                                const DealTypePage()),
                                       );
                                       print('deal click');
                                     } else {

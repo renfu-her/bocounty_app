@@ -246,54 +246,54 @@ class _HomePageState extends State<HomePage> {
               SizedBox(
                 height: screenHeight * 0.1,
               ),
-              GestureDetector(
-                  onTap: () {
-                    // Navigator.pushReplacement(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => LoginPage()),
-                    // );
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 50,
-                    width: 200,
-                    child: const Text(
-                      '關於我們',
-                      style: TextStyle(
-                        color: Color(0xffffffff),
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18.0,
-                        letterSpacing: 5,
-                      ),
-                    ),
-                  )),
-              SizedBox(
-                height: screenHeight * 0.05,
-              ),
-              GestureDetector(
-                  onTap: () {
-                    // Navigator.pushReplacement(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => LoginPage()),
-                    // );
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    height: 50,
-                    width: 200,
-                    child: const Text(
-                      '聯絡我們',
-                      style: TextStyle(
-                        color: Color(0xffffffff),
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18.0,
-                        letterSpacing: 5,
-                      ),
-                    ),
-                  )),
-              SizedBox(
-                height: screenHeight * 0.2,
-              ),
+              // GestureDetector(
+              //     onTap: () {
+              //       // Navigator.pushReplacement(
+              //       //   context,
+              //       //   MaterialPageRoute(builder: (context) => LoginPage()),
+              //       // );
+              //     },
+              //     child: Container(
+              //       alignment: Alignment.center,
+              //       height: 50,
+              //       width: 200,
+              //       child: const Text(
+              //         '關於我們',
+              //         style: TextStyle(
+              //           color: Color(0xffffffff),
+              //           fontWeight: FontWeight.w600,
+              //           fontSize: 18.0,
+              //           letterSpacing: 5,
+              //         ),
+              //       ),
+              //     )),
+              // SizedBox(
+              //   height: screenHeight * 0.05,
+              // ),
+              // GestureDetector(
+              //     onTap: () {
+              //       // Navigator.pushReplacement(
+              //       //   context,
+              //       //   MaterialPageRoute(builder: (context) => LoginPage()),
+              //       // );
+              //     },
+              //     child: Container(
+              //       alignment: Alignment.center,
+              //       height: 50,
+              //       width: 200,
+              //       child: const Text(
+              //         '聯絡我們',
+              //         style: TextStyle(
+              //           color: Color(0xffffffff),
+              //           fontWeight: FontWeight.w600,
+              //           fontSize: 18.0,
+              //           letterSpacing: 5,
+              //         ),
+              //       ),
+              //     )),
+              // SizedBox(
+              //   height: screenHeight * 0.2,
+              // ),
               GestureDetector(
                   onTap: () async {
                     _logoff(apiUrl);

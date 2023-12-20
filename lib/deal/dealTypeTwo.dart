@@ -1,24 +1,28 @@
 import 'package:app/mail/mail.dart';
-import 'package:app/deal/deal.dart';
-import 'package:app/deal/dealType.dart';
 import 'package:flutter/material.dart';
-import 'package:app/main.dart';
+import 'package:app/deal/joinEntrust.dart';
 import 'package:dio/dio.dart';
+import 'package:app/main.dart';
+import 'package:app/deal/joinView.dart';
+import 'package:app/deal/dealType.dart';
 import 'package:app/deal/joinViewDetail.dart';
 
-class JoinEntrustDealPage extends StatefulWidget {
-  const JoinEntrustDealPage({super.key});
+class DealTypeTwoPage extends StatefulWidget {
+  const DealTypeTwoPage({super.key});
 
   @override
-  _JoinEntrustDealPageState createState() => _JoinEntrustDealPageState();
+  _DealTypeTwoPageState createState() => _DealTypeTwoPageState();
 }
 
-class _JoinEntrustDealPageState extends State<JoinEntrustDealPage>
+class _DealTypeTwoPageState extends State<DealTypeTwoPage>
     with SingleTickerProviderStateMixin {
   final _focusNode = FocusNode();
   bool isMenuOpen = true;
+  late AnimationController _animationController;
+  late Animation<double> _animation;
   String? userToken = User_Token;
   List<dynamic> items = [];
+  bool openImage = true;
 
   @override
   void initState() {
@@ -30,12 +34,21 @@ class _JoinEntrustDealPageState extends State<JoinEntrustDealPage>
       }
     });
 
+    // 初始化AnimationController
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    )..repeat(reverse: true); // 使動畫重複執行，並在每次迭代時反向
+
+    // 創建Animation
+    _animation = Tween(begin: 1.0, end: 0.0).animate(_animationController);
     fetchData();
   }
 
   @override
   void dispose() {
     _focusNode.dispose();
+    _animationController.dispose(); // 釋放AnimationController資源
     super.dispose();
   }
 
@@ -72,52 +85,21 @@ class _JoinEntrustDealPageState extends State<JoinEntrustDealPage>
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
-          GestureDetector(
-            onTap: () {
-              FocusScope.of(context).unfocus();
-              setState(() {
-                isMenuOpen = true;
-              });
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const DealTypePage()),
-              );
-            },
-          ),
           Container(
-            width: screenWidth,
-            height: screenHeight,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/background/bg02.png'),
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-              ),
-            ),
             child: Stack(
               children: <Widget>[
                 // 第一個Text元件
-                Positioned(
-                  top: 220, // 可以根據需要調整這些值
-                  left: 70,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const DealTypePage()),
-                      );
-                    },
-                    child: const Text('已發佈委託', style: TextStyle(fontSize: 20)),
+                const SizedBox(
+                  height: 200, // 指定高度
+                  child: Center(
+                    child: Text(
+                      '已發佈委託',
+                      style: TextStyle(fontSize: 20),
+                    ),
                   ),
                 ),
-                const Positioned(
-                  top: 220,
-                  right: 70,
-                  child: Text('已參加委託', style: TextStyle(fontSize: 20)),
-                ),
                 Positioned(
-                  top: 300,
+                  top: 150,
                   left: 70,
                   right: 70,
                   bottom: 82,
@@ -135,13 +117,12 @@ class _JoinEntrustDealPageState extends State<JoinEntrustDealPage>
 
                         return GestureDetector(
                           onTap: () {
-                            // print('Item status: ${item['status']}');
-                            // 在這裡添加點擊事件邏輯
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      JoinViewDetailPage(itemId: item['id'])),
+                                builder: (context) =>
+                                    JoinViewDetailPage(itemId: item['id']),
+                              ),
                             );
                           },
                           child: Stack(

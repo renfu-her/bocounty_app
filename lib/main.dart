@@ -6,7 +6,9 @@ String apiUrl = "http://35.206.249.212:8000";
 String laravelUrl = "https://demo.dev-laravel.co/";
 String User_Token = "";
 String student_id = "";
+String pool_id = "";
 int bocoin = 0;
+int user_id = 0;
 
 void main() {
   runApp(const MyApp());
