@@ -331,7 +331,7 @@ class _EditPageState extends State<EditPage> {
 
     return GestureDetector(
       onTap: () {
-        super.initState();
+        // super.initState();
         getCategoryAccessories();
         setState(() {
           getCategoryAccessories();
