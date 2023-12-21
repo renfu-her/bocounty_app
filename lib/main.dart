@@ -6,15 +6,9 @@ String apiUrl = "http://35.206.249.212:8000";
 String laravelUrl = "https://demo.dev-laravel.co/";
 String User_Token = "";
 String student_id = "";
-<<<<<<< HEAD
-int bocoin = 0;
-int user_id = 0;
-
-=======
 String pool_id = "";
 int bocoin = 0;
 int user_id = 0;
->>>>>>> 2a1debafc51102d08d14f79d69f4feaee016ddb3
 void main() {
   runApp(const MyApp());
   WidgetsFlutterBinding.ensureInitialized();

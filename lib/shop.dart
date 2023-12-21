@@ -70,15 +70,9 @@ class _ShopPageState extends State<ShopPage> {
       'Cookie': 'user_token=$User_Token',
     };
 
-<<<<<<< HEAD
-    print('User Token: ${User_Token}');
-
-    var response = await dio.get('${apiUrl}/user/' + student_id,
-=======
     print('User Token: $User_Token');
 
     var response = await dio.get('$apiUrl/user/$student_id',
->>>>>>> 2a1debafc51102d08d14f79d69f4feaee016ddb3
         options: Options(headers: headers));
 
     var data = response.data['data'];
@@ -209,19 +203,11 @@ class _ShopPageState extends State<ShopPage> {
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(
-<<<<<<< HEAD
                                           title: Text('提示'),
                                           content: Text('您的 Bcoin 餘額不足。'),
                                           actions: <Widget>[
                                             TextButton(
                                               child: Text('關閉'),
-=======
-                                          title: const Text('提示'),
-                                          content: const Text('您的 Bcoin 餘額不足。'),
-                                          actions: <Widget>[
-                                            TextButton(
-                                              child: const Text('關閉'),
->>>>>>> 2a1debafc51102d08d14f79d69f4feaee016ddb3
                                               onPressed: () {
                                                 Navigator.of(context)
                                                     .pop(); // 关闭对话框
@@ -239,11 +225,7 @@ class _ShopPageState extends State<ShopPage> {
                                               const BonusPage()),
                                     );
 
-<<<<<<< HEAD
-                                    print(bocoin.toString() + ' coin');
-=======
                                     print('$bocoin coin');
->>>>>>> 2a1debafc51102d08d14f79d69f4feaee016ddb3
                                   }
                                 },
                                 child: const SizedBox(
@@ -264,11 +246,7 @@ class _ShopPageState extends State<ShopPage> {
                                   ),
                                 ),
                               ),
-<<<<<<< HEAD
-                              SizedBox(width: 20), // 右边 20px 的空白
-=======
                               const SizedBox(width: 20), // 右边 20px 的空白
->>>>>>> 2a1debafc51102d08d14f79d69f4feaee016ddb3
                             ],
                           ),
                         ),

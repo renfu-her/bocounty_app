@@ -62,11 +62,7 @@ class _EditPageState extends State<EditPage> {
       'Cookie': 'user_token=$User_Token',
     };
 
-<<<<<<< HEAD
-    var itemWear = await dio.get('${apiUrl}/item/wear/${student_id}',
-=======
     var itemWear = await dio.get('$apiUrl/item/wear/$student_id',
->>>>>>> 2a1debafc51102d08d14f79d69f4feaee016ddb3
         options: Options(headers: headers));
     var itemWearData = itemWear.data['data'];
 
@@ -268,11 +264,7 @@ class _EditPageState extends State<EditPage> {
         data: data, options: Options(headers: headers, method: "PUT"));
     var itemWearData = itemWear;
 
-<<<<<<< HEAD
-    print('${apiUrl}/item/wear');
-=======
     print('$apiUrl/item/wear');
->>>>>>> 2a1debafc51102d08d14f79d69f4feaee016ddb3
 
     try {
       var res = itemWearData;
