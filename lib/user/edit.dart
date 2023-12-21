@@ -256,6 +256,11 @@ class _EditPageState extends State<EditPage> {
       updateList.add({'item_id': clothes, 'action': 2});
     }
 
+    // 其他
+    if (el != '1' && el != '9' && el != '15' && el != '21') {
+      updateList.add({'item_id': el, 'action': 2});
+    }
+
     var data = {'update_list': updateList};
 
     print(data.toString());
