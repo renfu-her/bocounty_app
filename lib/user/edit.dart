@@ -62,7 +62,11 @@ class _EditPageState extends State<EditPage> {
       'Cookie': 'user_token=$User_Token',
     };
 
+<<<<<<< HEAD
     var itemWear = await dio.get('${apiUrl}/item/wear/${student_id}',
+=======
+    var itemWear = await dio.get('$apiUrl/item/wear/$student_id',
+>>>>>>> 2a1debafc51102d08d14f79d69f4feaee016ddb3
         options: Options(headers: headers));
     var itemWearData = itemWear.data['data'];
 
@@ -153,10 +157,10 @@ class _EditPageState extends State<EditPage> {
 
   Future<void> _getUserItem(apiUrl) async {
     var headers = {
-      'Cookie': 'user_token=${User_Token}',
+      'Cookie': 'user_token=$User_Token',
     };
     var itemOwn =
-        await dio.get('${apiUrl}/item/own', options: Options(headers: headers));
+        await dio.get('$apiUrl/item/own', options: Options(headers: headers));
     var itemOwnData = itemOwn.data['data'];
 
     try {
@@ -236,7 +240,7 @@ class _EditPageState extends State<EditPage> {
     // 構建登錄請求的資料
 
     var headers = {
-      'Cookie': 'user_token=${User_Token}',
+      'Cookie': 'user_token=$User_Token',
     };
 
     List<Map<String, dynamic>> updateList = [];
@@ -260,11 +264,15 @@ class _EditPageState extends State<EditPage> {
 
     print(data.toString());
 
-    var itemWear = await dio.request('${apiUrl}/item/wear',
+    var itemWear = await dio.request('$apiUrl/item/wear',
         data: data, options: Options(headers: headers, method: "PUT"));
     var itemWearData = itemWear;
 
+<<<<<<< HEAD
     print('${apiUrl}/item/wear');
+=======
+    print('$apiUrl/item/wear');
+>>>>>>> 2a1debafc51102d08d14f79d69f4feaee016ddb3
 
     try {
       var res = itemWearData;
