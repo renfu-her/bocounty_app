@@ -93,7 +93,7 @@ class _DealTypeTwoPageState extends State<DealTypeTwoPage>
                   height: 200, // 指定高度
                   child: Center(
                     child: Text(
-                      '已發佈委託',
+                      '已參加委託',
                       style: TextStyle(fontSize: 20),
                     ),
                   ),

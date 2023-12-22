@@ -100,7 +100,7 @@ class _Card2PageState extends State<Card2Page> {
           },
         );
         // 登錄失敗，處理失敗的邏輯
-        print('取得資訊錯誤：$responseData');
+        print('取得資訊錯誤 card2：$responseData');
       }
     } catch (e) {
       // 异常处理
