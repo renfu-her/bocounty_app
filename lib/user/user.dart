@@ -154,6 +154,9 @@ class _UserPageState extends State<UserPage> {
       for (int i = 0; i < list.length; i++) {
         String photo = list[i]['photo'] as String;
 
+        print(list[i]['type']);
+        print(list[i]['photo']);
+
         if (photo.isNotEmpty) {
           if (list[i]['type'] == 1) {
             setState(() {
@@ -172,7 +175,7 @@ class _UserPageState extends State<UserPage> {
             });
           } else if (list[i]['type'] == 4) {
             setState(() {
-              _else = photo;
+              _else = apiUrl + photo;
               getImg++;
             });
             List else_ = [
@@ -317,6 +320,11 @@ class _UserPageState extends State<UserPage> {
 
     // final TextEditingController _changeNameController = TextEditingController(text: username);
     // final TextEditingController _changeIntroController = TextEditingController(text: userintro);
+
+    print(_face);
+    print(_hair);
+    print(_clothes);
+    print(_else);
 
     changeName = _changeNameController.text;
     changeIntro = _changeIntroController.text;

@@ -73,7 +73,7 @@ class _EditPageState extends State<EditPage> {
 
       for (int i = 0; i < list.length; i++) {
         String photo = list[i]['photo'] as String;
-
+        
         if (photo.isNotEmpty) {
           if (list[i]['type'] == 1) {
             setState(() {
@@ -464,6 +464,7 @@ class _EditPageState extends State<EditPage> {
                     print(_hairID);
                     print(_faceID);
                     print(_clothesID);
+                    print(_elseID);
 
                     _changeItem(apiUrl, _hairID, _faceID, _clothesID, _elseID,
                         _hairPID, _facePID, _clothesPID, _elsePID);
